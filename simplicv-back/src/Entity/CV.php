@@ -1,0 +1,305 @@
+<?php
+
+namespace App\Entity;
+
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CVRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: CVRepository::class)]
+#[ApiResource]
+class CV
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'cv')]
+    private Collection $cVModels;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Profil $profil = null;
+
+    #[ORM\OneToMany(mappedBy: 'cv', targetEntity: Formation::class)]
+    private Collection $formations;
+
+    #[ORM\OneToMany(mappedBy: 'cv', targetEntity: Experience::class)]
+    private Collection $experiences;
+
+    #[ORM\OneToMany(mappedBy: 'cv', targetEntity: Skill::class)]
+    private Collection $skills;
+
+    #[ORM\OneToMany(mappedBy: 'cv', targetEntity: Language::class)]
+    private Collection $languages;
+
+    #[ORM\OneToMany(mappedBy: 'cv', targetEntity: SocialMedias::class)]
+    private Collection $socialMedias;
+
+    public function __construct()
+    {
+        $this->cVModels = new ArrayCollection();
+        $this->formations = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->languages = new ArrayCollection();
+        $this->socialMedias = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CVModel>
+     */
+    public function getCVModels(): Collection
+    {
+        return $this->cVModels;
+    }
+
+    public function addCVModel(CVModel $cVModel): self
+    {
+        if (!$this->cVModels->contains($cVModel)) {
+            $this->cVModels->add($cVModel);
+            $cVModel->addCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCVModel(CVModel $cVModel): self
+    {
+        if ($this->cVModels->removeElement($cVModel)) {
+            $cVModel->removeCv($this);
+        }
+
+        return $this;
+    }
+
+    public function getProfil(): ?Profil
+    {
+        return $this->profil;
+    }
+
+    public function setProfil(?Profil $profil): self
+    {
+        $this->profil = $profil;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Formation>
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations->add($formation);
+            $formation->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->removeElement($formation)) {
+            // set the owning side to null (unless already changed)
+            if ($formation->getCv() === $this) {
+                $formation->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Experience>
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences->add($experience);
+            $experience->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->removeElement($experience)) {
+            // set the owning side to null (unless already changed)
+            if ($experience->getCv() === $this) {
+                $experience->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->removeElement($skill)) {
+            // set the owning side to null (unless already changed)
+            if ($skill->getCv() === $this) {
+                $skill->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Language>
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): self
+    {
+        if (!$this->languages->contains($language)) {
+            $this->languages->add($language);
+            $language->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(Language $language): self
+    {
+        if ($this->languages->removeElement($language)) {
+            // set the owning side to null (unless already changed)
+            if ($language->getCv() === $this) {
+                $language->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SocialMedias>
+     */
+    public function getSocialMedias(): Collection
+    {
+        return $this->socialMedias;
+    }
+
+    public function addSocialMedia(SocialMedias $socialMedia): self
+    {
+        if (!$this->socialMedias->contains($socialMedia)) {
+            $this->socialMedias->add($socialMedia);
+            $socialMedia->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialMedia(SocialMedias $socialMedia): self
+    {
+        if ($this->socialMedias->removeElement($socialMedia)) {
+            // set the owning side to null (unless already changed)
+            if ($socialMedia->getCv() === $this) {
+                $socialMedia->setCv(null);
+            }
+        }
+
+        return $this;
+    }
+}
