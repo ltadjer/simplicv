@@ -33,6 +33,9 @@ class CVModel
     #[ORM\ManyToMany(targetEntity: CV::class, inversedBy: 'cVModels')]
     private Collection $cv;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->cv = new ArrayCollection();
@@ -123,6 +126,18 @@ class CVModel
     public function removeCv(CV $cv): self
     {
         $this->cv->removeElement($cv);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
