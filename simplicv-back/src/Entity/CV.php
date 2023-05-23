@@ -28,7 +28,7 @@ class CV
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'cv')]
     private Collection $cVModels;
@@ -50,6 +50,9 @@ class CV
 
     #[ORM\OneToMany(mappedBy: 'cv', targetEntity: SocialMedias::class)]
     private Collection $socialMedias;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -102,12 +105,12 @@ class CV
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -299,6 +302,18 @@ class CV
                 $socialMedia->setCv(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
