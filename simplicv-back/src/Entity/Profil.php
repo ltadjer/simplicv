@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ProfilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
+#[Vich\Uploadable]
+
 class Profil
 {
     #[ORM\Id]
@@ -14,7 +20,7 @@ class Profil
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
     #[ORM\Column]
@@ -31,6 +37,38 @@ class Profil
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $drivingLicence = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $mailAddress = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[Vich\UploadableField(mapping: 'profils', fileNameProperty: 'image')]
+    private ?File $profilImage = null;
+
+    #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'profils')]
+    private Collection $cVModels;
+
+    public function __construct()
+    {
+        $this->cVModels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +143,124 @@ class Profil
     public function setDrivingLicence(?string $drivingLicence): self
     {
         $this->drivingLicence = $drivingLicence;
+
+        return $this;
+    }
+
+    public function getMailAddress(): ?string
+    {
+        return $this->mailAddress;
+    }
+
+    public function setMailAddress(string $mailAddress): self
+    {
+        $this->mailAddress = $mailAddress;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getProfilImage(): ?File
+    {
+        return $this->profilImage;
+    }
+
+    public function setProfilImage(?File $profilImage = null): void
+    {
+        $this->profilImage = $profilImage;
+
+        if (null !== $profilImage) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return Collection<int, CVModel>
+     */
+    public function getCVModels(): Collection
+    {
+        return $this->cVModels;
+    }
+
+    public function addCVModel(CVModel $cVModel): self
+    {
+        if (!$this->cVModels->contains($cVModel)) {
+            $this->cVModels->add($cVModel);
+            $cVModel->addProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCVModel(CVModel $cVModel): self
+    {
+        if ($this->cVModels->removeElement($cVModel)) {
+            $cVModel->removeProfil($this);
+        }
 
         return $this;
     }

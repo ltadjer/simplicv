@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FormationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,8 +34,13 @@ class Formation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'formations')]
-    private ?CV $cv = null;
+    #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'formations')]
+    private Collection $cVModels;
+
+    public function __construct()
+    {
+        $this->cVModels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,15 +119,37 @@ class Formation
         return $this;
     }
 
-    public function getCv(): ?CV
+
+    public function __toString()
     {
-        return $this->cv;
+        return $this->degree; 
     }
 
-    public function setCv(?CV $cv): self
+    /**
+     * @return Collection<int, CVModel>
+     */
+    public function getCVModels(): Collection
     {
-        $this->cv = $cv;
+        return $this->cVModels;
+    }
+
+    public function addCVModel(CVModel $cVModel): self
+    {
+        if (!$this->cVModels->contains($cVModel)) {
+            $this->cVModels->add($cVModel);
+            $cVModel->addFormation($this);
+        }
 
         return $this;
     }
+
+    public function removeCVModel(CVModel $cVModel): self
+    {
+        if ($this->cVModels->removeElement($cVModel)) {
+            $cVModel->removeFormation($this);
+        }
+
+        return $this;
+    }
+
 }

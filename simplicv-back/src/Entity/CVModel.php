@@ -28,17 +28,46 @@ class CVModel
     private ?string $textColor = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $font = null;
-
-    #[ORM\ManyToMany(targetEntity: CV::class, inversedBy: 'cVModels')]
-    private Collection $cv;
+    private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $slug = null;
+    private ?string $textFont = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $titleFont = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\ManyToMany(targetEntity: Profil::class, inversedBy: 'cVModels')]
+    private Collection $profils;
+
+    #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'cVModels')]
+    private Collection $formations;
+
+    #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'cVModels')]
+    private Collection $experiences;
+
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'cVModels')]
+    private Collection $skills;
+
+    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'cVModels')]
+    private Collection $languages;
+
+    #[ORM\ManyToMany(targetEntity: SocialMedias::class, inversedBy: 'cVModels')]
+    private Collection $socialMedias;
 
     public function __construct()
     {
-        $this->cv = new ArrayCollection();
+        $this->profils = new ArrayCollection();
+        $this->formations = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->languages = new ArrayCollection();
+        $this->socialMedias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,42 +123,6 @@ class CVModel
         return $this;
     }
 
-    public function getFont(): ?string
-    {
-        return $this->font;
-    }
-
-    public function setFont(string $font): self
-    {
-        $this->font = $font;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, CV>
-     */
-    public function getCv(): Collection
-    {
-        return $this->cv;
-    }
-
-    public function addCv(CV $cv): self
-    {
-        if (!$this->cv->contains($cv)) {
-            $this->cv->add($cv);
-        }
-
-        return $this;
-    }
-
-    public function removeCv(CV $cv): self
-    {
-        $this->cv->removeElement($cv);
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -138,6 +131,198 @@ class CVModel
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getTextFont(): ?string
+    {
+        return $this->textFont;
+    }
+
+    public function setTextFont(string $textFont): self
+    {
+        $this->textFont = $textFont;
+
+        return $this;
+    }
+
+    public function getTitleFont(): ?string
+    {
+        return $this->titleFont;
+    }
+
+    public function setTitleFont(string $titleFont): self
+    {
+        $this->titleFont = $titleFont;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profil>
+     */
+    public function getProfils(): Collection
+    {
+        return $this->profils;
+    }
+
+    public function addProfil(Profil $profil): self
+    {
+        if (!$this->profils->contains($profil)) {
+            $this->profils->add($profil);
+        }
+
+        return $this;
+    }
+
+    public function removeProfil(Profil $profil): self
+    {
+        $this->profils->removeElement($profil);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Formation>
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations->add($formation);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        $this->formations->removeElement($formation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Experience>
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences->add($experience);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        $this->experiences->removeElement($experience);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        $this->skills->removeElement($skill);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Language>
+     */
+    public function getLanguages(): Collection
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): self
+    {
+        if (!$this->languages->contains($language)) {
+            $this->languages->add($language);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(Language $language): self
+    {
+        $this->languages->removeElement($language);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SocialMedias>
+     */
+    public function getSocialMedias(): Collection
+    {
+        return $this->socialMedias;
+    }
+
+    public function addSocialMedia(SocialMedias $socialMedia): self
+    {
+        if (!$this->socialMedias->contains($socialMedia)) {
+            $this->socialMedias->add($socialMedia);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialMedia(SocialMedias $socialMedia): self
+    {
+        $this->socialMedias->removeElement($socialMedia);
 
         return $this;
     }

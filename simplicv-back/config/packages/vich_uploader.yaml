@@ -1,0 +1,10 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        profils:
+           uri_prefix: '%profil_folder%'
+           upload_destination: '%kernel.project_dir%/public%profil_folder%'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+           delete_on_update: false
+           delete_on_remove: false

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\CV;
+use App\Entity\CoverLetterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<CV>
+ * @extends ServiceEntityRepository<CoverLetterModel>
  *
- * @method CV|null find($id, $lockMode = null, $lockVersion = null)
- * @method CV|null findOneBy(array $criteria, array $orderBy = null)
- * @method CV[]    findAll()
- * @method CV[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CoverLetterModel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CoverLetterModel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CoverLetterModel[]    findAll()
+ * @method CoverLetterModel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CVRepository extends ServiceEntityRepository
+class CoverLetterModelRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CV::class);
+        parent::__construct($registry, CoverLetterModel::class);
     }
 
-    public function save(CV $entity, bool $flush = false): void
+    public function save(CoverLetterModel $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CVRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(CV $entity, bool $flush = false): void
+    public function remove(CoverLetterModel $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class CVRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return CV[] Returns an array of CV objects
+//     * @return CoverLetterModel[] Returns an array of CoverLetterModel objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class CVRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?CV
+//    public function findOneBySomeField($value): ?CoverLetterModel
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')
