@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
+
 
 #[ORM\Entity(repositoryClass: CoverLetterRepository::class)]
 class CoverLetter
@@ -49,6 +51,7 @@ class CoverLetter
     #[ORM\Column(length: 255)]
     private ?string $placeOfCreation = null;
 
+    #[Ignore]
     #[ORM\ManyToMany(targetEntity: CoverLetterModel::class, mappedBy: 'coverLetters')]
     private Collection $coverLetterModels;
 
