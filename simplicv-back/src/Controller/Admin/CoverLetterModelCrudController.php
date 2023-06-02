@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\CoverLetterModel;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -44,5 +45,6 @@ class CoverLetterModelCrudController extends AbstractCrudController
         ->add(Crud::PAGE_INDEX, Action::DETAIL)
     ;
     }
+
 
 }

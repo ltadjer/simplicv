@@ -1,34 +1,36 @@
 <template>
-  <div class="template">
-    <h2>Liste des articles</h2>
+  <div class="home">
+    <h2>Modèles de lettre de motivation</h2>
     <ul>
-      <div v-for="article in articles" :key="article.id">
-        <h3>{{ article.name }}</h3>
-        <p>{{ article.description }}</p>
+      <div v-for="model in coverLetterModels" :key="model.id">
+        <h3>{{ model.coverLetterModel.name }}</h3>
+        <div :style="{ fontFamily: model.coverLetterModel.textFont, color: model.coverLetterModel.textColor }">
+          <p v-html="model.text"></p>
+        </div>
       </div>
     </ul>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import axios from 'axios'
 
 export default {
   data() {
     return {
-      articles: []
+      coverLetterModels: []
     }
   },
   mounted() {
-    this.getArticles()
+    this.getCoverLetterModel()
   },
   methods: {
-    getArticles() {
+    getCoverLetterModel() {
       axios
-        .get('http://127.0.0.1:8000/api/articles')
+        .get('http://127.0.0.1:8000/api/lettres-de-motivations')
         .then((response) => {
           console.log(response.data)
-          this.articles = response.data
+          this.coverLetterModels = response.data
         })
         .catch((error) => {
           console.log(error)
@@ -37,4 +39,3 @@ export default {
   }
 }
 </script>
-  

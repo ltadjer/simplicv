@@ -36,14 +36,17 @@ class CoverLetterCrudController extends AbstractCrudController
             DateField::new('dateOfCreation'),
             TextField::new('placeOfCreation'),
             TextField::new('object'),
-            TextEditorField::new('text', 'Texte'),
+            TextEditorField::new('text', 'Texte')
+                ->formatValue(function ($value) {
+                    return $value ? strip_tags($value) : '';
+                })
         ];
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->add(Crud::PAGE_INDEX, Action::DETAIL)
-    ;
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
+
 }
