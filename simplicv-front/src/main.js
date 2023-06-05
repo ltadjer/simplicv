@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import router from './router';
+import App from './views/App.vue';
 
-import './assets/css/main.css'
-
-createApp(App)
-    .use(router)
-    .mount('#app')
+createApp({
+  delimiters: ['${', '}$'], // Configure Vue.js delimiters
+  render: () => {
+    return createApp(App).use(router).mount('#app');
+  },
+}).mount('#app');

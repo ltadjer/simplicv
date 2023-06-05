@@ -4,6 +4,13 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+app_home:
+  path: /
+  defaults:
+    _controller: 'App\Controller\DefaultController::index'
+    vueRouting: /
+
+
 admin_dashboard:
     path: /admin
     controller: EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController::indexAction
