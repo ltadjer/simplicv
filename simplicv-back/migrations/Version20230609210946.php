@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230526211822 extends AbstractMigration
+final class Version20230609210946 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20230526211822 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE profil ADD updated_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE profil CHANGE image image VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE profil DROP updated_at');
+        $this->addSql('ALTER TABLE profil CHANGE image image VARCHAR(255) NOT NULL');
     }
 }

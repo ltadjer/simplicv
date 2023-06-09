@@ -29,7 +29,6 @@ class ProfilCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm()->hideOnIndex(),
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
-            // ImageField::new('image'), faut faire vichuploader
             TextField::new('profilImage')->setFormType(VichImageType::class)->onlyOnForms()->setFormTypeOptions(['allow_delete' => false]),
             ImageField::new('image')->setBasePath('/images/profils')->onlyOnIndex(),
             TextField::new('firstname', 'Prénom'),

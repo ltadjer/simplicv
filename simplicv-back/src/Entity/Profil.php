@@ -56,7 +56,7 @@ class Profil
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[Vich\UploadableField(mapping: 'profils', fileNameProperty: 'image')]
