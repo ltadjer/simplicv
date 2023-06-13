@@ -51,14 +51,15 @@ class CoverLetter
     #[ORM\Column(length: 255)]
     private ?string $placeOfCreation = null;
 
-    #[Ignore]
-    #[ORM\ManyToMany(targetEntity: CoverLetterModel::class, mappedBy: 'coverLetters')]
+    
+    #[ORM\OneToMany(mappedBy: 'coverLetter', targetEntity: CoverLetterModel::class)]
     private Collection $coverLetterModels;
 
     public function __construct()
     {
         $this->coverLetterModels = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -197,6 +198,13 @@ class CoverLetter
         return $this;
     }
 
+
+
+    public function __toString()
+    {
+        return $this->object; 
+    }
+
     /**
      * @return Collection<int, CoverLetterModel>
      */
@@ -205,27 +213,26 @@ class CoverLetter
         return $this->coverLetterModels;
     }
 
-    public function addCoverLetterModel(CoverLetterModel $coverLetterModel): self
+    public function addCoverLetterModel(CoverLetterModel $coverLetterModel): static
     {
         if (!$this->coverLetterModels->contains($coverLetterModel)) {
             $this->coverLetterModels->add($coverLetterModel);
-            $coverLetterModel->addCoverLetter($this);
+            $coverLetterModel->setCoverLetter($this);
         }
 
         return $this;
     }
 
-    public function removeCoverLetterModel(CoverLetterModel $coverLetterModel): self
+    public function removeCoverLetterModel(CoverLetterModel $coverLetterModel): static
     {
         if ($this->coverLetterModels->removeElement($coverLetterModel)) {
-            $coverLetterModel->removeCoverLetter($this);
+            // set the owning side to null (unless already changed)
+            if ($coverLetterModel->getCoverLetter() === $this) {
+                $coverLetterModel->setCoverLetter(null);
+            }
         }
 
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->object; 
-    }
 }

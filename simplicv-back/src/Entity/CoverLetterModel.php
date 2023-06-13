@@ -6,6 +6,7 @@ use App\Repository\CoverLetterModelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: CoverLetterModelRepository::class)]
 class CoverLetterModel
@@ -42,14 +43,9 @@ class CoverLetterModel
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToMany(targetEntity: CoverLetter::class, inversedBy: 'coverLetterModels')]
-    private Collection $coverLetters;
-
-    public function __construct()
-    {
-        $this->coverLetters = new ArrayCollection();
-    }
-
+    #[Ignore]
+    #[ORM\ManyToOne(inversedBy: 'coverLetterModels')]
+    private ?CoverLetter $coverLetter = null;
 
     public function getId(): ?int
     {
@@ -164,26 +160,14 @@ class CoverLetterModel
         return $this;
     }
 
-    /**
-     * @return Collection<int, CoverLetter>
-     */
-    public function getCoverLetters(): Collection
+    public function getCoverLetter(): ?CoverLetter
     {
-        return $this->coverLetters;
+        return $this->coverLetter;
     }
 
-    public function addCoverLetter(CoverLetter $coverLetter): self
+    public function setCoverLetter(?CoverLetter $coverLetter): static
     {
-        if (!$this->coverLetters->contains($coverLetter)) {
-            $this->coverLetters->add($coverLetter);
-        }
-
-        return $this;
-    }
-
-    public function removeCoverLetter(CoverLetter $coverLetter): self
-    {
-        $this->coverLetters->removeElement($coverLetter);
+        $this->coverLetter = $coverLetter;
 
         return $this;
     }

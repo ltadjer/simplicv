@@ -26,7 +26,7 @@ class CoverLetterModelCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm()->hideOnIndex(),
-            AssociationField::new('coverLetters'),
+            AssociationField::new('coverLetter'),
             TextField::new('name', 'Nom'),
             SlugField::new('slug', 'Slug')->setTargetFieldName('name')->hideOnIndex(),
             TextField::new('titleFont'),

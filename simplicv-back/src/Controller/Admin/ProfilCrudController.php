@@ -3,11 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Profil;
+use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -29,8 +31,9 @@ class ProfilCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm()->hideOnIndex(),
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
-            TextField::new('profilImage')->setFormType(VichImageType::class)->onlyOnForms()->setFormTypeOptions(['allow_delete' => false]),
             ImageField::new('image')->setBasePath('/images/profils')->onlyOnIndex(),
+            TextareaField::new('profilImage')->setFormType(VichImageType::class)->onlyOnForms(),
+            DateTimeField::new('updatedAt')->onlyOnDetail(),
             TextField::new('firstname', 'Prénom'),
             textField::new('lastname', 'Nom de famille'),
             EmailField::new('mailAddress', 'Adresse e-mail'),
