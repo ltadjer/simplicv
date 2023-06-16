@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Ignore;
 
 
 #[ORM\Entity(repositoryClass: CoverLetterRepository::class)]
@@ -54,6 +53,24 @@ class CoverLetter
     
     #[ORM\OneToMany(mappedBy: 'coverLetter', targetEntity: CoverLetterModel::class)]
     private Collection $coverLetterModels;
+
+    #[ORM\Column(length: 255)]
+    private ?string $postalAddressSender = null;
+
+    #[ORM\Column]
+    private ?int $zipCodeSender = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $citySender = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nameCompany = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $firstnameReceiver = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastnameReceiver = null;
 
     public function __construct()
     {
@@ -231,6 +248,78 @@ class CoverLetter
                 $coverLetterModel->setCoverLetter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPostalAddressSender(): ?string
+    {
+        return $this->postalAddressSender;
+    }
+
+    public function setPostalAddressSender(string $postalAddressSender): static
+    {
+        $this->postalAddressSender = $postalAddressSender;
+
+        return $this;
+    }
+
+    public function getZipCodeSender(): ?int
+    {
+        return $this->zipCodeSender;
+    }
+
+    public function setZipCodeSender(int $zipCodeSender): static
+    {
+        $this->zipCodeSender = $zipCodeSender;
+
+        return $this;
+    }
+
+    public function getCitySender(): ?string
+    {
+        return $this->citySender;
+    }
+
+    public function setCitySender(string $citySender): static
+    {
+        $this->citySender = $citySender;
+
+        return $this;
+    }
+
+    public function getNameCompany(): ?string
+    {
+        return $this->nameCompany;
+    }
+
+    public function setNameCompany(string $nameCompany): static
+    {
+        $this->nameCompany = $nameCompany;
+
+        return $this;
+    }
+
+    public function getFirstnameReceiver(): ?string
+    {
+        return $this->firstnameReceiver;
+    }
+
+    public function setFirstnameReceiver(string $firstnameReceiver): static
+    {
+        $this->firstnameReceiver = $firstnameReceiver;
+
+        return $this;
+    }
+
+    public function getLastnameReceiver(): ?string
+    {
+        return $this->lastnameReceiver;
+    }
+
+    public function setLastnameReceiver(string $lastnameReceiver): static
+    {
+        $this->lastnameReceiver = $lastnameReceiver;
 
         return $this;
     }

@@ -32,7 +32,7 @@ class ProfilCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
             ImageField::new('image')->setBasePath('/images/profils')->onlyOnIndex(),
-            TextareaField::new('profilImage')->setFormType(VichImageType::class)->onlyOnForms(),
+            TextareaField::new('profilFile')->setFormType(VichImageType::class)->onlyOnForms(),
             DateTimeField::new('updatedAt')->onlyOnDetail(),
             TextField::new('firstname', 'Prénom'),
             textField::new('lastname', 'Nom de famille'),
@@ -52,4 +52,5 @@ class ProfilCrudController extends AbstractCrudController
         ->add(Crud::PAGE_INDEX, Action::DETAIL)
     ;
     }
+    
 }

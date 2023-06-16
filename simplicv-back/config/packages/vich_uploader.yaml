@@ -1,10 +1,13 @@
 vich_uploader:
     db_driver: orm
 
+    metadata:
+        type: attribute
+        
     mappings:
         profils:
-           uri_prefix: '/images/profils'
-           upload_destination: '%kernel.project_dir%/public/images/profils'
-           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-           delete_on_update: true
-           delete_on_remove: true
+            uri_prefix: '/images/profils'
+            upload_destination: '%kernel.project_dir%/public/images/profils'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true

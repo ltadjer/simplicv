@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
 #[Vich\Uploadable]
@@ -52,15 +52,15 @@ class Profil
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
+    
+    #[Vich\UploadableField(mapping: 'profils', fileNameProperty: 'image')]
+    private ?File $profilFile = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
-
-    #[Vich\UploadableField(mapping: 'profils', fileNameProperty: 'image')]
-    private ?File $profilImage = null;
 
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'profils')]
     private Collection $cVModels;
@@ -207,32 +207,33 @@ class Profil
         return $this;
     }
 
+
+    public function setProfilFile(?File $profilFile = null): void
+    {
+        $this->profilFile = $profilFile;
+
+        if (null !== $profilFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getProfilFile(): ?File
+    {
+        return $this->profilFile;
+    }
+
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getProfilImage(): ?File
-    {
-        return $this->profilImage;
-    }
-
-    public function setProfilImage(?File $profilImage = null): void
-    {
-        $this->profilImage = $profilImage;
-
-        if (null !== $profilImage) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
+    
     public function __toString()
     {
         return $this->title;

@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import AboutView from '../views/AboutView.vue';
 import CoverLetterModelsView from '../views/CoverLetterModelsView.vue';
+import CVModelsView from '../views/CVModelsView.vue';
+import ContactView from '../views/ContactView.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -11,10 +14,26 @@ const router = createRouter({
         component: HomeView,
       },
       {
-        path: '/lettres-de-motivation',
-        name: 'lettres-de-motivation',
+        path: '/a-propos',
+        name: 'About',
+        component: AboutView,
+      },
+      {
+        path: '/creer-une-lettre-de-motivation',
+        name: 'Créer votre lettre de motivation',
         component: CoverLetterModelsView,
       },
+      {
+        path: '/creer-un-cv',
+        name: 'Créer son CV',
+        component: CVModelsView,
+      },
+      {
+        path: '/contact',
+        name: 'Contact',
+        component: ContactView,
+      }
+      
     ],
   });
 

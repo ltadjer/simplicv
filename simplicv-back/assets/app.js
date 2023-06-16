@@ -1,25 +1,6 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-
-// import { createApp } from 'vue';
-
-// const app = createApp({
-//   delimiters: ['${', '}$'], // Configure Vue.js delimiters
-//   data() {
-//     return {
-//       message: 'Hello Vue!'
-//     };
-//   }
-// });
-
 import { createApp } from 'vue';
+import { createPinia } from 'pinia'
 import router from './router';
 import App from './views/App.vue';
 
@@ -27,8 +8,8 @@ const app = createApp(App);
 
 app.config.delimiters = ['${', '}$']; // Configurez les délimiteurs personnalisés
 
-app.use(router); // Utilisez le router
-
+app.use(router); 
+app.use(createPinia())
 app.mount('#app');
 
 
