@@ -42,9 +42,6 @@ class CVModel
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Profil::class, inversedBy: 'cVModels')]
-    private Collection $profils;
-
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'cVModels')]
     private Collection $formations;
 
@@ -60,9 +57,11 @@ class CVModel
     #[ORM\ManyToMany(targetEntity: SocialMedias::class, inversedBy: 'cVModels')]
     private Collection $socialMedias;
 
+    #[ORM\ManyToOne(inversedBy: 'cVModels')]
+    private ?Profil $profil = null;
+
     public function __construct()
     {
-        $this->profils = new ArrayCollection();
         $this->formations = new ArrayCollection();
         $this->experiences = new ArrayCollection();
         $this->skills = new ArrayCollection();
@@ -184,30 +183,6 @@ class CVModel
     }
 
     /**
-     * @return Collection<int, Profil>
-     */
-    public function getProfils(): Collection
-    {
-        return $this->profils;
-    }
-
-    public function addProfil(Profil $profil): self
-    {
-        if (!$this->profils->contains($profil)) {
-            $this->profils->add($profil);
-        }
-
-        return $this;
-    }
-
-    public function removeProfil(Profil $profil): self
-    {
-        $this->profils->removeElement($profil);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Formation>
      */
     public function getFormations(): Collection
@@ -323,6 +298,18 @@ class CVModel
     public function removeSocialMedia(SocialMedias $socialMedia): self
     {
         $this->socialMedias->removeElement($socialMedia);
+
+        return $this;
+    }
+
+    public function getProfil(): ?Profil
+    {
+        return $this->profil;
+    }
+
+    public function setProfil(?Profil $profil): static
+    {
+        $this->profil = $profil;
 
         return $this;
     }

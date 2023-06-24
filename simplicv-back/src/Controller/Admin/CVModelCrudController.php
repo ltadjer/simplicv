@@ -27,7 +27,7 @@ class CVModelCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm()->hideOnIndex(),
-            AssociationField::new('profils', 'Profils'),
+            AssociationField::new('profil', 'Profils'),
             AssociationField::new('formations', 'Formations'),
             AssociationField::new('experiences', 'Expériences'),
             AssociationField::new('skills', 'Compétences'),

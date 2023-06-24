@@ -62,7 +62,7 @@ class Profil
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'profils')]
+    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CVModel::class)]
     private Collection $cVModels;
 
     public function __construct()
@@ -239,32 +239,6 @@ class Profil
         return $this->title;
     }
 
-    /**
-     * @return Collection<int, CVModel>
-     */
-    public function getCVModels(): Collection
-    {
-        return $this->cVModels;
-    }
-
-    public function addCVModel(CVModel $cVModel): self
-    {
-        if (!$this->cVModels->contains($cVModel)) {
-            $this->cVModels->add($cVModel);
-            $cVModel->addProfil($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCVModel(CVModel $cVModel): self
-    {
-        if ($this->cVModels->removeElement($cVModel)) {
-            $cVModel->removeProfil($this);
-        }
-
-        return $this;
-    }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -274,6 +248,36 @@ class Profil
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CVModel>
+     */
+    public function getCVModels(): Collection
+    {
+        return $this->cVModels;
+    }
+
+    public function addCVModel(CVModel $cVModel): static
+    {
+        if (!$this->cVModels->contains($cVModel)) {
+            $this->cVModels->add($cVModel);
+            $cVModel->setProfil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCVModel(CVModel $cVModel): static
+    {
+        if ($this->cVModels->removeElement($cVModel)) {
+            // set the owning side to null (unless already changed)
+            if ($cVModel->getProfil() === $this) {
+                $cVModel->setProfil(null);
+            }
+        }
 
         return $this;
     }

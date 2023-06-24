@@ -1,26 +1,71 @@
 <template>
-  <div>
+  <article>
     <div>{{ name }}</div>
-    <div>
-      <div class="profil">
+      <section class="profil">
         <h3>Profils</h3>
-        <div v-for="profil in profils" :key="profil.id">
-          <p>{{ profil.dateOfBirth }}</p>
-          <p>{{ profil.phoneNumber }}</p>
-          <p>{{ profil.postalAddress }}</p>
+        <div>
+          <img src="#" alt="">
+          <p>{{ title }}</p>
+          <p>{{ description }}</p>
+          <p>{{ firstname }}</p>
+          <p>{{ lastname }}</p>
+          <p>{{ mailAddress }}</p>
+          <p>{{ dateOfBirth }}</p>
+          <p>{{ phoneNumber }}</p>
+          <p>{{ postalAddress }}</p>
+          <p>{{ zipCode }}</p>
+          <p>{{ city }}</p>
+          <p>{{ drivingLicence }}</p>  
         </div>
-      </div>
-    </div>
+      </section>
 
-    <div class="formations">
+    <section class="formations">
       <h3>Formations</h3>
       <ul>
         <li v-for="formation in formations" :key="formation.id">
-          {{ formation.degree }} - {{ formation.nameSchool }}
+          <p>{{ formation.degree }} - {{ formation.nameSchool }}</p>
+          <br>
+          <span>{{formation.startDate}} - {{formation.endDate}}</span>
+          <p>{{formation.description}}</p>
         </li>
       </ul>
-    </div>
-  </div>
+    </section>
+    <section class="experiences">
+      <h3>Expériences</h3>
+      <ul>
+        <li v-for="experience in experiences" :key="experience.id">
+          <p>{{ experience.jobTitle }} - {{ experience.employer }} - {{ experience.city }}</p>
+          <br>
+          <span>{{experience.startDate}} - {{experience.endDate}}</span>
+          <p>{{experience.description}}</p>
+        </li>
+      </ul>
+    </section>
+    <section class="skills">
+      <h3>Compétences</h3>
+      <ul>
+        <li v-for="skill in skills" :key="skill.id">
+          {{ skill.name }}
+        </li>
+      </ul>
+    </section>
+    <section class="languages">
+      <h3>Langues</h3>
+      <ul>
+        <li v-for="language in languages" :key="language.id">
+          {{ language.name }}
+        </li>
+      </ul>
+    </section>
+    <section class="socialMedias">
+      <h3>Réseaux sociaux</h3>
+      <ul>
+        <li v-for="socialMedia in socialMedias" :key="socialMedia.id">
+          {{ socialMedia.name }} : {{ socialMedia.link }}
+        </li>
+      </ul>
+    </section>
+  </article>
 </template>
 
 <script>
@@ -28,7 +73,21 @@ export default {
   props: {
     name: String,
     formations: Array,
-    profils: Array,
+    experiences: Array,
+    skills: Array,
+    languages: Array,
+    socialMedias: Array,
+    dateOfBirth: String,
+    phoneNumber: Number,
+    title: String,
+    description: String,
+    firstname: String,
+    lastname: String,
+    mailAddress: String,
+    drivingLicence: String,
+    postalAddress: String,
+    city: String,
+    zipCode: Number,
   },
 };
 </script>
