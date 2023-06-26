@@ -362,7 +362,7 @@ export default {
   loadDataFromCookies() {
     this.firstnameSender = cookies.get('firstnameSender');
     this.lastnameSender = cookies.get('lastnameSender');
-    this.lastnameSender = cookies.get('mailAddressSender');
+    this.mailAddressSender = cookies.get('mailAddressSender');
     this.phoneNumberSender = cookies.get('phoneNumberSender');
     this.postalAddressSender = cookies.get('postalAddressSender');
     this.zipCodeSender = cookies.get('zipCodeSender');

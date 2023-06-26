@@ -32,7 +32,7 @@ class ProfilCrudController extends AbstractCrudController
             TextField::new('title', 'Titre'),
             TextareaField::new('description', 'Description'),
             ImageField::new('image')->setBasePath('/images/profils')->onlyOnIndex(),
-            TextareaField::new('profilFile')->setFormType(VichImageType::class)->onlyOnForms(),
+            TextareaField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
             DateTimeField::new('updatedAt')->onlyOnDetail(),
             TextField::new('firstname', 'Prénom'),
             textField::new('lastname', 'Nom de famille'),

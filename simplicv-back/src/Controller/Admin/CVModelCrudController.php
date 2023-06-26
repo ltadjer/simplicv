@@ -3,9 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\CVModel;
-use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -21,7 +20,6 @@ class CVModelCrudController extends AbstractCrudController
     {
         return CVModel::class;
     }
-
 
     public function configureFields(string $pageName): iterable
     {
@@ -39,9 +37,7 @@ class CVModelCrudController extends AbstractCrudController
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
             ColorField::new('bgColor'),
-            // ColorField::new('titleColor'),
             ColorField::new('textColor'),
-            //idéalement un select avec des polices prédéfinis (à voir après)
             TextField::new('titleFont'),
             TextField::new('textFont'),
         ];
@@ -50,7 +46,7 @@ class CVModelCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->add(Crud::PAGE_INDEX, Action::DETAIL)
-    ;
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_NEW, Action::NEW);
     }
 }

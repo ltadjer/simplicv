@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230624101428 extends AbstractMigration
+final class Version20230626070242 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,6 +23,7 @@ final class Version20230624101428 extends AbstractMigration
         $this->addSql('CREATE TABLE article (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cover_letter (id INT AUTO_INCREMENT NOT NULL, firstname_sender VARCHAR(255) NOT NULL, lastname_sender VARCHAR(255) NOT NULL, mail_address_sender VARCHAR(255) NOT NULL, phone_number_sender INT NOT NULL, postal_address_receiver VARCHAR(255) NOT NULL, zip_code_receiver INT NOT NULL, city_receiver VARCHAR(255) NOT NULL, object VARCHAR(255) NOT NULL, text LONGTEXT NOT NULL, date_of_creation DATE NOT NULL, place_of_creation VARCHAR(255) NOT NULL, postal_address_sender VARCHAR(255) NOT NULL, zip_code_sender INT NOT NULL, city_sender VARCHAR(255) NOT NULL, name_company VARCHAR(255) NOT NULL, firstname_receiver VARCHAR(255) NOT NULL, lastname_receiver VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cover_letter_model (id INT AUTO_INCREMENT NOT NULL, cover_letter_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, text_font VARCHAR(255) NOT NULL, title_font VARCHAR(255) NOT NULL, bg_color VARCHAR(255) NOT NULL, text_color VARCHAR(255) NOT NULL, title_color VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME DEFAULT NULL, slug VARCHAR(255) NOT NULL, INDEX IDX_5621F66EB944729C (cover_letter_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE cv (id INT AUTO_INCREMENT NOT NULL, profil_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, image VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_B66FFE92275ED078 (profil_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cvmodel (id INT AUTO_INCREMENT NOT NULL, profil_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, bg_color VARCHAR(255) NOT NULL, text_color VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, text_font VARCHAR(255) NOT NULL, title_font VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', updated_at DATETIME DEFAULT NULL, INDEX IDX_EBFEE21E275ED078 (profil_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cvmodel_formation (cvmodel_id INT NOT NULL, formation_id INT NOT NULL, INDEX IDX_CB3D6C0146B405D4 (cvmodel_id), INDEX IDX_CB3D6C015200282E (formation_id), PRIMARY KEY(cvmodel_id, formation_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cvmodel_experience (cvmodel_id INT NOT NULL, experience_id INT NOT NULL, INDEX IDX_29C222C546B405D4 (cvmodel_id), INDEX IDX_29C222C546E90E27 (experience_id), PRIMARY KEY(cvmodel_id, experience_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -32,11 +33,12 @@ final class Version20230624101428 extends AbstractMigration
         $this->addSql('CREATE TABLE experience (id INT AUTO_INCREMENT NOT NULL, job_title VARCHAR(255) NOT NULL, employer VARCHAR(255) NOT NULL, city VARCHAR(255) NOT NULL, contrat_type LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', start_date DATE NOT NULL, end_date DATE NOT NULL, description LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formation (id INT AUTO_INCREMENT NOT NULL, degree VARCHAR(255) NOT NULL, name_school VARCHAR(255) NOT NULL, location_school VARCHAR(255) NOT NULL, start_date DATE NOT NULL, end_date DATE NOT NULL, description LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE language (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE profil (id INT AUTO_INCREMENT NOT NULL, date_of_birth DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', phone_number INT NOT NULL, postal_address VARCHAR(255) NOT NULL, zip_code INT NOT NULL, city VARCHAR(255) NOT NULL, driving_licence VARCHAR(255) DEFAULT NULL, mail_address VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, image VARCHAR(255) DEFAULT NULL, updated_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE profil (id INT AUTO_INCREMENT NOT NULL, date_of_birth DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', phone_number INT NOT NULL, postal_address VARCHAR(255) NOT NULL, zip_code INT NOT NULL, city VARCHAR(255) NOT NULL, driving_licence VARCHAR(255) DEFAULT NULL, mail_address VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, image VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE skill (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE social_medias (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, link VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, is_verified TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE cover_letter_model ADD CONSTRAINT FK_5621F66EB944729C FOREIGN KEY (cover_letter_id) REFERENCES cover_letter (id)');
+        $this->addSql('ALTER TABLE cv ADD CONSTRAINT FK_B66FFE92275ED078 FOREIGN KEY (profil_id) REFERENCES profil (id)');
         $this->addSql('ALTER TABLE cvmodel ADD CONSTRAINT FK_EBFEE21E275ED078 FOREIGN KEY (profil_id) REFERENCES profil (id)');
         $this->addSql('ALTER TABLE cvmodel_formation ADD CONSTRAINT FK_CB3D6C0146B405D4 FOREIGN KEY (cvmodel_id) REFERENCES cvmodel (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE cvmodel_formation ADD CONSTRAINT FK_CB3D6C015200282E FOREIGN KEY (formation_id) REFERENCES formation (id) ON DELETE CASCADE');
@@ -54,6 +56,7 @@ final class Version20230624101428 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE cover_letter_model DROP FOREIGN KEY FK_5621F66EB944729C');
+        $this->addSql('ALTER TABLE cv DROP FOREIGN KEY FK_B66FFE92275ED078');
         $this->addSql('ALTER TABLE cvmodel DROP FOREIGN KEY FK_EBFEE21E275ED078');
         $this->addSql('ALTER TABLE cvmodel_formation DROP FOREIGN KEY FK_CB3D6C0146B405D4');
         $this->addSql('ALTER TABLE cvmodel_formation DROP FOREIGN KEY FK_CB3D6C015200282E');
@@ -68,6 +71,7 @@ final class Version20230624101428 extends AbstractMigration
         $this->addSql('DROP TABLE article');
         $this->addSql('DROP TABLE cover_letter');
         $this->addSql('DROP TABLE cover_letter_model');
+        $this->addSql('DROP TABLE cv');
         $this->addSql('DROP TABLE cvmodel');
         $this->addSql('DROP TABLE cvmodel_formation');
         $this->addSql('DROP TABLE cvmodel_experience');

@@ -26,4 +26,5 @@ Encore.setOutputPath('public/build/')
     inject: true,
   }));
 
+
 module.exports = Encore.getWebpackConfig();

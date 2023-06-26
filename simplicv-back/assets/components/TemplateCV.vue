@@ -2,7 +2,7 @@
   <article>
     <div>{{ name }}</div>
       <section class="profil">
-        <h3>Profils</h3>
+        <h3>Profil</h3>
         <div>
           <img src="#" alt="">
           <p>{{ title }}</p>

@@ -37,6 +37,9 @@ class Formation
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'formations')]
     private Collection $cVModels;
 
+    // #[ORM\Column]
+    // private ?int $position = null;
+
     public function __construct()
     {
         $this->cVModels = new ArrayCollection();
@@ -151,5 +154,17 @@ class Formation
 
         return $this;
     }
+
+    // public function getPosition(): ?int
+    // {
+    //     return $this->position;
+    // }
+
+    // public function setPosition(int $position): static
+    // {
+    //     $this->position = $position;
+
+    //     return $this;
+    // }
 
 }

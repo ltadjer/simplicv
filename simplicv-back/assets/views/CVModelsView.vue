@@ -170,26 +170,32 @@ Description </textarea
           </div>
           <div class="field">
             <label for="endDate">Date de fin </label>
-            <input type="date" name="endDate" id="endDate" v-model="endDateFormation" />
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              v-model="endDateFormation"
+            />
           </div>
           <div class="field">
-            <textarea v-model="descriptionFormation" placeholder="Description">Description </textarea
+            <textarea v-model="descriptionFormation" placeholder="Description">
+Description </textarea
             >
           </div>
         </div>
         <div class="experiences">
           <div class="field">
             <label for="jobTitle">Intitulé du poste </label>
-            <input type="text" name="jobTitle" id="jobTitle" v-model="jobTitle" />
+            <input
+              type="text"
+              name="jobTitle"
+              id="jobTitle"
+              v-model="jobTitle"
+            />
           </div>
           <div class="field">
             <label for="city">Lieu du poste </label>
-            <input
-              type="text"
-              name="city"
-              id="city"
-              v-model="city"
-            />
+            <input type="text" name="city" id="city" v-model="city" />
           </div>
           <div class="field">
             <label for="startDate">Date de début </label>
@@ -202,10 +208,16 @@ Description </textarea
           </div>
           <div class="field">
             <label for="endDate">Date de fin </label>
-            <input type="date" name="endDate" id="endDate" v-model="endDateExperience" />
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              v-model="endDateExperience"
+            />
           </div>
           <div class="field">
-            <textarea v-model="descriptionExperience" placeholder="Description">Description </textarea
+            <textarea v-model="descriptionExperience" placeholder="Description">
+Description </textarea
             >
           </div>
         </div>
@@ -224,11 +236,21 @@ Description </textarea
         <div class="socialMedias">
           <div class="field">
             <label for="name">Réseau social </label>
-            <input type="text" name="name" id="name" v-model="nameSocialMedia" />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              v-model="nameSocialMedia"
+            />
           </div>
           <div class="field">
             <label for="link">Lien </label>
-            <input type="text" link="link" id="link" v-model="linkSocialMedia" />
+            <input
+              type="text"
+              link="link"
+              id="link"
+              v-model="linkSocialMedia"
+            />
           </div>
         </div>
       </div>
@@ -257,18 +279,18 @@ Description </textarea
           ]"
           :skills="[
             {
-              name: nameSkill
+              name: nameSkill,
             },
           ]"
           :languages="[
             {
-              name: nameLanguage
+              name: nameLanguage,
             },
           ]"
           :socialMedias="[
             {
               name: nameSocialMedia,
-              link: linkSocialMedia
+              link: linkSocialMedia,
             },
           ]"
           :dateOfBirth="dateOfBirth"
@@ -288,65 +310,71 @@ Description </textarea
     </form>
     <div v-if="currentStep === 'telecharger'">
       <TemplateCV
-          :name="selectedCVTemplate.name"
-          :formations="[
-            {
-              degree: degree,
-              nameSchool: nameSchool,
-              startDate: startDateFormation,
-              endDate: endDateFormation,
-              description: descriptionFormation,
-            },
-          ]"
-          :experiences="[
-            {
-              jobTitle: jobTitle,
-              employer: employer,
-              city: city,
-              startDate: startDateExperience,
-              endDate: endDateExperience,
-              description: descriptionExperience,
-            },
-          ]"
-          :skills="[
-            {
-              name: nameSkill
-            },
-          ]"
-          :languages="[
-            {
-              name: nameLanguage
-            },
-          ]"
-          :socialMedias="[
-            {
-              name: nameSocialMedia,
-              link: linkSocialMedia
-            },
-          ]"
-          :dateOfBirth="dateOfBirth"
-          :phoneNumber="phoneNumber"
-          :postalAddress="postalAddress"
-          :title="title"
-          :description="descriptionProfil"
-          :firstname="firstname"
-          :lastname="lastname"
-          :mailAddress="mailAddress"
-          :drivingLicence="drivingLicence"
-          :city="city"
-          :zipCode="zipCode"
-        ></TemplateCV>
+        :name="selectedCVTemplate.name"
+        :formations="[
+          {
+            degree: degree,
+            nameSchool: nameSchool,
+            startDate: startDateFormation,
+            endDate: endDateFormation,
+            description: descriptionFormation,
+          },
+        ]"
+        :experiences="[
+          {
+            jobTitle: jobTitle,
+            employer: employer,
+            city: city,
+            startDate: startDateExperience,
+            endDate: endDateExperience,
+            description: descriptionExperience,
+          },
+        ]"
+        :skills="[
+          {
+            name: nameSkill,
+          },
+        ]"
+        :languages="[
+          {
+            name: nameLanguage,
+          },
+        ]"
+        :socialMedias="[
+          {
+            name: nameSocialMedia,
+            link: linkSocialMedia,
+          },
+        ]"
+        :dateOfBirth="dateOfBirth"
+        :phoneNumber="phoneNumber"
+        :postalAddress="postalAddress"
+        :title="title"
+        :description="descriptionProfil"
+        :firstname="firstname"
+        :lastname="lastname"
+        :mailAddress="mailAddress"
+        :drivingLicence="drivingLicence"
+        :city="city"
+        :zipCode="zipCode"
+      ></TemplateCV>
       <button @click.prevent="downloadPDF">Télécharger en PDF</button>
     </div>
   </div>
-  <button v-if="currentStep !== 'choix-template'" @click="previousStep">Précédent</button>
-  <button v-if="currentStep !== 'telecharger'" @click="nextStep">Suivant</button>
+  <button v-if="currentStep !== 'choix-template'" @click="previousStep">
+    Précédent
+  </button>
+  <button v-if="currentStep === 'choix-template' && selectedCV && selectedCV.name" @click="nextStep">
+  Suivant
+</button>
+
 </template>
 
 <script>
 import axios from "axios";
 import { useCVStore } from "../stores/cv";
 import TemplateCV from "../components/TemplateCV.vue";
+import cookies from "vue-cookies";
 
 export default {
   components: {
@@ -365,7 +393,7 @@ export default {
         profil: [],
       }, // Modèle de CV sélectionné par l'utilisateur
       currentStep: "choix-template", // Étape actuelle du processus
-      phoneNumber: "", 
+      phoneNumber: "",
       postalAddress: "",
       dateOfBirth: "",
       title: "",
@@ -392,11 +420,11 @@ export default {
       nameLanguage: "",
       nameSocialMedia: "",
       linkSocialMedia: "",
-
     };
   },
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
+    this.loadDataFromCookies();
   },
   setup() {
     const cvStore = useCVStore(); // Utilisation du store CV
@@ -437,7 +465,63 @@ export default {
 
       this.currentStep = "infos-personnelles"; // Passage à l'étape suivante
     },
+    saveDataToCookies() {
+      cookies.set("phoneNumber", this.phoneNumber);
+      cookies.set("postalAddress", this.postalAddress);
+      cookies.set("dateOfBirth", this.dateOfBirth);
+      cookies.set("title", this.title);
+      cookies.set("descriptionProfil", this.descriptionProfil);
+      cookies.set("firstname", this.firstname);
+      cookies.set("lastname", this.lastname);
+      cookies.set("mailAddress", this.mailAddress);
+      cookies.set("drivingLicence", this.drivingLicence);
+      cookies.set("city", this.city);
+      cookies.set("zipCode", this.zipCode);
+      cookies.set("degree", this.degree);
+      cookies.set("nameSchool", this.nameSchool);
+      cookies.set("locationSchool", this.locationSchool);
+      cookies.set("startDateFormation", this.startDateFormation);
+      cookies.set("endDateFormation", this.endDateFormation);
+      cookies.set("descriptionFormation", this.descriptionFormation);
+      cookies.set("jobTitle", this.jobTitle);
+      cookies.set("employer", this.employer);
+      cookies.set("startDateExperience", this.startDateExperience);
+      cookies.set("endDateExperience", this.endDateExperience);
+      cookies.set("descriptionExperience", this.descriptionExperience);
+      cookies.set("nameSkill", this.nameSkill);
+      cookies.set("nameLanguage", this.nameLanguage);
+      cookies.set("nameSocialMedia", this.nameSocialMedia);
+      cookies.set("linkSocialMedia", this.linkSocialMedia);
+    },
 
+    loadDataFromCookies() {
+      this.phoneNumber = cookies.get("phoneNumber");
+      this.postalAddress = cookies.get("postalAddress");
+      this.dateOfBirth = cookies.get("dateOfBirth");
+      this.title = cookies.get("title");
+      this.descriptionProfil = cookies.get("descriptionProfil");
+      this.firstname = cookies.get("firstname");
+      this.lastname = cookies.get("lastname");
+      this.mailAddress = cookies.get("mailAddress");
+      this.drivingLicence = cookies.get("drivingLicence");
+      this.city = cookies.get("city");
+      this.zipCode = cookies.get("zipCode");
+      this.degree = cookies.get("degree");
+      this.nameSchool = cookies.get("nameSchool");
+      this.locationSchool = cookies.get("locationSchool");
+      this.startDateFormation = cookies.get("startDateFormation");
+      this.endDateFormation = cookies.get("endDateFormation");
+      this.descriptionFormation = cookies.get("descriptionFormation");
+      this.jobTitle = cookies.get("jobTitle");
+      this.employer = cookies.get("employer");
+      this.startDateExperience = cookies.get("startDateExperience");
+      this.endDateExperience = cookies.get("endDateExperience");
+      this.descriptionExperience = cookies.get("descriptionExperience");
+      this.nameSkill = cookies.get("nameSkill");
+      this.nameLanguage = cookies.get("nameLanguage");
+      this.nameSocialMedia = cookies.get("nameSocialMedia");
+      this.linkSocialMedia = cookies.get("linkSocialMedia");
+    },
     previewLetter() {
       const profil = [
         {
@@ -477,24 +561,49 @@ export default {
         },
       ];
 
+      const skills = [
+        {
+          name: this.nameSkill,
+        },
+      ];
+
+      const languages = [
+        {
+          name: this.nameLanguage,
+        },
+      ];
+      const socialMedias = [
+        {
+          name: this.nameSocialMedia,
+          link: this.linkSocialMedia,
+        },
+      ];
+
       if (this.selectedCV && this.selectedCV.name) {
         // Vérification de la sélection d'un modèle de CV
         this.cvStore.setProfil(profil); // Définition des profils dans le store
         console.log(this.degree);
         console.log(this.selectedCV.name);
         this.cvStore.setFormations(formations); // Définition des formations dans le store
-        this.cvStore.setExperiences(experiences); 
-        this.cvStore.setLanguages(languages); 
-        this.cvStore.setSkills(skills); 
-        this.cvStore.setSocialMedias(socialMedias); 
+        this.cvStore.setExperiences(experiences);
+        this.cvStore.setLanguages(languages);
+        this.cvStore.setSkills(skills);
+        this.cvStore.setSocialMedias(socialMedias);
       }
-
+      this.saveDataToCookies();
       this.currentStep = "telecharger"; // Passage à l'étape suivante
     },
 
     downloadPDF() {
       // Fonction pour télécharger le CV en format PDF
-      const { profil, formations, experiences, skills, languages, socialMedias } = this.cvStore;
+      const {
+        profil,
+        formations,
+        experiences,
+        skills,
+        languages,
+        socialMedias,
+      } = this.cvStore;
 
       // Utilisez les données du store pour générer le PDF
 
@@ -503,19 +612,19 @@ export default {
     },
     previousStep() {
       // Méthode pour passer à l'étape précédente
-      if (this.currentStep === 'infos-personnelles') {
-        this.currentStep = 'choix-template';
-      } else if (this.currentStep === 'telecharger') {
-        this.currentStep = 'infos-personnelles';
+      if (this.currentStep === "infos-personnelles") {
+        this.currentStep = "choix-template";
+      } else if (this.currentStep === "telecharger") {
+        this.currentStep = "infos-personnelles";
       }
     },
 
     nextStep() {
       // Méthode pour passer à l'étape suivante
-      if (this.currentStep === 'choix-template') {
-        this.currentStep = 'infos-personnelles';
-      } else if (this.currentStep === 'infos-personnelles') {
-        this.currentStep = 'telecharger';
+      if (this.currentStep === "choix-template") {
+        this.currentStep = "infos-personnelles";
+      } else if (this.currentStep === "infos-personnelles") {
+        this.currentStep = "telecharger";
       }
     },
   },

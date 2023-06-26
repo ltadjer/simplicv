@@ -53,17 +53,21 @@ class Profil
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
     
-    #[Vich\UploadableField(mapping: 'profils', fileNameProperty: 'image')]
-    private ?File $profilFile = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $image = null;
+    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CVModel::class)]
+    private Collection $cVModels;
+
+    #[Vich\UploadableField(mapping: 'images_profils', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CVModel::class)]
-    private Collection $cVModels;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    // #[ORM\Column]
+    // private ?int $position = null;
 
     public function __construct()
     {
@@ -207,39 +211,6 @@ class Profil
         return $this;
     }
 
-
-    public function setProfilFile(?File $profilFile = null): void
-    {
-        $this->profilFile = $profilFile;
-
-        if (null !== $profilFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
-    public function getProfilFile(): ?File
-    {
-        return $this->profilFile;
-    }
-
-
-    public function setImage(string $image): void
-    {
-        $this->image = $image;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    
-    public function __toString()
-    {
-        return $this->title;
-    }
-
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
@@ -250,6 +221,28 @@ class Profil
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     /**
@@ -278,6 +271,30 @@ class Profil
                 $cVModel->setProfil(null);
             }
         }
+
+        return $this;
+    }
+
+    // public function getPosition(): ?int
+    // {
+    //     return $this->position;
+    // }
+
+    // public function setPosition(int $position): static
+    // {
+    //     $this->position = $position;
+
+    //     return $this;
+    // }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

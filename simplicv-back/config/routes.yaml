@@ -14,6 +14,10 @@ api_routes:
         namespace: App\Controller\Api
     type: attribute
     
+api_contact:
+    path: /api/contact
+    controller: App\Controller\Api\ApiContactController::index
+
 vue_routing:
     path: '/{vueRouting}'
     controller: 'App\Controller\DefaultController::index'

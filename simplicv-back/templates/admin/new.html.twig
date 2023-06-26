@@ -1,0 +1,28 @@
+{% extends '@!EasyAdmin/new.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="cvmodel-menu">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_cvmodel_new', { 'menu': 'general' }) }}">Général</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_cvmodel_new', { 'menu': 'profil' }) }}">Profil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_cvmodel_new', { 'menu': 'formations' }) }}">Formations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_cvmodel_new', { 'menu': 'experiences' }) }}">Expériences</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_cvmodel_new', { 'menu': 'skills' }) }}">Compétences</a>
+            </li>
+        </ul>
+    </div>
+
+    <h1>Test</h1> <!-- Ajoutez ce contenu supplémentaire -->
+
+{% endblock %}
