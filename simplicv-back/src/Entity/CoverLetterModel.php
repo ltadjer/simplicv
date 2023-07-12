@@ -42,7 +42,7 @@ class CoverLetterModel
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(inversedBy: 'coverLetterModels')]
+    #[ORM\ManyToOne(inversedBy: 'coverLetterModels', cascade:["persist"])]
     private ?CoverLetter $coverLetter = null;
 
     public function getId(): ?int

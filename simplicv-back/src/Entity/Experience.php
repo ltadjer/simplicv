@@ -25,9 +25,6 @@ class Experience
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $contratType = [];
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
@@ -40,12 +37,20 @@ class Experience
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'experiences')]
     private Collection $cVModels;
 
+    #[ORM\ManyToOne(inversedBy: 'experiences')]
+    private ?ContratType $contratType = null;
+
     // #[ORM\Column]
     // private ?int $position = null;
 
     public function __construct()
     {
         $this->cVModels = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->jobTitle;
     }
 
     public function getId(): ?int
@@ -89,17 +94,6 @@ class Experience
         return $this;
     }
 
-    public function getContratType(): array
-    {
-        return $this->contratType;
-    }
-
-    public function setContratType(array $contratType): self
-    {
-        $this->contratType = $contratType;
-
-        return $this;
-    }
 
     public function getStartDate(): ?\DateTimeInterface
     {
@@ -135,11 +129,6 @@ class Experience
         $this->description = $description;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->jobTitle; 
     }
 
     /**
@@ -180,5 +169,17 @@ class Experience
 
     //     return $this;
     // }
+
+    public function getContratType(): ?ContratType
+    {
+        return $this->contratType;
+    }
+
+    public function setContratType(?ContratType $contratType): static
+    {
+        $this->contratType = $contratType;
+
+        return $this;
+    }
 
 }

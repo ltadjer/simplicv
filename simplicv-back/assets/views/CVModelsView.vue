@@ -364,7 +364,7 @@ Description </textarea
   <button v-if="currentStep !== 'choix-template'" @click="previousStep">
     Précédent
   </button>
-  <button v-if="currentStep === 'choix-template' && selectedCV && selectedCV.name" @click="nextStep">
+  <button v-if="currentStep !== 'telecharger'" @click="nextStep">
   Suivant
 </button>
 

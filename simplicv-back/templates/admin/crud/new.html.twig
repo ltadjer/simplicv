@@ -1,0 +1,59 @@
+{% extends '@EasyAdmin/crud/new.html.twig' %}
+
+{% block main %}
+    <div class="cvmodel-menu">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\CVModelCrudController')
+                    .setAction('new')
+                    }}"> Général
+            </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\ProfilCrudController')
+                    .setAction('new')
+                    }}"> Profil
+            </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\FormationCrudController')
+                    .setAction('new')
+                    }}"> Formations
+            </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\ExperienceCrudController')
+                    .setAction('new')
+                    }}"> Expériences
+            </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\SkillCrudController')
+                    .setAction('new')
+                    }}"> Compétences
+            </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\LanguageCrudController')
+                    .setAction('new')
+                    }}"> Langues
+            </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\SocialMediasCrudController')
+                    .setAction('new')
+                    }}"> Réseaux sociaux
+            </a>
+            </li>
+        </ul>
+    </div>
+
+    {{ parent() }}
+{% endblock %}

@@ -1,3 +1,8 @@
+:root {
+    --bgColor:#EBFCFF;
+    --buttonColor: #F55200;
+}
+
 body {
-    background-color: lightgray;
+    background-color: var(--bgColor);
 }

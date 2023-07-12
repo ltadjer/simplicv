@@ -6,7 +6,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\{Action, Actions, Crud, KeyValueStore
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\{ArrayField, IdField, EmailField, TextField};
+use EasyCorp\Bundle\EasyAdminBundle\Field\{ ChoiceField, IdField, EmailField, TextField};
 use Symfony\Component\Form\Extension\Core\Type\{PasswordType, RepeatedType};
 use Symfony\Component\Form\{FormBuilderInterface, FormEvent, FormEvents};
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -26,13 +26,20 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $roles = ['Rôle administrateur' => 'ROLE_ADMIN', 'Rôle utilisateur' => 'ROLE_USER'];
         // Configuration des champs de formulaire
         $fields = [
             IdField::new('id')->hideOnForm()->hideOnIndex(),
-            TextField::new('firstname', 'Prénom'),
-            TextField::new('lastname', 'Nom de famille'),
+            TextField::new('firstname', 'Prénom')->onlyOnForms(),
+            TextField::new('lastname', 'Nom de famille')->onlyOnForms(),
+            TextField::new('fullname')->hideOnForm(),
             EmailField::new('email', 'Adresse e-mail'),
-            ArrayField::new('roles', 'Rôles'),
+            
+            ChoiceField::new('roles', 'Rôles')
+                ->setChoices(array_combine($roles, $roles))
+                ->allowMultipleChoices()
+                ->renderExpanded()
+                ->renderAsBadges()
         ];
 
         // Champ de mot de passe avec répétition et hachage

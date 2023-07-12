@@ -42,7 +42,7 @@ class CVModel
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'cVModels')]
+    #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $formations;
 
     #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'cVModels')]
@@ -57,7 +57,7 @@ class CVModel
     #[ORM\ManyToMany(targetEntity: SocialMedias::class, inversedBy: 'cVModels')]
     private Collection $socialMedias;
 
-    #[ORM\ManyToOne(inversedBy: 'cVModels')]
+    #[ORM\ManyToOne(inversedBy: 'cVModels', cascade: ["persist"])]
     private ?Profil $profil = null;
 
     public function __construct()
@@ -67,6 +67,11 @@ class CVModel
         $this->skills = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->socialMedias = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int

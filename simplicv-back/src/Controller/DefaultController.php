@@ -14,6 +14,8 @@ class DefaultController extends AbstractController
         $html = file_get_contents('../public/build/index.html');
         return new Response($html, 200, ['Content-Type' => 'text/html']);
     }
+
+    
 }
 
 

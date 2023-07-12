@@ -38,4 +38,10 @@ class FormationCrudController extends AbstractCrudController
         ->add(Crud::PAGE_INDEX, Action::DETAIL)
     ;
     }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+            ->overrideTemplate('crud/new', 'admin/crud/new.html.twig');
+    }
 }

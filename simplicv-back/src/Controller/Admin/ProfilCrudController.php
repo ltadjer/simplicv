@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Profil;
-use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -11,10 +10,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -30,12 +29,12 @@ class ProfilCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm()->hideOnIndex(),
             TextField::new('title', 'Titre'),
-            TextareaField::new('description', 'Description'),
+            TextField::new('description', 'Description'),
             ImageField::new('image')->setBasePath('/images/profils')->onlyOnIndex(),
-            TextareaField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
+            Field::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
             DateTimeField::new('updatedAt')->onlyOnDetail(),
-            TextField::new('firstname', 'Prénom'),
-            textField::new('lastname', 'Nom de famille'),
+            Field::new('firstname', 'Prénom'),
+            TextField::new('lastname', 'Nom de famille'),
             EmailField::new('mailAddress', 'Adresse e-mail'),
             NumberField::new('phoneNumber', 'Numéro de téléphone'),
             DateField::new('dateOfBirth', 'Date de naissance'),
@@ -49,8 +48,12 @@ class ProfilCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-        ->add(Crud::PAGE_INDEX, Action::DETAIL)
-    ;
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
-    
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+            ->overrideTemplate('crud/new', 'admin/crud/new.html.twig');
+    }
 }

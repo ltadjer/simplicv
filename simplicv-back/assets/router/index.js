@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import CoverLetterModelsView from '../views/CoverLetterModelsView.vue';
 import CVModelsView from '../views/CVModelsView.vue';
+import CVModelView from '../views/CVModelView.vue';
 import ContactView from '../views/ContactView.vue';
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
         path: '/creer-un-cv',
         name: 'Créer son CV',
         component: CVModelsView,
+      },
+      {
+        path: '/modeles-de-cv/:slug',
+        name: 'cv-model',
+        component: CVModelView,
       },
       {
         path: '/contact',
