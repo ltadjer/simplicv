@@ -2,25 +2,10 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\CoverLetter;
-use App\Entity\CoverLetterModel;
-use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Entity\{CoverLetter,CoverLetterModel};
+use EasyCorp\Bundle\EasyAdminBundle\Config\{Action,Actions,Crud};
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\{ChoiceField, ColorField,DateTimeField,FormField,IdField,SlugField,TextField,DateField,IntegerField,TextareaField };
 
 class CoverLetterModelCrudController extends AbstractCrudController
 {
@@ -55,8 +40,36 @@ class CoverLetterModelCrudController extends AbstractCrudController
         yield IdField::new('id')->hideOnForm()->hideOnIndex();
         yield TextField::new('name', 'Nom');
         yield SlugField::new('slug', 'Slug')->setTargetFieldName('name')->hideOnIndex();
-        yield TextField::new('titleFont');
-        yield TextField::new('textFont');
+        yield ChoiceField::new('titleFont')
+        ->setLabel('Police des titres')
+        ->setChoices([
+            'Arial' => 'Arial',
+            'Times New Roman' => 'Times New Roman',
+            'Calibri' => 'Calibri',
+            'Helvetica' => 'Helvetica',
+            'Garamond' => 'Garamond',
+            'Verdana' => 'Verdana',
+            'Cambria' => 'Cambria',
+            'Tahoma' => 'Tahoma',
+            'Georgia' => 'Georgia',
+            'Century Gothic' => 'Century Gothic',
+        ])
+        ->setValue('Arial');
+        yield ChoiceField::new('textFont')
+        ->setLabel('Police des textes')
+        ->setChoices([
+            'Arial' => 'Arial',
+            'Times New Roman' => 'Times New Roman',
+            'Calibri' => 'Calibri',
+            'Helvetica' => 'Helvetica',
+            'Garamond' => 'Garamond',
+            'Verdana' => 'Verdana',
+            'Cambria' => 'Cambria',
+            'Tahoma' => 'Tahoma',
+            'Georgia' => 'Georgia',
+            'Century Gothic' => 'Century Gothic',
+        ])
+        ->setValue('Arial');
         yield ColorField::new('bgColor');
         yield ColorField::new('titleColor');
         yield ColorField::new('textColor');
@@ -66,8 +79,37 @@ class CoverLetterModelCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $viewAction = Action::new('Visualiser')
+        ->linkToUrl(function (CoverLetterModel $CoverLetterModel) {
+            
+            return '/modeles-de-lettres/' . $CoverLetterModel->getSlug();
+        })
+        ->setIcon('fa fa-eye') 
+        ->setLabel('Visualiser')
+        ->setCssClass('btn btn-secondary');
         return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_DETAIL, $viewAction)
+            ->add(Crud::PAGE_INDEX, $viewAction);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+            ->setPageTitle(Crud::PAGE_INDEX, 'Modèles de lettres de motivation')
+            ->setPageTitle(Crud::PAGE_NEW, 'Créer un modèle de lettre de motivation')
+            ->setPageTitle(Crud::PAGE_DETAIL, static function (CoverLetterModel $CoverLetterModel) {
+                return sprintf('#%s %s', $CoverLetterModel->getId(), $CoverLetterModel->getName());
+            })
+            ->setPageTitle(Crud::PAGE_EDIT, static function (CoverLetterModel $CoverLetterModel) {
+                return sprintf('#%s %s', $CoverLetterModel->getId(), $CoverLetterModel->getName());
+            })
+            ->setDefaultSort([
+                'createdAt' => 'DESC',
+            ])
+            ->setFormThemes([
+                '@EasyAdmin/crud/form_theme.html.twig',
+            ]);
     }
 
     public function createEntity(string $entityFqcn)

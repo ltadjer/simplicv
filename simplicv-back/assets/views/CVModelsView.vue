@@ -17,7 +17,7 @@
         :class="{ active: currentStep === 'telecharger' }"
         @click="changeStep('telecharger')"
       >
-        Télécharger votre lettre de motivation
+        Télécharger votre CV
       </li>
     </ol>
     <div v-if="currentStep === 'choix-template'">
@@ -31,6 +31,10 @@
           :skills="cv.skills"
           :socialMedias="cv.socialMedias"
           :name="cv.name"
+          :textColor="cv.textColor"
+          :bgColor="cv.bgColor"
+          :titleColor="cv.titleColor"
+          :textFont="cv.textFont"
           :dateOfBirth="cv.profil.dateOfBirth"
           :phoneNumber="cv.profil.phoneNumber"
           :postalAddress="cv.profil.postalAddress"
@@ -42,6 +46,7 @@
           :drivingLicence="cv.profil.drivingLicence"
           :city="cv.profil.city"
           :zipCode="cv.profil.zipCode"
+          :image="cv.profil.image"
         ></TemplateCV>
         <button @click="selectCV(cv)">Sélectionner le modèle</button>
       </section>
@@ -49,6 +54,10 @@
     <form v-if="currentStep === 'infos-personnelles'">
       <div class="forms">
         <div class="infos-perso">
+          <div>
+            <label for="image">Photo de profil</label>
+            <input type="file" name="image" id="image"  @change="ChangeImage" />
+          </div>
           <div class="field">
             <label for="title">Titre </label>
             <input
@@ -60,7 +69,8 @@
             />
           </div>
           <div class="field">
-            <textarea v-model="descriptionProfil" placeholder="Description">
+            <label for="descriptionProfil">Description </label>
+            <textarea id="descriptionProfil" v-model="descriptionProfil">
 Description </textarea
             >
           </div>
@@ -84,7 +94,16 @@ Description </textarea
               required
             />
           </div>
-
+          <div class="field">
+            <label for="dateOfBirth">Date d'anniversaire </label>
+            <input
+              type="date"
+              name="dateOfBirth"
+              id="dateOfBirth"
+              v-model="dateOfBirth"
+              required
+            />
+          </div>
           <div class="field">
             <label for="mailAddress">Adresse-email </label>
             <input
@@ -126,14 +145,8 @@ Description </textarea
             <input type="text" name="city" id="city" v-model="city" />
           </div>
           <div class="field">
-            <label for="dateOfBirth">Date de création </label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              id="dateOfBirth"
-              v-model="dateOfBirth"
-              required
-            />
+            <label for="drivingLicence">Type de permis </label>
+            <input type="text" name="drivingLicence" id="drivingLicence" v-model="drivingLicence" />
           </div>
         </div>
         <div class="formations">
@@ -178,7 +191,8 @@ Description </textarea
             />
           </div>
           <div class="field">
-            <textarea v-model="descriptionFormation" placeholder="Description">
+            <label for="descriptionFormation">Description </label>
+            <textarea id="descriptionFormation" v-model="descriptionFormation" placeholder="Description">
 Description </textarea
             >
           </div>
@@ -194,8 +208,8 @@ Description </textarea
             />
           </div>
           <div class="field">
-            <label for="city">Lieu du poste </label>
-            <input type="text" name="city" id="city" v-model="city" />
+            <label for="cityExperience">Lieu du poste </label>
+            <input type="text" name="cityExperience" id="cityExperience" v-model="cityExperience" />
           </div>
           <div class="field">
             <label for="startDate">Date de début </label>
@@ -216,7 +230,8 @@ Description </textarea
             />
           </div>
           <div class="field">
-            <textarea v-model="descriptionExperience" placeholder="Description">
+            <label for="descriptionExperience">Description </label>
+            <textarea id="descriptionExperience" v-model="descriptionExperience" placeholder="Description">
 Description </textarea
             >
           </div>
@@ -244,12 +259,12 @@ Description </textarea
             />
           </div>
           <div class="field">
-            <label for="link">Lien </label>
+            <label for="pseudo">Pseudo </label>
             <input
               type="text"
-              link="link"
-              id="link"
-              v-model="linkSocialMedia"
+              link="pseudo"
+              id="pseudo"
+              v-model="pseudoSocialMedia"
             />
           </div>
         </div>
@@ -290,7 +305,7 @@ Description </textarea
           :socialMedias="[
             {
               name: nameSocialMedia,
-              link: linkSocialMedia,
+              pseudo: pseudoSocialMedia,
             },
           ]"
           :dateOfBirth="dateOfBirth"
@@ -304,6 +319,11 @@ Description </textarea
           :drivingLicence="drivingLicence"
           :city="city"
           :zipCode="zipCode"
+          :image="image"
+          :textColor="selectedCVTemplate.textColor"
+          :bgColor="selectedCVTemplate.bgColor"
+          :titleColor="selectedCVTemplate.titleColor"
+          :textFont="selectedCVTemplate.textFont"
         ></TemplateCV>
       </div>
       <button @click.prevent="previewLetter">Enregistrer</button>
@@ -357,6 +377,11 @@ Description </textarea
         :drivingLicence="drivingLicence"
         :city="city"
         :zipCode="zipCode"
+        :image="image"
+        :textColor="selectedCVTemplate.textColor"
+        :bgColor="selectedCVTemplate.bgColor"
+        :titleColor="selectedCVTemplate.titleColor"
+        :textFont="selectedCVTemplate.textFont"
       ></TemplateCV>
       <button @click.prevent="downloadPDF">Télécharger en PDF</button>
     </div>
@@ -398,6 +423,7 @@ export default {
       dateOfBirth: "",
       title: "",
       descriptionProfil: "",
+      image: "",
       firstname: "",
       lastname: "",
       mailAddress: "",
@@ -412,14 +438,15 @@ export default {
       descriptionFormation: "",
       jobTitle: "",
       employer: "",
-      city: "",
+      cityExperience: "",
       startDateExperience: "",
       endDateExperience: "",
       descriptionExperience: "",
       nameSkill: "",
       nameLanguage: "",
       nameSocialMedia: "",
-      linkSocialMedia: "",
+      pseudoSocialMedia: "",
+      bgColor:""
     };
   },
   mounted() {
@@ -437,7 +464,7 @@ export default {
     getModelsCV() {
       // Fonction pour récupérer les modèles de CV via une requête Axios
       axios
-        .get("http://127.0.0.1:8000/api/modeles-de-cv")
+        .get("/api/modeles-de-cv")
         .then((response) => {
           console.log(response.data);
           this.modelsCV = response.data; // Stockage des modèles de CV dans la variable data
@@ -465,8 +492,14 @@ export default {
 
       this.currentStep = "infos-personnelles"; // Passage à l'étape suivante
     },
+    ChangeImage(event) {
+    const file = event.target.files[0];
+    this.image = file;
+    console.log(this.image)
+  },
     saveDataToCookies() {
       cookies.set("phoneNumber", this.phoneNumber);
+      cookies.set("image", this.image);
       cookies.set("postalAddress", this.postalAddress);
       cookies.set("dateOfBirth", this.dateOfBirth);
       cookies.set("title", this.title);
@@ -485,16 +518,18 @@ export default {
       cookies.set("descriptionFormation", this.descriptionFormation);
       cookies.set("jobTitle", this.jobTitle);
       cookies.set("employer", this.employer);
+      cookies.seet("cityExperience");
       cookies.set("startDateExperience", this.startDateExperience);
       cookies.set("endDateExperience", this.endDateExperience);
       cookies.set("descriptionExperience", this.descriptionExperience);
       cookies.set("nameSkill", this.nameSkill);
       cookies.set("nameLanguage", this.nameLanguage);
       cookies.set("nameSocialMedia", this.nameSocialMedia);
-      cookies.set("linkSocialMedia", this.linkSocialMedia);
+      cookies.set("pseudoSocialMedia", this.pseudoSocialMedia);
     },
 
     loadDataFromCookies() {
+      this.image = cookies.get("image");
       this.phoneNumber = cookies.get("phoneNumber");
       this.postalAddress = cookies.get("postalAddress");
       this.dateOfBirth = cookies.get("dateOfBirth");
@@ -514,17 +549,19 @@ export default {
       this.descriptionFormation = cookies.get("descriptionFormation");
       this.jobTitle = cookies.get("jobTitle");
       this.employer = cookies.get("employer");
+      this.cityExperience = cookies.get("cityExperience");
       this.startDateExperience = cookies.get("startDateExperience");
       this.endDateExperience = cookies.get("endDateExperience");
       this.descriptionExperience = cookies.get("descriptionExperience");
       this.nameSkill = cookies.get("nameSkill");
       this.nameLanguage = cookies.get("nameLanguage");
       this.nameSocialMedia = cookies.get("nameSocialMedia");
-      this.linkSocialMedia = cookies.get("linkSocialMedia");
+      this.pseudoSocialMedia = cookies.get("pseudoSocialMedia");
     },
     previewLetter() {
       const profil = [
         {
+          image: this.image,
           phoneNumber: this.phoneNumber,
           postalAddress: this.postalAddress,
           dateOfBirth: this.dateOfBirth,
@@ -554,7 +591,7 @@ export default {
         {
           jobTitle: this.jobTitle,
           employer: this.employer,
-          city: this.city,
+          city: this.cityExperience,
           startDate: this.startDateExperience,
           endDate: this.endDateExperience,
           description: this.descriptionExperience,
@@ -575,7 +612,7 @@ export default {
       const socialMedias = [
         {
           name: this.nameSocialMedia,
-          link: this.linkSocialMedia,
+          link: this.pseudoSocialMedia,
         },
       ];
 
@@ -637,6 +674,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

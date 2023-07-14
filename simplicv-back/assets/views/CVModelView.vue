@@ -1,25 +1,31 @@
 <template>
   <div>
   <TemplateCV
-          :formations="cv.formations"
-          :experiences="cv.experiences"
-          :languages="cv.languages"
-          :skills="cv.skills"
-          :socialMedias="cv.socialMedias"
-          :name="cv.name"
-          :dateOfBirth="cv.profil?.dateOfBirth"
-          :phoneNumber="cv.profil?.phoneNumber"
-          :postalAddress="cv.profil?.postalAddress"
-          :title="cv.profil?.title"
-          :description="cv.profil?.description"
-          :firstname="cv.profil?.firstname"
-          :lastname="cv.profil?.lastname"
-          :mailAddress="cv.profil?.mailAddress"
-          :drivingLicence="cv.profil?.drivingLicence"
-          :city="cv.profil?.city"
-          :zipCode="cv.profil?.zipCode"
-        ></TemplateCV>
-        </div>
+    :formations="cv.formations"
+    :experiences="cv.experiences"
+    :languages="cv.languages"
+    :skills="cv.skills"
+    :socialMedias="cv.socialMedias"
+    :name="cv.name"
+    :dateOfBirth="cv.profil?.dateOfBirth"
+    :phoneNumber="cv.profil?.phoneNumber"
+    :postalAddress="cv.profil?.postalAddress"
+    :title="cv.profil?.title"
+    :description="cv.profil?.description"
+    :firstname="cv.profil?.firstname"
+    :lastname="cv.profil?.lastname"
+    :mailAddress="cv.profil?.mailAddress"
+    :drivingLicence="cv.profil?.drivingLicence"
+    :city="cv.profil?.city"
+    :zipCode="cv.profil?.zipCode"
+    :bgColor="cv.bgColor"
+    :textColor="cv.textColor"
+    :titleFont="cv.titleFont"
+    :titleColor="cv.titleColor"
+    :textFont="cv.textFont"
+    :image="cv.profil?.image"
+  ></TemplateCV>
+  </div>
 </template>
 
 <script>
@@ -51,3 +57,4 @@ export default {
   },
 };
 </script>
+<style></style>

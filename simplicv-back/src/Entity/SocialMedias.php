@@ -19,7 +19,7 @@ class SocialMedias
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $link = null;
+    private ?string $pseudo = null;
 
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'socialMedias')]
     private Collection $cVModels;
@@ -49,14 +49,14 @@ class SocialMedias
         return $this;
     }
 
-    public function getLink(): ?string
+    public function getPseudo(): ?string
     {
-        return $this->link;
+        return $this->pseudo;
     }
 
-    public function setLink(string $link): self
+    public function setPseudo(string $pseudo): self
     {
-        $this->link = $link;
+        $this->pseudo = $pseudo;
 
         return $this;
     }

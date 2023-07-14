@@ -17,8 +17,8 @@ class SocialMediaType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => "Nom du réseau social",
             ])
-            ->add('link', UrlType::class, [
-                'label' => "Lien",
+            ->add('pseudo', TextType::class, [
+                'label' => "Pseudo",
             ])
         ;
     }

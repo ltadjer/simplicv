@@ -1,5 +1,10 @@
 :root {
     --body-bg:#EBFCFF;
+    --responsive-header-bg: #EBFCFF;
     --sidebar-bg:#EBFCFF;
     --button-primary-bg: #F55200;
+    --pagination-active-bg: #F55200;
+    --pagination-active-bg: #F55200;
+    --link-color: #00B4D8;
+    --sidebar-menu-active-item-color: #00B4D8;
 }

@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use DateTimeImmutable;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ProfilRepository::class)]
 #[Vich\Uploadable]
@@ -20,7 +22,7 @@ class Profil
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
     #[ORM\Column]
@@ -52,7 +54,7 @@ class Profil
 
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
-    
+
 
     #[ORM\OneToMany(mappedBy: 'profil', targetEntity: CVModel::class)]
     private Collection $cVModels;
@@ -60,7 +62,7 @@ class Profil
     #[Vich\UploadableField(mapping: 'images_profils', fileNameProperty: 'image')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -79,15 +81,15 @@ class Profil
         return $this->id;
     }
 
-    public function getDateOfBirth(): ?\DateTimeInterface
+    public function getDateOfBirth(): ?DateTimeInterface  
     {
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
+    public function setDateOfBirth(DateTimeInterface  $dateOfBirth): self
     {
+        // Supprimez l'heure de la date de naissance en utilisant seulement la date
         $this->dateOfBirth = $dateOfBirth;
-
         return $this;
     }
 
@@ -211,18 +213,17 @@ class Profil
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
-
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;

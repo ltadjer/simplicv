@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Experience;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,6 +19,15 @@ class ExperienceType extends AbstractType
             ->add('jobTitle', TextType::class, [
                     'label' => 'Intitulé du poste',
                 ])
+            ->add('contractType', ChoiceType::class, [
+                'label' => 'Type de contrat',
+                'choices'=>[
+                    'CDI' =>'CDI', 
+                    'CDD'=>'CDD', 
+                    'Alternance'=>'Alternance', 
+                    'Stage'=>'Stage'
+                ]
+            ])
             ->add('employer', TextType::class, [
                     'label' => 'Nom de l\'entreprise',
                 ])
@@ -37,7 +47,6 @@ class ExperienceType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])    
-            ->add('contratType')
         ;
     }
 

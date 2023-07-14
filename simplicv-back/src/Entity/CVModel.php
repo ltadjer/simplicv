@@ -6,7 +6,6 @@ use App\Repository\CVModelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 #[ORM\Entity(repositoryClass: CVModelRepository::class)]
 class CVModel
 {
@@ -45,20 +44,23 @@ class CVModel
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $formations;
 
-    #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'cVModels')]
+    #[ORM\ManyToMany(targetEntity: Experience::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $experiences;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'cVModels')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $skills;
 
-    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'cVModels')]
+    #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $languages;
 
-    #[ORM\ManyToMany(targetEntity: SocialMedias::class, inversedBy: 'cVModels')]
+    #[ORM\ManyToMany(targetEntity: SocialMedias::class, inversedBy: 'cVModels', cascade:["persist"])]
     private Collection $socialMedias;
 
     #[ORM\ManyToOne(inversedBy: 'cVModels', cascade: ["persist"])]
     private ?Profil $profil = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $titleColor = null;
 
     public function __construct()
     {
@@ -315,6 +317,18 @@ class CVModel
     public function setProfil(?Profil $profil): static
     {
         $this->profil = $profil;
+
+        return $this;
+    }
+
+    public function getTitleColor(): ?string
+    {
+        return $this->titleColor;
+    }
+
+    public function setTitleColor(string $titleColor): static
+    {
+        $this->titleColor = $titleColor;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="contact">
-    <h1>Contact Us</h1>
+    <h1 class="text-orange">Contact Us</h1>
     <form @submit.prevent="submitForm">
       <div>
         <label for="lastname">Last Name:</label>
@@ -117,8 +117,3 @@ export default {
   },
 };
 </script>
-  
-  <style scoped>
-/* Component-specific styles */
-</style>
-  

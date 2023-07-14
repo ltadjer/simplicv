@@ -312,7 +312,7 @@ export default {
   methods: {
     getCoverLetterModels() {
       axios
-        .get("http://127.0.0.1:8000/api/lettres-de-motivation")
+        .get("/api/lettres-de-motivation")
         .then((response) => {
           console.log(response.data);
           this.coverLetterModels = response.data;

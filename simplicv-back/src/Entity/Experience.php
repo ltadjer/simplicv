@@ -37,8 +37,8 @@ class Experience
     #[ORM\ManyToMany(targetEntity: CVModel::class, mappedBy: 'experiences')]
     private Collection $cVModels;
 
-    #[ORM\ManyToOne(inversedBy: 'experiences')]
-    private ?ContratType $contratType = null;
+    #[ORM\Column(length: 255)]
+    private ?string $contractType = null;
 
     // #[ORM\Column]
     // private ?int $position = null;
@@ -170,14 +170,14 @@ class Experience
     //     return $this;
     // }
 
-    public function getContratType(): ?ContratType
+    public function getContractType(): ?string
     {
-        return $this->contratType;
+        return $this->contractType;
     }
 
-    public function setContratType(?ContratType $contratType): static
+    public function setContractType(string $contractType): static
     {
-        $this->contratType = $contratType;
+        $this->contractType = $contractType;
 
         return $this;
     }

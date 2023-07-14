@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import CoverLetterModelsView from '../views/CoverLetterModelsView.vue';
+import CoverLetterModelView from '../views/CoverLetterModelView.vue';
 import CVModelsView from '../views/CVModelsView.vue';
 import CVModelView from '../views/CVModelView.vue';
 import ContactView from '../views/ContactView.vue';
@@ -23,6 +24,11 @@ const router = createRouter({
         path: '/creer-une-lettre-de-motivation',
         name: 'Créer votre lettre de motivation',
         component: CoverLetterModelsView,
+      },
+      {
+        path: '/modeles-de-lettres/:slug',
+        name: 'letter-model',
+        component: CoverLetterModelView,
       },
       {
         path: '/creer-un-cv',
