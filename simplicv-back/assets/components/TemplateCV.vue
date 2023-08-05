@@ -14,7 +14,7 @@
         <div class="mt-4">
           <div>
             <img
-              :src="getImageUrl(image)"
+             :src="getImageSrc()"
               alt="Profile Image"
               class="w-24 h-24 rounded-full mx-auto mb-4"
             />
@@ -141,6 +141,7 @@ export default {
     textFont: String,
     titleFont: String,
     titleColor: String,
+    imageFromForm: String,
     image: String,
   },
   methods: {
@@ -154,10 +155,23 @@ export default {
       return new Date(date).toLocaleDateString(undefined, options);
     },
 
-    getImageUrl(image) {
-      return `/images/profils/${image}`;
-    },
+    getImageSrc() {
+      // Si imageFromBDD est disponible, renvoyer le chemin avec /images/profils/
+
+      if (this.imageFromForm) {
+        return this.imageFromForm;
+      }
+      
+      if (this.image) {
+        return `/images/profils/${this.image}`;
+      }
+
+      // Sinon, si image est disponible, renvoyer le chemin de l'image sélectionnée par l'utilisateur
+     
+
   },
+  },
+
   mounted() {
     // Définir la couleur de la timeline dynamiquement
     document.documentElement.style.setProperty('--timeline-color', this.textColor);

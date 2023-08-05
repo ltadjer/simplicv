@@ -1,3 +1,5 @@
+
+/* tu dois reprendre à partir du swtich d'affichage pour formation lorsque l'on appuie sur modifier */
 <template>
   <div class="cv-models">
     <ol class="progress-bar">
@@ -55,8 +57,8 @@
       <div class="forms">
         <div class="infos-perso">
           <div>
-            <label for="image">Photo de profil</label>
-            <input type="file" name="image" id="image"  @change="ChangeImage" />
+            <label for="imageFromForm">Photo de profil</label>
+            <input type="file" name="imageFromForm" id="imageFromForm"  @change="ChangeImage" />
           </div>
           <div class="field">
             <label for="title">Titre </label>
@@ -148,8 +150,16 @@ Description </textarea
             <label for="drivingLicence">Type de permis </label>
             <input type="text" name="drivingLicence" id="drivingLicence" v-model="drivingLicence" />
           </div>
+          <button @click.prevent="saveInfosPersoData">Enregistrer</button>
         </div>
-        <div class="formations">
+        <div v-if="formationsDataSaved">
+        
+          <p>{{ degree }}</p>
+          <span>{{ startDateFormation }} - {{ endDateFormation }}</span>
+          <button @click.prevent="editFormation(index)">Modifier</button>
+          <button @click.prevent="removeFormation(index)">Supprimer</button>
+      </div>
+        <div class="formations" v-if="!formationsDataSaved">
           <div class="field">
             <label for="degree">Diplôme </label>
             <input type="text" name="degree" id="degree" v-model="degree" />
@@ -196,6 +206,8 @@ Description </textarea
 Description </textarea
             >
           </div>
+          <button @click.prevent="saveFormationsData">Enregistrer</button>
+          <button @click="addFormation">Ajouter une autre formation</button>
         </div>
         <div class="experiences">
           <div class="field">
@@ -235,18 +247,21 @@ Description </textarea
 Description </textarea
             >
           </div>
+          <button @click.prevent="saveExperiencesData">Enregistrer</button>
         </div>
         <div class="skills">
           <div class="field">
             <label for="name">Compétence </label>
             <input type="text" name="name" id="name" v-model="nameSkill" />
           </div>
+          <button @click.prevent="saveSkillsData">Enregistrer</button>
         </div>
         <div class="languages">
           <div class="field">
             <label for="name">Language </label>
             <input type="text" name="name" id="name" v-model="nameLanguage" />
           </div>
+          <button @click.prevent="saveLanguagesData">Enregistrer</button>
         </div>
         <div class="socialMedias">
           <div class="field">
@@ -267,9 +282,11 @@ Description </textarea
               v-model="pseudoSocialMedia"
             />
           </div>
+          <button @click.prevent="saveSocialMediasData">Enregistrer</button>
+
         </div>
       </div>
-
+      
       <div class="preview">
         <TemplateCV
           :name="selectedCVTemplate.name"
@@ -319,14 +336,13 @@ Description </textarea
           :drivingLicence="drivingLicence"
           :city="city"
           :zipCode="zipCode"
-          :image="image"
+          :imageFromForm="imageFromForm"
           :textColor="selectedCVTemplate.textColor"
           :bgColor="selectedCVTemplate.bgColor"
           :titleColor="selectedCVTemplate.titleColor"
           :textFont="selectedCVTemplate.textFont"
         ></TemplateCV>
       </div>
-      <button @click.prevent="previewLetter">Enregistrer</button>
     </form>
     <div v-if="currentStep === 'telecharger'">
       <TemplateCV
@@ -377,7 +393,7 @@ Description </textarea
         :drivingLicence="drivingLicence"
         :city="city"
         :zipCode="zipCode"
-        :image="image"
+        :imageFromForm="imageFromForm"
         :textColor="selectedCVTemplate.textColor"
         :bgColor="selectedCVTemplate.bgColor"
         :titleColor="selectedCVTemplate.titleColor"
@@ -400,6 +416,9 @@ import axios from "axios";
 import { useCVStore } from "../stores/cv";
 import TemplateCV from "../components/TemplateCV.vue";
 import cookies from "vue-cookies";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 export default {
   components: {
@@ -446,7 +465,9 @@ export default {
       nameLanguage: "",
       nameSocialMedia: "",
       pseudoSocialMedia: "",
-      bgColor:""
+      bgColor:"", 
+      imageFromForm: "",
+      formationsDataSaved: false,
     };
   },
   mounted() {
@@ -486,6 +507,7 @@ export default {
       this.selectedCV.skills = [];
       this.selectedCV.socialMedias = [];
       this.selectedCV.profil = [];
+      this.imageFromForm = ''; 
       this.cvStore.reset(); // Réinitialisation des données du store CV
 
       this.cvStore.setSelectedTemplate(cv); // Définition du modèle de CV sélectionné dans le store
@@ -493,13 +515,13 @@ export default {
       this.currentStep = "infos-personnelles"; // Passage à l'étape suivante
     },
     ChangeImage(event) {
-    const file = event.target.files[0];
-    this.image = file;
-    console.log(this.image)
-  },
+      const file = event.target.files[0];
+      this.imageFromForm = URL.createObjectURL(file);
+    },
+
     saveDataToCookies() {
       cookies.set("phoneNumber", this.phoneNumber);
-      cookies.set("image", this.image);
+      cookies.set("imageFromForm", this.imageFromForm);
       cookies.set("postalAddress", this.postalAddress);
       cookies.set("dateOfBirth", this.dateOfBirth);
       cookies.set("title", this.title);
@@ -518,7 +540,7 @@ export default {
       cookies.set("descriptionFormation", this.descriptionFormation);
       cookies.set("jobTitle", this.jobTitle);
       cookies.set("employer", this.employer);
-      cookies.seet("cityExperience");
+      cookies.set("cityExperience");
       cookies.set("startDateExperience", this.startDateExperience);
       cookies.set("endDateExperience", this.endDateExperience);
       cookies.set("descriptionExperience", this.descriptionExperience);
@@ -529,7 +551,7 @@ export default {
     },
 
     loadDataFromCookies() {
-      this.image = cookies.get("image");
+      this.imageFromForm = cookies.get("imageFromForm");
       this.phoneNumber = cookies.get("phoneNumber");
       this.postalAddress = cookies.get("postalAddress");
       this.dateOfBirth = cookies.get("dateOfBirth");
@@ -557,11 +579,13 @@ export default {
       this.nameLanguage = cookies.get("nameLanguage");
       this.nameSocialMedia = cookies.get("nameSocialMedia");
       this.pseudoSocialMedia = cookies.get("pseudoSocialMedia");
+
+      console.log("Formations Data Saved:", this.formationsDataSaved);
     },
-    previewLetter() {
+    saveInfosPersoData() {
       const profil = [
         {
-          image: this.image,
+          imageFromForm: this.imageFromForm,
           phoneNumber: this.phoneNumber,
           postalAddress: this.postalAddress,
           dateOfBirth: this.dateOfBirth,
@@ -575,7 +599,17 @@ export default {
           drivingLicence: this.drivingLicence,
         },
       ];
-
+      console.log("profil:", profil);
+      if (this.selectedCV && this.selectedCV.name) {
+        // Vérification de la sélection d'un modèle de CV
+        this.cvStore.setProfil(profil); // Définition des profils dans le store
+       
+      }
+      this.saveDataToCookies();
+      
+    },
+    saveFormationsData() {
+      
       const formations = [
         {
           degree: this.degree,
@@ -587,6 +621,46 @@ export default {
         },
       ];
 
+      
+
+      if (this.selectedCV && this.selectedCV.name) {
+      // Vérification de la sélection d'un modèle de CV
+      this.cvStore.addFormation(formations); // Add the new formation to the store
+    }
+    this.formationsDataSaved = true; // Mark formations data as saved
+    console.log("Formations Data Saved:", this.formationsDataSaved);
+    this.saveDataToCookies(); // Save data to cookies (if needed)
+    },
+    addFormation() {
+    const newFormation = {
+      degree: "",
+      nameSchool: "",
+      locationSchool: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    };
+    this.cvStore.addFormation(newFormation);
+  },
+    editFormation(index) {
+    // You can use this method to pre-fill the formations form
+    // with the data of the selected formation for editing.
+    const formation = this.cvStore.formations[index];
+    this.degree = formation.degree;
+    this.nameSchool = formation.nameSchool;
+    this.locationSchool = formation.locationSchool;
+    this.startDateFormation = formation.startDate;
+    this.endDateFormation = formation.endDate;
+    this.descriptionFormation = formation.description;
+  },
+
+  removeFormation(index) {
+    // This method will remove the selected formation from the formations array.
+    this.cvStore.removeFormation(index);
+  },
+
+    saveExperiencesData() {
+      
       const experiences = [
         {
           jobTitle: this.jobTitle,
@@ -598,17 +672,38 @@ export default {
         },
       ];
 
+      if (this.selectedCV && this.selectedCV.name) {
+        // Vérification de la sélection d'un modèle de CV
+        this.cvStore.setExperiences(experiences);
+      }
+      this.saveDataToCookies();
+    },
+    saveSkillsData() {
       const skills = [
         {
           name: this.nameSkill,
         },
       ];
 
+
+      if (this.selectedCV && this.selectedCV.name) {
+        this.cvStore.setSkills(skills);
+      }
+      this.saveDataToCookies();
+    },
+    saveLanguagesData() {
       const languages = [
         {
           name: this.nameLanguage,
         },
       ];
+      if (this.selectedCV && this.selectedCV.name) {
+        this.cvStore.setLanguages(languages);
+      }
+      this.saveDataToCookies();
+    },
+    saveSocialMediasData() {
+
       const socialMedias = [
         {
           name: this.nameSocialMedia,
@@ -617,22 +712,15 @@ export default {
       ];
 
       if (this.selectedCV && this.selectedCV.name) {
-        // Vérification de la sélection d'un modèle de CV
-        this.cvStore.setProfil(profil); // Définition des profils dans le store
-        console.log(this.degree);
-        console.log(this.selectedCV.name);
-        this.cvStore.setFormations(formations); // Définition des formations dans le store
-        this.cvStore.setExperiences(experiences);
-        this.cvStore.setLanguages(languages);
-        this.cvStore.setSkills(skills);
         this.cvStore.setSocialMedias(socialMedias);
       }
       this.saveDataToCookies();
       this.currentStep = "telecharger"; // Passage à l'étape suivante
     },
 
-    downloadPDF() {
-      // Fonction pour télécharger le CV en format PDF
+    async downloadPDF() {
+      const cvStore = useCVStore(); // Obtenir le store CV
+
       const {
         profil,
         formations,
@@ -640,20 +728,11 @@ export default {
         skills,
         languages,
         socialMedias,
-      } = this.cvStore;
+      } = cvStore;
 
-      // Utilisez les données du store pour générer le PDF
+     
 
-      this.cvStore.reset(); // Réinitialisation des données du store
-      this.currentStep = "choix-template"; // Retour à la première étape
-    },
-    previousStep() {
-      // Méthode pour passer à l'étape précédente
-      if (this.currentStep === "infos-personnelles") {
-        this.currentStep = "choix-template";
-      } else if (this.currentStep === "telecharger") {
-        this.currentStep = "infos-personnelles";
-      }
+      this.currentStep = "choix-template"; // Retour à la première étape après avoir généré le PDF
     },
 
     nextStep() {
@@ -674,3 +753,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+button, [role="button"]  {
+background-color: #F55200;
+padding: 10px;
+}
+</style>

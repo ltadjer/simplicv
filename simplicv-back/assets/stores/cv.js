@@ -29,6 +29,9 @@ export const useCVStore = defineStore('cv', {
     setFormations(formations) {
       this.formations = formations;
     },
+    addFormation(formation) {
+      this.formations.push(formation);
+    },
 
     setExperiences(experiences) {
       this.experiences = experiences;
