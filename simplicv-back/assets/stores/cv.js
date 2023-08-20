@@ -9,6 +9,7 @@ export const useCVStore = defineStore('cv', {
     skills: [],
     languages: [],
     socialMedias: [],
+    imageFromForm: '',
   }),
 
   getters: {
@@ -21,7 +22,9 @@ export const useCVStore = defineStore('cv', {
     setSelectedTemplate(template) {
       this.selectedTemplate = template;
     },
-
+    setImageFromForm(image) {
+      this.imageFromForm = image;
+    },
     setProfil(profil) {
       this.profil = profil;
     },

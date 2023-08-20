@@ -2,19 +2,18 @@ import './styles/app.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'
 import router from './router';
+
 import App from './views/App.vue';
 import 'tailwindcss/tailwind.css';
 
 const app = createApp(App);
 
-app.config.delimiters = ['${', '}$']; // Configurez les délimiteurs personnalisés
+// Configurez les délimiteurs personnalisés
+app.config.delimiters = ['${', '}$'];
 
-app.use(router); 
-app.use(createPinia())
+// Utilisez le routeur et Pinia
+app.use(router);
+app.use(createPinia());
+
+
 app.mount('#app');
-
-
-
-
-
-

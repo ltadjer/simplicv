@@ -46,7 +46,7 @@
         <p class="text-xl font-bold" :style="{ color: titleColor }">{{ title }}</p>
         <p class="mt-4">{{ description }}</p>
 
-        <section class="mt-8">
+        <section class="mt-4">
           <h3 class="text-lg font-bold" :style="{ color: titleColor }">Formations</h3>
           <ul class="mt-4 timeline">
         <li v-for="formation in formations" :key="formation.id" class="mb-4">
@@ -65,7 +65,7 @@
         </li>
       </ul>
         </section>
-        <section class="mt-8">
+        <section class="mt-4">
         <h3 class="text-lg font-bold" :style="{ color: titleColor }">Expériences</h3>
         <ul class="mt-4 timeline">
           <li v-for="experience in experiences" :key="experience.id" class="mb-4">
@@ -84,13 +84,13 @@
           </li>
         </ul>
       </section>
-        <section class="mt-8">
+        <section class="mt-4">
           <h3 class="text-lg font-bold" :style="{ color: titleColor }">Compétences</h3>
           <ul class="mt-4">
             <li v-for="skill in skills" :key="skill.id">{{ skill.name }}</li>
           </ul>
         </section>
-        <section class="mt-8">
+        <section class="mt-4">
           <h3 class="text-lg font-bold" :style="{ color: titleColor }">Langues</h3>
           <ul class="mt-4">
             <li v-for="language in languages" :key="language.id">
@@ -98,7 +98,7 @@
             </li>
           </ul>
         </section>
-        <section class="mt-8">
+        <section class="mt-4">
           <h3 class="text-lg font-bold" :style="{ color: titleColor }">Réseaux sociaux</h3>
           <ul class="mt-4">
             <li
@@ -229,5 +229,42 @@ export default {
   margin-top: 2px;
 }
 
+/* Styles spécifiques à l'impression
 
+Faut que je modifie*/
+
+@media print {
+  .cv-template-a4 {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    padding: 20mm;
+  }
+
+  /* Ajustement de la bande de couleur latérale */
+  .side-bar {
+    width: 20mm;
+    background-color: #333;
+  }
+
+  /* Ajustement de la largeur des sections */
+  .w-1/4, .w-3/4 {
+    width: auto;
+  }
+
+  /* Ajustement de la taille de l'image de profil */
+  .w-24, .h-24 {
+    width: 64px;
+    height: 64px;
+  }
+
+  /* Ajustement de la taille des icônes */
+  .fas {
+    font-size: 12px;
+  }
+
+  /* ... Autres ajustements de style si nécessaire ... */
+}
 </style>

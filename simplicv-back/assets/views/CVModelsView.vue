@@ -52,115 +52,105 @@
         <button @click="selectCV(cv)">Sélectionner le modèle</button>
       </section>
     </div>
-    <form v-if="currentStep === 'infos-personnelles'">
+    <div v-if="currentStep === 'infos-personnelles'">
       <div class="forms">
-        <div class="infos-perso">
-          <div>
-            <label for="imageFromForm">Photo de profil</label>
-            <input
-              type="file"
-              name="imageFromForm"
-              id="imageFromForm"
-              @change="ChangeImage"
-            />
-          </div>
-          <div class="field">
-            <label for="title">Titre </label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              v-model="title"
-              required
-            />
-          </div>
-          <div class="field">
-            <label for="descriptionProfil">Description </label>
-            <textarea id="descriptionProfil" v-model="descriptionProfil">
-Description </textarea
-            >
-          </div>
-          <div class="field">
-            <label for="lastname">Nom </label>
-            <input
-              type="text"
-              name="lastname"
-              id="lastname"
-              v-model="lastname"
-              required
-            />
-          </div>
-          <div class="field">
-            <label for="firstname">Prénom </label>
-            <input
-              type="text"
-              name="firstname"
-              id="firstname"
-              v-model="firstname"
-              required
-            />
-          </div>
-          <div class="field">
-            <label for="dateOfBirth">Date d'anniversaire </label>
-            <input
-              type="date"
-              name="dateOfBirth"
-              id="dateOfBirth"
-              v-model="dateOfBirth"
-              required
-            />
-          </div>
-          <div class="field">
-            <label for="mailAddress">Adresse-email </label>
-            <input
-              type="email"
-              name="mailAddress"
-              id="mailAddress"
-              v-model="mailAddress"
-            />
-          </div>
-          <div class="field">
-            <label for="phoneNumber">Téléphone </label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              id="phoneNumber"
-              v-model="phoneNumber"
-            />
-          </div>
-          <div class="field">
-            <label for="postalAddress">Adresse postale </label>
-            <input
-              type="text"
-              name="postalAddress"
-              id="postalAddress"
-              v-model="postalAddress"
-            />
-          </div>
-          <div class="field">
-            <label for="zipCode">Code postal </label>
-            <input
-              type="number"
-              name="zipCode"
-              id="zipCode"
-              v-model="zipCode"
-            />
-          </div>
-          <div class="field">
-            <label for="city">Ville </label>
-            <input type="text" name="city" id="city" v-model="city" />
-          </div>
-          <div class="field">
-            <label for="drivingLicence">Type de permis </label>
-            <input
-              type="text"
-              name="drivingLicence"
-              id="drivingLicence"
-              v-model="drivingLicence"
-            />
-          </div>
+        <MyForm class="infos-perso">
+          <MyInput
+            label="Photo de profil"
+            type="file"
+            inputName="imageFromForm"
+            :inputValue="imageFromForm"
+            @update:value="imageFromForm = $event"
+            @changeImage="handleImageChange"
+          />
+
+          <MyInput
+            label="Titre"
+            type="text"
+            inputName="title"
+            :inputValue="title"
+            @update:value="title = $event"
+            :required="required"
+          />
+          <MyInput
+            label="Description"
+            type="textarea"
+            inputName="descriptionProfil"
+            :inputValue="descriptionProfil"
+            @update:value="descriptionProfil = $event"
+          />
+          <MyInput
+            label="Nom"
+            type="text"
+            inputName="lastname"
+            :inputValue="lastname"
+            @update:value="lastname = $event"
+          />
+          <MyInput
+            label="Prénom"
+            type="text"
+            inputName="firstname"
+            :inputValue="firstname"
+            @update:value="firstname = $event"
+            v-model.trim="firstname"
+          />
+          <MyInput
+            label="Date d'anniversaire"
+            type="date"
+            inputName="dateOfBirth"
+            :inputValue="dateOfBirth"
+            @update:value="dateOfBirth = $event"
+          />
+          <MyInput
+            label="Adresse-email"
+            type="email"
+            inputName="mailAddress"
+            :inputValue="mailAddress"
+            @update:value="mailAddress = $event"
+            v-model.trim="email"
+          />
+          <MyInput
+            label="Téléphone"
+            type="tel"
+            inputName="phoneNumber"
+            :inputValue="phoneNumber"
+            @update:value="phoneNumber = $event"
+            pattern="^[0-9]{10}$"
+          />
+
+          <MyInput
+            label="Adresse postale"
+            type="text"
+            inputName="postalAddress"
+            :inputValue="postalAddress"
+            @update:value="postalAddress = $event"
+          />
+
+          <MyInput
+            label="Code postal"
+            type="number"
+            inputName="zipCode"
+            :inputValue="zipCode"
+            @update:value="zipCode = $event"
+          />
+
+          <MyInput
+            label="Ville"
+            type="text"
+            inputName="city"
+            :inputValue="city"
+            @update:value="city = $event"
+          />
+
+          <MyInput
+            label="Type de permis"
+            type="text"
+            inputName="drivingLicence"
+            :inputValue="drivingLicence"
+            @update:value="drivingLicence = $event"
+          />
           <button @click.prevent="saveInfosPersoData">Enregistrer</button>
-        </div>
+        </MyForm>
         <div class="displayedFormations">
           <div v-for="(formation, index) in formations" :key="index">
             <p>{{ formation.degree }}</p>
@@ -169,60 +159,50 @@ Description </textarea
             <button @click.prevent="removeFormation(index)">Supprimer</button>
           </div>
         </div>
-
-        <div class="formations">
+        <MyForm class="formations">
           <template v-if="isFormVisible || formations.length === 0">
-            <div class="field">
-              <label for="degree">Diplôme </label>
-              <input type="text" name="degree" id="degree" v-model="degree" />
-            </div>
-            <div class="field">
-              <label for="nameSchool">Nom de l'établissement </label>
-              <input
-                type="text"
-                name="nameSchool"
-                id="nameSchool"
-                v-model="nameSchool"
-              />
-            </div>
-            <div class="field">
-              <label for="locationSchool">Lieu de l'établissement </label>
-              <input
-                type="text"
-                name="locationSchool"
-                id="locationSchool"
-                v-model="locationSchool"
-              />
-            </div>
-            <div class="field">
-              <label for="startDate">Date de début </label>
-              <input
-                type="date"
-                name="startDate"
-                id="startDate"
-                v-model="startDateFormation"
-              />
-            </div>
-            <div class="field">
-              <label for="endDate">Date de fin </label>
-              <input
-                type="date"
-                name="endDate"
-                id="endDate"
-                v-model="endDateFormation"
-              />
-            </div>
-            <div class="field">
-              <label for="descriptionFormation">Description </label>
-              <textarea
-                id="descriptionFormation"
-                v-model="descriptionFormation"
-                placeholder="Description"
-              >
-Description </textarea
-              >
-            </div>
-
+            <MyInput
+              label="Diplôme"
+              type="text"
+              inputName="degree"
+              :inputValue="degree"
+              @update:value="degree = $event"
+            />
+            <MyInput
+              label="Nom de l'établissement"
+              type="text"
+              inputName="nameSchool"
+              :inputValue="nameSchool"
+              @update:value="nameSchool = $event"
+            />
+            <MyInput
+              label="Lieu de l'établissement"
+              type="text"
+              inputName="locationSchool"
+              :inputValue="locationSchool"
+              @update:value="locationSchool = $event"
+            />
+            <MyInput
+              label="Date de début"
+              type="date"
+              inputName="startDateFormation"
+              :inputValue="startDateFormation"
+              @update:value="startDateFormation = $event"
+            />
+            <MyInput
+              label="Date de fin"
+              type="date"
+              inputName="endDateFormation"
+              :inputValue="endDateFormation"
+              @update:value="endDateFormation = $event"
+            />
+            <MyInput
+              label="Description"
+              type="textarea"
+              inputName="descriptionFormation"
+              :inputValue="descriptionFormation"
+              @update:value="descriptionFormation = $event"
+            />
             <button
               @click.prevent="
                 isEditingFormation ? updateFormation() : saveFormationsData()
@@ -235,7 +215,7 @@ Description </textarea
           <button v-if="isEditingFormation" @click.prevent="clearFormationForm">
             Supprimer
           </button>
-        </div>
+        </MyForm>
         <button @click.prevent="addFormation">
           Ajouter une autre formation
         </button>
@@ -249,63 +229,50 @@ Description </textarea
           </div>
         </div>
 
-        <div class="experiences">
+        <MyForm class="experiences">
           <template v-if="isExperienceFormVisible || experiences.length === 0">
-            <div class="field">
-              <label for="jobTitle">Intitulé du poste </label>
-              <input
-                type="text"
-                name="jobTitle"
-                id="jobTitle"
-                v-model="jobTitle"
-              />
-            </div>
-            <div class="field">
-              <label for="cityExperience">Lieu du poste </label>
-              <input
-                type="text"
-                name="cityExperience"
-                id="cityExperience"
-                v-model="cityExperience"
-              />
-            </div>
-            <div class="field">
-              <label for="startDate">Date de début </label>
-              <input
-                type="date"
-                name="startDate"
-                id="startDate"
-                v-model="startDateExperience"
-              />
-            </div>
-            <div class="field">
-              <label for="endDate">Date de fin </label>
-              <input
-                type="date"
-                name="endDate"
-                id="endDate"
-                v-model="endDateExperience"
-              />
-            </div>
-            <div class="field">
-              <label for="descriptionExperience">Description </label>
-              <textarea
-                id="descriptionExperience"
-                v-model="descriptionExperience"
-                placeholder="Description"
-              >
-Description </textarea
-              >
-            </div>
-            <div class="field">
-              <label for="contractType">Type de contrat </label>
-              <input
-                type="text"
-                name="contractType"
-                id="contractType"
-                v-model="contractTypeExperience"
-              />
-            </div>
+            <MyInput
+              label="Intitulé du poste"
+              type="text"
+              inputName="jobTitle"
+              :inputValue="jobTitle"
+              @update:value="jobTitle = $event"
+            />
+            <MyInput
+              label="Lieu du poste"
+              type="text"
+              inputName="cityExperience"
+              :inputValue="cityExperience"
+              @update:value="cityExperience = $event"
+            />
+            <MyInput
+              label="Date de début"
+              type="date"
+              inputName="startDateExperience"
+              :inputValue="startDateExperience"
+              @update:value="startDateExperience = $event"
+            />
+            <MyInput
+              label="Date de fin"
+              type="date"
+              inputName="endDateExperience"
+              :inputValue="endDateExperience"
+              @update:value="endDateExperience = $event"
+            />
+            <MyInput
+              label="Description"
+              type="textarea"
+              inputName="descriptionExperience"
+              :inputValue="descriptionExperience"
+              @update:value="descriptionExperience = $event"
+            />
+            <MyInput
+              label="Type de contrat"
+              type="text"
+              inputName="contractTypeExperience"
+              :inputValue="contractTypeExperience"
+              @update:value="contractTypeExperience = $event"
+            />
             <button
               @click.prevent="
                 isEditingExperience ? updateExperience() : saveExperiencesData()
@@ -321,7 +288,7 @@ Description </textarea
           >
             Supprimer
           </button>
-        </div>
+        </MyForm>
         <button @click.prevent="addExperience">
           Ajouter une autre expérience
         </button>
@@ -333,12 +300,15 @@ Description </textarea
           </div>
         </div>
 
-        <div class="skills">
+        <MyForm class="skills">
           <template v-if="isSkillFormVisible || skills.length === 0">
-            <div class="field">
-              <label for="name">Compétence </label>
-              <input type="text" name="name" id="name" v-model="nameSkill" />
-            </div>
+            <MyInput
+              label="Compétence"
+              type="text"
+              inputName="nameSkill"
+              :inputValue="nameSkill"
+              @update:value="nameSkill = $event"
+            />
             <button
               @click.prevent="isEditingSkill ? updateSkill() : saveSkillsData()"
             >
@@ -348,7 +318,7 @@ Description </textarea
           <button v-if="isEditingSkill" @click.prevent="clearSkillForm">
             Supprimer
           </button>
-        </div>
+        </MyForm>
         <button @click.prevent="addSkill">Ajouter une autre compétence</button>
         <div class="displayedLanguages">
           <div v-for="(language, index) in languages" :key="index">
@@ -358,12 +328,15 @@ Description </textarea
           </div>
         </div>
 
-        <div class="languages">
+        <MyForm class="languages">
           <template v-if="isLanguageFormVisible || languages.length === 0">
-            <div class="field">
-              <label for="name">Langue </label>
-              <input type="text" name="name" id="name" v-model="nameLanguage" />
-            </div>
+            <MyInput
+              label="Langue"
+              type="text"
+              inputName="nameLanguage"
+              :inputValue="nameLanguage"
+              @update:value="nameLanguage = $event"
+            />
             <button
               @click.prevent="
                 isEditingLanguage ? updateLanguage() : saveLanguagesData()
@@ -375,7 +348,7 @@ Description </textarea
           <button v-if="isEditingLanguage" @click.prevent="clearLanguageForm">
             Supprimer
           </button>
-        </div>
+        </MyForm>
         <button @click.prevent="addLanguage">Ajouter une langue</button>
         <div class="diplayedSocialMedias">
           <div v-for="(socialMedia, index) in socialMedias" :key="index">
@@ -384,28 +357,24 @@ Description </textarea
             <button @click.prevent="removeSocialMedia(index)">Supprimer</button>
           </div>
         </div>
-        <div class="socialMedias">
+        <MyForm class="socialMedias">
           <template
             v-if="isSocialMediaFormVisible || socialMedias.length === 0"
           >
-            <div class="field">
-              <label for="name">Réseau social </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                v-model="nameSocialMedia"
-              />
-            </div>
-            <div class="field">
-              <label for="pseudo">Pseudo </label>
-              <input
-                type="text"
-                link="pseudo"
-                id="pseudo"
-                v-model="pseudoSocialMedia"
-              />
-            </div>
+            <MyInput
+              label="Réseau social"
+              type="text"
+              inputName="nameSocialMedia"
+              :inputValue="nameSocialMedia"
+              @update:value="nameSocialMedia = $event"
+            />
+            <MyInput
+              label="Pseudo"
+              type="text"
+              inputName="pseudoSocialMedia"
+              :inputValue="pseudoSocialMedia"
+              @update:value="pseudoSocialMedia = $event"
+            />
             <button
               @click.prevent="
                 isEditingSocialMedia
@@ -422,7 +391,7 @@ Description </textarea
           >
             Supprimer
           </button>
-        </div>
+        </MyForm>
         <button @click.prevent="addSocialMedia">Ajouter une langue</button>
       </div>
 
@@ -452,9 +421,10 @@ Description </textarea
           :textFont="selectedCVTemplate.textFont"
         ></TemplateCV>
       </div>
-    </form>
+    </div>
     <div v-if="currentStep === 'telecharger'">
       <TemplateCV
+        ref="cvComponent"
         :name="selectedCVTemplate.name"
         :formations="formations"
         :experiences="experiences"
@@ -493,6 +463,8 @@ Description </textarea
 import axios from "axios";
 import { useCVStore } from "../stores/cv";
 import TemplateCV from "../components/TemplateCV.vue";
+import MyForm from "../components/form/MyForm.vue";
+import MyInput from "../components/form/MyInput.vue";
 import cookies from "vue-cookies";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -500,6 +472,8 @@ import html2canvas from "html2canvas";
 export default {
   components: {
     TemplateCV,
+    MyForm,
+    MyInput,
   },
   data() {
     return {
@@ -568,6 +542,7 @@ export default {
       imageFromForm: "",
     };
   },
+
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
     this.loadDataFromCookies();
@@ -612,14 +587,12 @@ export default {
 
       this.currentStep = "infos-personnelles"; // Passage à l'étape suivante
     },
-    ChangeImage(event) {
-      const file = event.target.files[0];
-      this.imageFromForm = URL.createObjectURL(file);
+    handleImageChange(imageUrl) {
+      this.imageFromForm = imageUrl; // Mettez à jour l'état Pinia
+      this.saveImageToCookies(imageUrl); // Mettez à jour les cookies
     },
-
     saveDataToCookies() {
       cookies.set("phoneNumber", this.phoneNumber);
-      cookies.set("imageFromForm", this.imageFromForm);
       cookies.set("postalAddress", this.postalAddress);
       cookies.set("dateOfBirth", this.dateOfBirth);
       cookies.set("title", this.title);
@@ -662,8 +635,11 @@ export default {
       cookies.set("socialMedias", this.socialMedias);
       console.log("Data saved to cookies:", this.socialMedias);
     },
+    saveImageToCookies(image) {
+      cookies.set("imageFromForm", image);
+    },
     loadDataFromCookies() {
-      this.imageFromForm = cookies.get("imageFromForm");
+      this.imageFromForm = cookies.get("imageFromForm") || "";
       this.phoneNumber = cookies.get("phoneNumber");
       this.postalAddress = cookies.get("postalAddress");
       this.dateOfBirth = cookies.get("dateOfBirth");
@@ -708,28 +684,28 @@ export default {
       console.log("socialMedias data loaded from cookies:", this.socialMedias);
     },
     saveInfosPersoData() {
-      const profil = [
-        {
-          imageFromForm: this.imageFromForm,
-          phoneNumber: this.phoneNumber,
-          postalAddress: this.postalAddress,
-          dateOfBirth: this.dateOfBirth,
-          title: this.title,
-          description: this.description,
-          firstname: this.firstname,
-          lastname: this.lastname,
-          mailAddress: this.mailAddress,
-          zipCode: this.zipCode,
-          city: this.city,
-          drivingLicence: this.drivingLicence,
-        },
-      ];
-      console.log("profil:", profil);
-      if (this.selectedCV && this.selectedCV.name) {
-        // Vérification de la sélection d'un modèle de CV
-        this.cvStore.setProfil(profil); // Définition des profils dans le store
-      }
-      this.saveDataToCookies();
+        const profil = [
+          {
+            imageFromForm: this.imageFromForm,
+            phoneNumber: this.phoneNumber,
+            postalAddress: this.postalAddress,
+            dateOfBirth: this.dateOfBirth,
+            title: this.title,
+            description: this.description,
+            firstname: this.firstname,
+            lastname: this.lastname,
+            mailAddress: this.mailAddress,
+            zipCode: this.zipCode,
+            city: this.city,
+            drivingLicence: this.drivingLicence,
+          },
+        ];
+        console.log("profil:", profil);
+        if (this.selectedCV && this.selectedCV.name) {
+          // Vérification de la sélection d'un modèle de CV
+          this.cvStore.setProfil(profil); // Définition des profils dans le store
+        }
+        this.saveDataToCookies();
     },
     saveFormationsData() {
       const newFormation = {
@@ -872,7 +848,7 @@ export default {
       this.isEditingExperience = true;
       this.editingExperienceIndex = index;
 
-      const experience = this.selectedCV.experiences[index];
+      const experience = this.experiences[index];
       this.jobTitle = experience.jobTitle;
       this.employer = experience.employer;
       this.cityExperience = experience.city;
@@ -1096,6 +1072,7 @@ export default {
 
       const socialMedia = this.socialMedias[index];
       this.nameSocialMedia = socialMedia.name;
+      this.pseudoSocialMedia = socialMedia.pseudo;
 
       this.isSocialMediaFormVisible = true;
     },
@@ -1129,18 +1106,18 @@ export default {
     },
 
     async downloadPDF() {
-      const cvStore = useCVStore(); // Obtenir le store CV
+      // Récupérer la référence au composant CV
+      const cvComponent = this.$refs.cvComponent;
 
-      const {
-        profil,
-        formations,
-        experiences,
-        skills,
-        languages,
-        socialMedias,
-      } = cvStore;
+      // Générer le contenu HTML du CV
+      const cvContent = cvComponent.$el.outerHTML;
 
-      // this.currentStep = "choix-template"; // Retour à la première étape après avoir généré le PDF
+      // Convertir le contenu HTML en PDF
+      const pdf = new jsPDF();
+      const canvas = await html2canvas(cvComponent.$el);
+      const imgData = canvas.toDataURL("image/png");
+      pdf.addImage(imgData, "PNG", 10, 10, 190, 280);
+      pdf.save("mon_cv.pdf");
     },
     previousStep() {
       // Méthode pour passer à l'étape précédente
@@ -1150,7 +1127,6 @@ export default {
         this.currentStep = "infos-personnelles";
       }
     },
-
     nextStep() {
       // Méthode pour passer à l'étape suivante
       if (this.currentStep === "choix-template") {
