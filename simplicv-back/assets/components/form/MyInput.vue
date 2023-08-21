@@ -43,6 +43,7 @@ export default {
       default: "text",
     },
     inputName: String,
+    inputId: String,
     inputValue: [String, Number],
     required: Boolean,
   },

@@ -22,6 +22,7 @@
     </ol>
     <div v-if="currentStep === 'choix-template'">
       <h1>Modèles de CV</h1>
+
       <section v-for="cv in modelsCV" :key="cv.id">
         <TemplateCV
           :formations="cv.formations"
@@ -57,9 +58,10 @@
             label="Photo de profil"
             type="file"
             inputName="imageFromForm"
-            :inputValue="imageFromForm"
             @update:value="imageFromForm = $event"
             @changeImage="handleImageChange"
+            inputId="imageFromForm"
+            :required="true"
           />
 
           <MyInput
@@ -68,8 +70,8 @@
             inputName="title"
             :inputValue="title"
             @update:value="title = $event"
-            :required="required"
             inputId="title"
+            :required="true"
           />
           <div v-if="titleError" class="error-message">{{ titleError }}</div>
           <MyInput
@@ -78,6 +80,8 @@
             inputName="descriptionProfil"
             :inputValue="descriptionProfil"
             @update:value="descriptionProfil = $event"
+            inputId="descriptionProfil"
+            :required="true"
           />
           <div v-if="descriptionProfilError" class="error-message">
             {{ descriptionProfilError }}
@@ -88,16 +92,21 @@
             inputName="lastname"
             :inputValue="lastname"
             @update:value="lastname = $event"
+            inputId="lastname"
+            :required="true"
           />
           <div v-if="lastnameError" class="error-message">
             {{ lastnameError }}
           </div>
+
           <MyInput
             label="Prénom"
             type="text"
             inputName="firstname"
             :inputValue="firstname"
             @update:value="firstname = $event"
+            inputId="firstname"
+            :required="true"
           />
           <div v-if="firstnameError" class="error-message">
             {{ firstnameError }}
@@ -108,16 +117,21 @@
             inputName="dateOfBirth"
             :inputValue="dateOfBirth"
             @update:value="dateOfBirth = $event"
+            inputId="dateOfBirth"
+            :required="false"
           />
           <div v-if="dateOfBirthError" class="error-message">
             {{ dateOfBirthError }}
           </div>
+
           <MyInput
             label="Adresse-email"
             type="email"
             inputName="mailAddress"
             :inputValue="mailAddress"
             @update:value="mailAddress = $event"
+            inputId="mailAddress"
+            :required="true"
           />
           <div v-if="mailAddressError" class="error-message">
             {{ mailAddressError }}
@@ -128,6 +142,8 @@
             inputName="phoneNumber"
             :inputValue="phoneNumber"
             @update:value="phoneNumber = $event"
+            inputId="phoneNumber"
+            :required="false"
           />
           <div v-if="phoneNumberError" class="error-message">
             {{ phoneNumberError }}
@@ -138,6 +154,8 @@
             inputName="postalAddress"
             :inputValue="postalAddress"
             @update:value="postalAddress = $event"
+            inputId="postalAddress"
+            :required="false"
           />
 
           <MyInput
@@ -146,6 +164,8 @@
             inputName="zipCode"
             :inputValue="zipCode"
             @update:value="zipCode = $event"
+            inputId="zipCode"
+            :required="false"
           />
           <div v-if="zipCodeError" class="error-message">
             {{ zipCodeError }}
@@ -156,6 +176,8 @@
             inputName="city"
             :inputValue="city"
             @update:value="city = $event"
+            inputId="city"
+            :required="false"
           />
 
           <MyInput
@@ -164,13 +186,18 @@
             inputName="drivingLicence"
             :inputValue="drivingLicence"
             @update:value="drivingLicence = $event"
+            inputId="drivingLicence"
+            :required="false"
           />
           <button @click.prevent="saveInfosPersoData">Enregistrer</button>
         </MyForm>
         <div class="displayedFormations">
           <div v-for="(formation, index) in formations" :key="index">
             <p>{{ formation.degree }}</p>
-            <span>{{ formation.startDate }} - {{ formation.endDate }}</span>
+            <span
+              >{{ formatMonthYear(formation.startDate) }} -
+              {{ formatMonthYear(formation.endDate) }}</span
+            >
             <button @click.prevent="editFormation(index)">Modifier</button>
             <button @click.prevent="removeFormation(index)">Supprimer</button>
           </div>
@@ -190,6 +217,8 @@
               inputName="nameSchool"
               :inputValue="nameSchool"
               @update:value="nameSchool = $event"
+              inputId="nameSchool"
+              :required="true"
             />
             <div v-if="nameSchoolError" class="error-message">
               {{ nameSchoolError }}
@@ -198,8 +227,10 @@
               label="Lieu de l'établissement"
               type="text"
               inputName="locationSchool"
+              inputId="locationSchool"
               :inputValue="locationSchool"
               @update:value="locationSchool = $event"
+              :required="true"
             />
             <div v-if="locationSchoolError" class="error-message">
               {{ locationSchoolError }}
@@ -208,28 +239,36 @@
               label="Date de début"
               type="date"
               inputName="startDateFormation"
+              inputId="startDateFormation"
               :inputValue="startDateFormation"
               @update:value="startDateFormation = $event"
+              :required="true"
             />
             <div v-if="startDateFormationError" class="error-message">
               {{ startDateFormationError }}
             </div>
+
             <MyInput
               label="Date de fin"
               type="date"
               inputName="endDateFormation"
+              inputId="endDateFormation"
               :inputValue="endDateFormation"
               @update:value="endDateFormation = $event"
+              :required="true"
             />
             <div v-if="endDateFormationError" class="error-message">
               {{ endDateFormationError }}
             </div>
+
             <MyInput
               label="Description"
               type="textarea"
               inputName="descriptionFormation"
+              inputId="descriptionFormation"
               :inputValue="descriptionFormation"
               @update:value="descriptionFormation = $event"
+              :required="false"
             />
             <button
               @click.prevent="
@@ -263,57 +302,55 @@
               label="Intitulé du poste"
               type="text"
               inputName="jobTitle"
+              inputId="jobTitle"
               :inputValue="jobTitle"
               @update:value="jobTitle = $event"
+              :required="true"
             />
-            <div v-if="jobTitleError" class="error-message">
-              {{ jobTitleError }}
-            </div>
             <MyInput
               label="Lieu du poste"
               type="text"
               inputName="cityExperience"
+              inputId="cityExperience"
               :inputValue="cityExperience"
               @update:value="cityExperience = $event"
+              :required="true"
             />
-            <div v-if="cityExperienceError" class="error-message">
-              {{ cityExperienceError }}
-            </div>
             <MyInput
               label="Date de début"
               type="date"
               inputName="startDateExperience"
+              inputId="startDateExperience"
               :inputValue="startDateExperience"
               @update:value="startDateExperience = $event"
+              :required="true"
             />
-            <div v-if="startDateExperienceError" class="error-message">
-              {{ startDateExperienceError }}
-            </div>
-
             <MyInput
               label="Date de fin"
               type="date"
               inputName="endDateExperience"
+              inputId="endDateExperience"
               :inputValue="endDateExperience"
               @update:value="endDateExperience = $event"
+              :required="true"
             />
-            <div v-if="endDateExperienceError" class="error-message">
-              {{ endDateExperienceError }}
-            </div>
-
             <MyInput
               label="Description"
               type="textarea"
               inputName="descriptionExperience"
+              inputId="descriptionExperience"
               :inputValue="descriptionExperience"
               @update:value="descriptionExperience = $event"
+              :required="true"
             />
             <MyInput
               label="Type de contrat"
               type="text"
               inputName="contractTypeExperience"
+              inputId="contractTypeExperience"
               :inputValue="contractTypeExperience"
               @update:value="contractTypeExperience = $event"
+              :required="true"
             />
             <button
               @click.prevent="
@@ -348,8 +385,10 @@
               label="Compétence"
               type="text"
               inputName="nameSkill"
+              inputId="nameSkill"
               :inputValue="nameSkill"
               @update:value="nameSkill = $event"
+              :required="false"
             />
             <button
               @click.prevent="isEditingSkill ? updateSkill() : saveSkillsData()"
@@ -376,8 +415,10 @@
               label="Langue"
               type="text"
               inputName="nameLanguage"
+              inputId="nameLanguage"
               :inputValue="nameLanguage"
               @update:value="nameLanguage = $event"
+              :required="false"
             />
             <button
               @click.prevent="
@@ -407,15 +448,19 @@
               label="Réseau social"
               type="text"
               inputName="nameSocialMedia"
+              inputId="nameSocialMedia"
               :inputValue="nameSocialMedia"
               @update:value="nameSocialMedia = $event"
+              :required="false"
             />
             <MyInput
               label="Pseudo"
               type="text"
               inputName="pseudoSocialMedia"
+              inputId="pseudoSocialMedia"
               :inputValue="pseudoSocialMedia"
               @update:value="pseudoSocialMedia = $event"
+              :required="false"
             />
             <button
               @click.prevent="
@@ -434,7 +479,9 @@
             Supprimer
           </button>
         </MyForm>
-        <button @click.prevent="addSocialMedia">Ajouter une langue</button>
+        <button @click.prevent="addSocialMedia">
+          Ajouter un réseau social
+        </button>
       </div>
 
       <div class="preview">
@@ -502,19 +549,18 @@
 </template>
 
 <script>
+const encryptionKey = "secretkey"; // Remplacez par votre propre clé
+
 import axios from "axios";
 import { useCVStore } from "../stores/cv";
-import TemplateCV from "../components/TemplateCV";
+import TemplateCV from "../components/TemplateCV.vue";
 import MyForm from "../components/form/MyForm.vue";
 import MyInput from "../components/form/MyInput.vue";
 import cookies from "vue-cookies";
-import DOMPurify from "dompurify";
+import cryptoJS from "crypto-js";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { parseISO, isBefore, subYears } from "date-fns"; // Importez les fonctions nécessaires
-
-import cryptoJS from "crypto-js";
-const encryptionKey = "secretkey";
 
 export default {
   components: {
@@ -556,7 +602,7 @@ export default {
       isEditingSocialMedia: false,
       editingSocialMediaIndex: -1,
       currentStep: "choix-template", // Étape actuelle du processus
-      phoneNumber: "",
+      phoneNumber: null,
       postalAddress: "",
       dateOfBirth: "",
       title: "",
@@ -567,7 +613,7 @@ export default {
       mailAddress: "",
       drivingLicence: "",
       city: "",
-      zipCode: "",
+      zipCode: null,
       degree: "",
       nameSchool: "",
       locationSchool: "",
@@ -601,18 +647,11 @@ export default {
       nameSchoolError: "",
       startDateFormationError: "",
       endDateFormationError: "",
-      jobTitleError: "",
-      cityExperienceError: "",
-      startDateExperienceError: "",
-      endDateExperienceError: "",
     };
   },
-
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
-    this.loadFormationsFromCookies();
-    this.loadExperiencesFromCookies();
-    this.loadInfosPersoFromCookies();
+    this.loadDataFromCookies();
   },
   setup() {
     const cvStore = useCVStore(); // Utilisation du store CV
@@ -657,22 +696,6 @@ export default {
     handleImageChange(imageUrl) {
       this.imageFromForm = imageUrl; // Mettez à jour l'état Pinia
       this.saveImageToCookies(imageUrl); // Mettez à jour les cookies
-    },
-
-    saveImageToCookies(image) {
-      cookies.set("imageFromForm", image);
-    },
-    sanitizeAndEscape(text) {
-      // Utilisez DOMPurify pour nettoyer les données
-      const sanitizedText = DOMPurify.sanitize(text);
-      // Échappez les caractères spéciaux HTML pour éviter les attaques XSS
-      const escapedText = this.escapeHtml(sanitizedText);
-      return escapedText;
-    },
-
-    escapeHtml(text) {
-      // Fonction d'échappement des caractères spéciaux HTML
-      return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     },
     validateInfosPersoData() {
       this.titleError = this.title ? "" : "Le titre est requis.";
@@ -769,38 +792,6 @@ export default {
         !this.endDateFormationError
       );
     },
-    validateExperienceData() {
-      this.jobTitleError = this.jobTitle
-        ? ""
-        : "Le champ 'Intitulé du poste' est requis.";
-      this.cityExperienceError = this.cityExperience
-        ? ""
-        : "Le champ 'Lieu du poste' est requis.";
-
-      // Validation de la date de début
-      this.startDateExperienceError = !this.startDateExperience
-        ? "Le champ 'Date de début' est requis."
-        : !this.isValidDateFormat(this.startDateExperience)
-        ? "Le format de la date est invalide."
-        : "";
-
-      // Validation de la date de fin
-      this.endDateExperienceError = !this.endDateExperience
-        ? "Le champ 'Date de fin' est requis."
-        : !this.isValidDateFormat(this.endDateExperience)
-        ? "Le format de la date est invalide."
-        : this.isDateValid(this.startDateExperience, this.endDateExperience)
-        ? "La date de fin doit être supérieure à la date de début."
-        : "";
-
-      // Vérifiez toutes les erreurs et retournez vrai si toutes les validations sont passées, sinon retournez faux
-      return (
-        !this.jobTitleError &&
-        !this.cityExperienceError &&
-        !this.startDateExperienceError &&
-        !this.endDateExperienceError
-      );
-    },
     isDateValid(startDate, endDate) {
       const startDateObj = new Date(startDate);
       const endDateObj = new Date(endDate);
@@ -810,92 +801,229 @@ export default {
       const regex = /^\d{4}-\d{2}-\d{2}$/;
       return regex.test(date);
     },
+    loadDataFromCookies() {
+      const encryptedPersonalData = cookies.get("personalData");
+      if (encryptedPersonalData) {
+        const decryptedPersonalData = JSON.parse(encryptedPersonalData);
+
+        this.phoneNumber = cryptoJS.AES.decrypt(
+          decryptedPersonalData.phoneNumber,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.postalAddress = cryptoJS.AES.decrypt(
+          decryptedPersonalData.postalAddress,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.dateOfBirth = cryptoJS.AES.decrypt(
+          decryptedPersonalData.dateOfBirth,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.title = cryptoJS.AES.decrypt(
+          decryptedPersonalData.title,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.descriptionProfil = cryptoJS.AES.decrypt(
+          decryptedPersonalData.descriptionProfil,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.firstname = cryptoJS.AES.decrypt(
+          decryptedPersonalData.firstname,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.lastname = cryptoJS.AES.decrypt(
+          decryptedPersonalData.lastname,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.mailAddress = cryptoJS.AES.decrypt(
+          decryptedPersonalData.mailAddress,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.drivingLicence = cryptoJS.AES.decrypt(
+          decryptedPersonalData.drivingLicence,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.city = cryptoJS.AES.decrypt(
+          decryptedPersonalData.city,
+          encryptionKey
+        ).toString(cryptoJS.enc.Utf8);
+        this.zipCode = parseInt(
+          cryptoJS.AES.decrypt(
+            decryptedPersonalData.zipCode,
+            encryptionKey
+          ).toString(cryptoJS.enc.Utf8)
+        );
+      }
+    },
+
+    // saveDataToCookies() {
+    //   //attribut "Secure" pour qu'ils ne soient envoyés que via HTTPS
+    //   cookies.set("phoneNumber", this.phoneNumber, { secure: true });
+    //   cookies.set("postalAddress", this.postalAddress, { secure: true });
+    //   cookies.set("dateOfBirth", this.dateOfBirth, { secure: true });
+    //   cookies.set("title", this.title, { secure: true });
+    //   cookies.set("descriptionProfil", this.descriptionProfil, { secure: true });
+    //   cookies.set("firstname", this.firstname, { secure: true });
+    //   cookies.set("lastname", this.lastname, { secure: true });
+    //   cookies.set("mailAddress", this.mailAddress, { secure: true });
+    //   cookies.set("drivingLicence", this.drivingLicence, { secure: true });
+    //   cookies.set("city", this.city, { secure: true });
+    //   cookies.set("zipCode", this.zipCode, { secure: true });
+    //   cookies.set("degree", this.degree, { secure: true });
+    //   cookies.set("nameSchool", this.nameSchool, { secure: true });
+    //   cookies.set("locationSchool", this.locationSchool, { secure: true });
+    //   cookies.set("startDateFormation", this.startDateFormation, { secure: true });
+    //   cookies.set("endDateFormation", this.endDateFormation, { secure: true });
+    //   cookies.set("descriptionFormation", this.descriptionFormation, { secure: true });
+    //   cookies.set("jobTitle", this.jobTitle, { secure: true });
+    //   cookies.set("employer", this.employer, { secure: true });
+    //   cookies.set("cityExperience", { secure: true });
+    //   cookies.set("startDateExperience", this.startDateExperience, { secure: true });
+    //   cookies.set("endDateExperience", this.endDateExperience, { secure: true });
+    //   cookies.set("descriptionExperience", this.descriptionExperience, { secure: true });
+    //   cookies.set("nameSkill", this.nameSkill, { secure: true });
+    //   cookies.set("nameLanguage", this.nameLanguage, { secure: true });
+    //   cookies.set("nameSocialMedia", this.nameSocialMedia, { secure: true });
+    //   cookies.set("pseudoSocialMedia", this.pseudoSocialMedia, { secure: true });
+    //   // Save formations data
+    //   cookies.set("formations", this.formations, { secure: true });
+    //   console.log("Data saved to cookies:", this.formations, { secure: true });
+
+    //   cookies.set("experiences", this.experiences, { secure: true });
+    //   console.log("Data saved to cookies:", this.experiences, { secure: true });
+
+    //   cookies.set("skills", this.skills, { secure: true });
+    //   console.log("Data saved to cookies:", this.skills, { secure: true });
+
+    //   cookies.set("languages", this.languages, { secure: true });
+    //   console.log("Data saved to cookies:", this.languages, { secure: true });
+
+    //   cookies.set("socialMedias", this.socialMedias, { secure: true });
+    //   console.log("Data saved to cookies:", this.socialMedias, { secure: true });
+    // },
+    saveImageToCookies(image) {
+      cookies.set("imageFromForm", image);
+    },
+    // loadDataFromCookies() {
+    //   this.imageFromForm = cookies.get("imageFromForm") || "";
+    //   this.phoneNumber = cookies.get("phoneNumber");
+    //   this.postalAddress = cookies.get("postalAddress");
+    //   this.dateOfBirth = cookies.get("dateOfBirth");
+    //   this.title = cookies.get("title");
+    //   this.descriptionProfil = cookies.get("descriptionProfil");
+    //   this.firstname = cookies.get("firstname");
+    //   this.lastname = cookies.get("lastname");
+    //   this.mailAddress = cookies.get("mailAddress");
+    //   this.drivingLicence = cookies.get("drivingLicence");
+    //   this.city = cookies.get("city");
+    //   this.zipCode = cookies.get("zipCode");
+    //   this.degree = cookies.get("degree");
+    //   this.nameSchool = cookies.get("nameSchool");
+    //   this.locationSchool = cookies.get("locationSchool");
+    //   this.startDateFormation = cookies.get("startDateFormation");
+    //   this.endDateFormation = cookies.get("endDateFormation");
+    //   this.descriptionFormation = cookies.get("descriptionFormation");
+    //   this.jobTitle = cookies.get("jobTitle");
+    //   this.employer = cookies.get("employer");
+    //   this.cityExperience = cookies.get("cityExperience");
+    //   this.startDateExperience = cookies.get("startDateExperience");
+    //   this.endDateExperience = cookies.get("endDateExperience");
+    //   this.descriptionExperience = cookies.get("descriptionExperience");
+    //   this.nameSkill = cookies.get("nameSkill");
+    //   this.nameLanguage = cookies.get("nameLanguage");
+    //   this.nameSocialMedia = cookies.get("nameSocialMedia");
+    //   this.pseudoSocialMedia = cookies.get("pseudoSocialMedia");
+
+    //   this.formations = cookies.get("formations") || [];
+    //   console.log("Formations data loaded from cookies:", this.formations);
+
+    //   this.experiences = cookies.get("experiences") || [];
+    //   console.log("experiences data loaded from cookies:", this.experiences);
+
+    //   this.skills = cookies.get("skills") || [];
+    //   console.log("skills data loaded from cookies:", this.skills);
+
+    //   this.languages = cookies.get("languages") || [];
+    //   console.log("languages data loaded from cookies:", this.languages);
+
+    //   this.socialMedias = cookies.get("socialMedias") || [];
+    //   console.log("socialMedias data loaded from cookies:", this.socialMedias);
+    // },
     saveInfosPersoData() {
       if (!this.validateInfosPersoData()) {
         // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
         return;
       }
-      const profil = {
-        imageFromForm: this.sanitizeAndEscape(this.imageFromForm),
-        phoneNumber: this.sanitizeAndEscape(this.phoneNumber),
-        postalAddress: this.sanitizeAndEscape(this.postalAddress),
-        title: this.sanitizeAndEscape(this.title),
-        descriptionProfil: this.sanitizeAndEscape(this.descriptionProfil),
-        firstname: this.sanitizeAndEscape(this.firstname),
-        lastname: this.sanitizeAndEscape(this.lastname),
-        mailAddress: this.sanitizeAndEscape(this.mailAddress),
-        drivingLicence: this.sanitizeAndEscape(this.drivingLicence),
-        city: this.sanitizeAndEscape(this.city),
-        zipCode: this.sanitizeAndEscape(this.zipCode),
-        dateOfBirth: this.sanitizeAndEscape(this.dateOfBirth),
-      };
-
+      const profil = [
+        {
+          imageFromForm: this.imageFromForm,
+          phoneNumber: this.phoneNumber,
+          postalAddress: this.postalAddress,
+          dateOfBirth: this.dateOfBirth,
+          title: this.title,
+          description: this.descriptionProfil,
+          firstname: this.firstname,
+          lastname: this.lastname,
+          mailAddress: this.mailAddress,
+          zipCode: this.zipCode,
+          city: this.city,
+          drivingLicence: this.drivingLicence,
+        },
+      ];
       console.log("profil:", profil);
       if (this.selectedCV && this.selectedCV.name) {
         // Vérification de la sélection d'un modèle de CV
         this.cvStore.setProfil(profil); // Définition des profils dans le store
       }
 
-      const encryptedProfil = cryptoJS.AES.encrypt(
-        JSON.stringify(profil),
-        encryptionKey
-      ).toString();
+      const cookieOptions = { secure: true, expires: 1 }; // 1 day expiration
 
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict", httpOnly: true }; // 1 day expiration
-      cookies.set("personalData", encryptedProfil, cookieOptions);
-      console.log("Personal data saved to cookies:", encryptedProfil);
-    },
-    loadInfosPersoFromCookies() {
-      try {
-        const encryptedProfil = cookies.get("personalData");
+      // Encrypt and store personal data in cookies
+      const encryptedPersonalData = {
+        postalAddress: cryptoJS.AES.encrypt(
+          this.postalAddress,
+          encryptionKey
+        ).toString(),
+        title: cryptoJS.AES.encrypt(this.title, encryptionKey).toString(),
+        descriptionProfil: cryptoJS.AES.encrypt(
+          this.descriptionProfil,
+          encryptionKey
+        ).toString(),
+        firstname: cryptoJS.AES.encrypt(
+          this.firstname,
+          encryptionKey
+        ).toString(),
+        lastname: cryptoJS.AES.encrypt(this.lastname, encryptionKey).toString(),
+        mailAddress: cryptoJS.AES.encrypt(
+          this.mailAddress,
+          encryptionKey
+        ).toString(),
+        drivingLicence: cryptoJS.AES.encrypt(
+          this.drivingLicence,
+          encryptionKey
+        ).toString(),
+        city: cryptoJS.AES.encrypt(this.city, encryptionKey).toString(),
+      };
 
-        if (encryptedProfil) {
-          const decryptedProfilBytes = cryptoJS.AES.decrypt(
-            encryptedProfil,
-            encryptionKey
-          );
+      cookies.set(
+        "personalData",
+        JSON.stringify(encryptedPersonalData),
+        cookieOptions
+      );
 
-          if (decryptedProfilBytes.sigBytes === 0) {
-            console.error("Error decrypting data.");
-            return;
-          }
-
-          const decryptedProfil = JSON.parse(
-            decryptedProfilBytes.toString(cryptoJS.enc.Utf8)
-          );
-
-          this.imageFromForm = decryptedProfil.imageFromForm;
-          this.phoneNumber = decryptedProfil.phoneNumber;
-          this.postalAddress = decryptedProfil.postalAddress;
-          this.title = decryptedProfil.title;
-          this.descriptionProfil = decryptedProfil.descriptionProfil;
-          this.firstname = decryptedProfil.firstname;
-          this.lastname = decryptedProfil.lastname;
-          this.mailAddress = decryptedProfil.mailAddress;
-          this.drivingLicence = decryptedProfil.drivingLicence;
-          this.city = decryptedProfil.city;
-          this.zipCode = decryptedProfil.zipCode;
-          this.dateOfBirth = decryptedProfil.dateOfBirth;
-
-          console.log("Personal data loaded from cookies:", decryptedProfil);
-        }
-      } catch (error) {
-        console.error("Error while decrypting/parsing data:", error);
-      }
+      console.log("Personal data saved to cookies:", encryptedPersonalData);
     },
     saveFormationsData() {
       if (!this.validateFormationData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
+        // Affichez un message d'erreur ou effectuez une autre action en cas de données non valides
         return;
       }
-
       const newFormation = {
-        degree: this.sanitizeAndEscape(this.degree),
-        nameSchool: this.sanitizeAndEscape(this.nameSchool),
-        locationSchool: this.sanitizeAndEscape(this.locationSchool),
+        degree: this.degree,
+        nameSchool: this.nameSchool,
+        locationSchool: this.locationSchool,
         startDate: this.startDateFormation,
         endDate: this.endDateFormation,
-        description: this.sanitizeAndEscape(this.descriptionFormation),
+        description: this.descriptionFormation,
       };
 
       if (this.isEditingFormation && this.editingFormationIndex >= 0) {
@@ -903,40 +1031,11 @@ export default {
       } else {
         this.formations.push(newFormation);
       }
+
       this.clearFormationForm();
       this.isFormVisible = false;
-      this.saveFormationsToCookies();
-    },
-    saveFormationsToCookies() {
-      // Encrypt and store formations data in cookies
-      const encryptedFormations = cryptoJS.AES.encrypt(
-        JSON.stringify(this.formations),
-        encryptionKey
-      ).toString();
 
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict" }; // 1 day expiration
-
-      cookies.set("formationsData", encryptedFormations, cookieOptions);
-      console.log("Formations data loaded from cookies:", encryptedFormations);
-    },
-    loadFormationsFromCookies() {
-      try {
-        const encryptedFormations = cookies.get("formationsData");
-        if (encryptedFormations) {
-          const decryptedFormations = cryptoJS.AES.decrypt(
-            encryptedFormations,
-            encryptionKey
-          ).toString(cryptoJS.enc.Utf8);
-
-          this.formations = JSON.parse(decryptedFormations);
-          console.log(
-            "Formations data loaded from cookies:",
-            decryptedFormations
-          );
-        }
-      } catch (error) {
-        console.error("Error while decrypting/parsing formations data:", error);
-      }
+      this.saveDataToCookies(); // Save formations data to cookies
     },
     addFormation() {
       this.isFormVisible = true;
@@ -976,17 +1075,13 @@ export default {
       this.isFormVisible = true;
     },
     updateFormation() {
-      if (!this.validateFormationData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
-        return;
-      }
       const updatedFormation = {
-        degree: this.sanitizeAndEscape(this.degree),
-        nameSchool: this.sanitizeAndEscape(this.nameSchool),
-        locationSchool: this.sanitizeAndEscape(this.locationSchool),
-        startDate: this.sanitizeAndEscape(this.startDateFormation),
-        endDate: this.sanitizeAndEscape(this.endDateFormation),
-        description: this.sanitizeAndEscape(this.descriptionFormation),
+        degree: this.degree,
+        nameSchool: this.nameSchool,
+        locationSchool: this.locationSchool,
+        startDate: this.startDateFormation,
+        endDate: this.endDateFormation,
+        description: this.descriptionFormation,
       };
 
       this.formations.splice(this.editingFormationIndex, 1, updatedFormation);
@@ -994,7 +1089,6 @@ export default {
       this.clearFormationForm();
       this.isFormVisible = false;
       this.isEditingFormation = false;
-      this.saveFormationsToCookies();
     },
     clearFormationForm() {
       // Reset the form fields and editingFormationIndex
@@ -1009,18 +1103,17 @@ export default {
     removeFormation(index) {
       this.formations.splice(index, 1);
       this.cvStore.removeFormation(index); // Suppression dans le store
-      this.saveFormationsToCookies(); // Mettre à jour les cookies si nécessaire
+      this.saveDataToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveExperiencesData() {
-      // Code pour la sauvegarde des expériences (similaire à la sauvegarde des formations)
       const newExperience = {
-        jobTitle: this.sanitizeAndEscape(this.jobTitle),
-        employer: this.sanitizeAndEscape(this.employer),
-        city: this.sanitizeAndEscape(this.cityExperience),
-        startDate: this.sanitizeAndEscape(this.startDateExperience),
-        endDate: this.sanitizeAndEscape(this.endDateExperience),
-        description: this.sanitizeAndEscape(this.descriptionExperience),
-        contractType: this.sanitizeAndEscape(this.contractTypeExperience),
+        jobTitle: this.jobTitle,
+        employer: this.employer,
+        city: this.cityExperience,
+        startDate: this.startDateExperience,
+        endDate: this.endDateExperience,
+        description: this.descriptionExperience,
+        contractType: this.contractTypeExperience,
       };
 
       if (this.isEditingExperience && this.editingExperienceIndex >= 0) {
@@ -1033,43 +1126,7 @@ export default {
 
       this.clearExperienceForm();
       this.isExperienceFormVisible = false; // Set this flag to false to hide the form
-      this.saveExperiencesToCookies(); // Appel de la fonction pour sauvegarder les expériences dans les cookies
-    },
-
-    saveExperiencesToCookies() {
-      // Encrypt and store experiences data in cookies
-      const encryptedExperiences = cryptoJS.AES.encrypt(
-        JSON.stringify(this.experiences),
-        encryptionKey
-      ).toString();
-
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict", httpOnly: true }; // 1 day expiration
-
-      cookies.set("experiencesData", encryptedExperiences, cookieOptions);
-      console.log("Experiences data saved to cookies:", encryptedExperiences);
-    },
-
-    loadExperiencesFromCookies() {
-      try {
-        const encryptedExperiences = cookies.get("experiencesData");
-        if (encryptedExperiences) {
-          const decryptedExperiences = cryptoJS.AES.decrypt(
-            encryptedExperiences,
-            encryptionKey
-          ).toString(cryptoJS.enc.Utf8);
-
-          this.experiences = JSON.parse(decryptedExperiences);
-          console.log(
-            "Experiences data loaded from cookies:",
-            decryptedExperiences
-          );
-        }
-      } catch (error) {
-        console.error(
-          "Error while decrypting/parsing experiences data:",
-          error
-        );
-      }
+      this.saveDataToCookies(); // Save data to cookies
     },
     // Méthode pour ajouter une expérience
     addExperience() {
@@ -1112,10 +1169,6 @@ export default {
       this.isExperienceFormVisible = true;
     },
     updateExperience() {
-      if (!this.validateExperienceData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
-        return;
-      }
       const updatedExperience = {
         jobTitle: this.jobTitle,
         employer: this.employer,
@@ -1151,7 +1204,7 @@ export default {
     removeExperience(index) {
       this.experiences.splice(index, 1);
       this.cvStore.removeExperience(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveDataToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveSkillsData() {
       const newSkill = {
@@ -1166,7 +1219,7 @@ export default {
 
       this.clearSkillForm();
       this.isSkillFormVisible = false;
-      // Save data to cookies
+      this.saveDataToCookies(); // Save data to cookies
     },
 
     addSkill() {
@@ -1217,7 +1270,7 @@ export default {
     removeSkill(index) {
       this.skills.splice(index, 1);
       this.cvStore.removeSkill(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveDataToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveLanguagesData() {
       const newLanguage = {
@@ -1232,7 +1285,7 @@ export default {
 
       this.clearLanguageForm();
       this.isLanguageFormVisible = false;
-      // Save data to cookies
+      this.saveDataToCookies(); // Save data to cookies
     },
 
     addLanguage() {
@@ -1283,7 +1336,7 @@ export default {
     removeLanguage(index) {
       this.languages.splice(index, 1);
       this.cvStore.removeLanguage(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveDataToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveSocialMediasData() {
       const newSocialMedia = {
@@ -1298,7 +1351,7 @@ export default {
 
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
-      // Save data to cookies
+      this.saveDataToCookies(); // Save data to cookies
     },
 
     addSocialMedia() {
@@ -1358,7 +1411,7 @@ export default {
     removeSocialMedia(index) {
       this.socialMedias.splice(index, 1);
       this.cvStore.removeSocialMedia(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveDataToCookies(); // Mettre à jour les cookies si nécessaire
     },
 
     async downloadPDF() {
@@ -1408,7 +1461,6 @@ button,
   background-color: #f55200;
   padding: 10px;
 }
-
 .error-message {
   color: red;
   font-size: 12px;

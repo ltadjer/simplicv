@@ -274,7 +274,7 @@
 <script>
 import axios from "axios";
 import { useCoverLetterStore } from "../stores/coverLetter";
-import TemplateCoverLetter from "../components/TemplateCoverLetter.vue";
+import TemplateCoverLetter from "../components/TemplateCoverLetter";
 import cookies from 'vue-cookies';
 
 export default {

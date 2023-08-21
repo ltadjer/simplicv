@@ -93,7 +93,7 @@ export default {
 
       // Envoyer la requête POST à votre API Symfony avec les données du formulaire
       axios
-        .post("http://localhost:8000/api/contact", formData)
+        .post("/api/contact", formData)
         .then((response) => {
           // Réponse réussie de l'API Symfony
           console.log(response.data);

@@ -25,6 +25,10 @@ Encore.setOutputPath('public/build/')
   .enableBuildNotifications()
   .enableSourceMaps(!Encore.isProduction())
   .enableVersioning(Encore.isProduction())
+  .configureDevServerOptions(options => {
+        // Activer HTTPS en environnement de développement
+        options.https(true);
+    })
   .addPlugin(new HtmlWebpackPlugin({
     template: './assets/index.html',
     filename: 'index.html',
