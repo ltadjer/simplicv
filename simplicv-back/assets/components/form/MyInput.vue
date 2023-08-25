@@ -1,6 +1,12 @@
 <template>
-  <div class="field">
-    <label class="block text-gray-600 text-sm mb-1" :for="inputId">{{ label }}</label>
+  <div class="field m-0">
+    <label v-if="type !== 'file'" class="block text-gray-600 text-sm mb-1" :for="inputId">{{ label }}</label>
+    <label v-else>
+  <i
+    class="fa-solid fa-camera text-orange text-6xl border-2 rounded-full p-12 cursor-pointer"
+    @click="openFileInput"
+  ></i>
+</label>
     <template v-if="type === 'textarea'">
       <textarea
         :id="inputId"
@@ -9,7 +15,7 @@
         @input="handleInput"
         :required="required"
         :placeholder="InputPlaceholder"
-        class="bg-background text-blue placeholder-gray-500 border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
+        class="w-full bg-background text-blue placeholder-blue border-2 border-gray-300 rounded-[12px] py-2 px-3 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
       ></textarea>
     </template>
     <template v-else-if="type === 'file'">
@@ -19,6 +25,9 @@
         :name="inputName"
         @change="handleFileChange"
         :required="required"
+        class="opacity-0 inset-0"
+        ref="fileInput"
+
       />
     </template>
     <template v-else>
@@ -30,7 +39,7 @@
           @input="handleInput"
           :required="required"
           :placeholder="InputPlaceholder"
-          class="bg-background text-blue placeholder-gray-500 border border-gray-300 rounded-lg py-1 px-3 focus:outline-none focus:border-blue focus:ring focus:ring-blue-200"
+          class="w-full	bg-background text-blue placeholder-gray-500 border-2 border-gray-300 rounded-[12px] py-1 px-3 focus:outline-none focus:border-blue focus:ring focus:ring-blue-200"
         />
     </template>
   </div>
@@ -63,7 +72,11 @@ export default {
         this.$emit("update:value", imageUrl);
         this.$emit("changeImage", imageUrl);
       }
-    }
+    },
+    openFileInput() {
+    const inputElement = this.$refs.fileInput;
+    inputElement.click();
+  },
   },
 };
 </script>

@@ -1,27 +1,31 @@
 <template>
-  <div class="cv-models">
-    <ol class="progress-bar">
+  <div class="cv-models container mx-auto px-3 py-4 md:px-8 md:py-8">
+    <ol
+      class="progress-bar list-decimal flex justify-center items-center gap-4 pt-3 pb-20 text-xl"
+    >
       <li
-        :class="{ active: currentStep === 'choix-template' }"
+      class="cursor-pointer"
+        :class="{ 'active text-blue text-bold': currentStep === 'choix-template' }"
         @click="changeStep('choix-template')"
       >
-        Choississez votre template
+        Choississez votre template <i class="fa-solid fa-chevron-right"></i>
       </li>
       <li
-        :class="{ active: currentStep === 'infos-personnelles' }"
+        :class="{ 'active text-blue text-bold': currentStep === 'infos-personnelles' }"
         @click="changeStep('infos-personnelles')"
+        class="ml-4 cursor-pointer"
       >
-        Entrez vos informations
+        Entrez vos informations <i class="fa-solid fa-chevron-right"></i>
       </li>
       <li
-        :class="{ active: currentStep === 'telecharger' }"
+        :class="{ 'active text-blue text-bold': currentStep === 'telecharger' }"
         @click="changeStep('telecharger')"
+        class="ml-4 cursor-pointer"
       >
         Télécharger votre CV
       </li>
     </ol>
     <div v-if="currentStep === 'choix-template'">
-      <h1>Modèles de CV</h1>
       <section v-for="cv in modelsCV" :key="cv.id">
         <TemplateCV
           :formations="cv.formations"
@@ -50,11 +54,16 @@
         <MyButton @click="selectCV(cv)">Sélectionner le modèle</MyButton>
       </section>
     </div>
-    <div v-if="currentStep === 'infos-personnelles'">
-      <div class="forms">
-        <MyForm class="infos-perso">
+    <div
+      v-if="currentStep === 'infos-personnelles'"
+      class="md:flex md:justify-between md:gap-5"
+    >
+      <div class="forms md:w-1/2 flex flex-col gap-6">
+        <MyForm
+          class="infos-perso border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3"
+        >
           <MyInput
-            label="Photo de profil"
+            class="md:col-span-1 mx-auto"
             type="file"
             inputName="imageFromForm"
             :inputValue="imageFromForm"
@@ -62,6 +71,7 @@
             @changeImage="handleImageChange"
           />
           <MyInput
+            class="md:col-span-1"
             label="Titre"
             type="text"
             inputName="title"
@@ -70,68 +80,65 @@
             :required="required"
             inputId="title"
           />
-          <div v-if="titleError" class="error-message">{{ titleError }}</div>
+          <span v-if="titleError" class="error-message">{{ titleError }}</span>
           <MyInput
+            class="md:col-span-2"
             label="Description"
             type="textarea"
             inputName="descriptionProfil"
             :inputValue="descriptionProfil"
             @update:value="descriptionProfil = $event"
           />
-          <div v-if="descriptionProfilError" class="error-message">
+          <span v-if="descriptionProfilError" class="error-message">
             {{ descriptionProfilError }}
-          </div>
+          </span>
           <MyInput
+            class="md:col-span-1"
             label="Nom"
             type="text"
             inputName="lastname"
             :inputValue="lastname"
             @update:value="lastname = $event"
           />
-          <div v-if="lastnameError" class="error-message">
+          <span v-if="lastnameError" class="error-message">
             {{ lastnameError }}
-          </div>
+          </span>
           <MyInput
+            class="md:col-span-1"
             label="Prénom"
             type="text"
             inputName="firstname"
             :inputValue="firstname"
             @update:value="firstname = $event"
           />
-          <div v-if="firstnameError" class="error-message">
+          <span v-if="firstnameError" class="error-message">
             {{ firstnameError }}
-          </div>
+          </span>
+
           <MyInput
-            label="Date d'anniversaire"
-            type="date"
-            inputName="dateOfBirth"
-            :inputValue="dateOfBirth"
-            @update:value="dateOfBirth = $event"
-          />
-          <div v-if="dateOfBirthError" class="error-message">
-            {{ dateOfBirthError }}
-          </div>
-          <MyInput
+            class="md:col-span-1"
             label="Adresse-email"
             type="email"
             inputName="mailAddress"
             :inputValue="mailAddress"
             @update:value="mailAddress = $event"
           />
-          <div v-if="mailAddressError" class="error-message">
+          <span v-if="mailAddressError" class="error-message">
             {{ mailAddressError }}
-          </div>
+          </span>
           <MyInput
+            class="md:col-span-1"
             label="Téléphone"
             type="tel"
             inputName="phoneNumber"
             :inputValue="phoneNumber"
             @update:value="phoneNumber = $event"
           />
-          <div v-if="phoneNumberError" class="error-message">
+          <span v-if="phoneNumberError" class="error-message">
             {{ phoneNumberError }}
-          </div>
+          </span>
           <MyInput
+            class="md:col-span-2"
             label="Adresse postale"
             type="text"
             inputName="postalAddress"
@@ -140,43 +147,61 @@
           />
 
           <MyInput
+            class="md:col-span-1"
             label="Code postal"
             type="number"
             inputName="zipCode"
             :inputValue="zipCode"
             @update:value="zipCode = $event"
           />
-          <div v-if="zipCodeError" class="error-message">
+          <span v-if="zipCodeError" class="error-message">
             {{ zipCodeError }}
-          </div>
+          </span>
           <MyInput
+            class="md:col-span-1"
             label="Ville"
             type="text"
             inputName="city"
             :inputValue="city"
             @update:value="city = $event"
           />
-
           <MyInput
+            class="md:col-span-1"
+            label="Date d'anniversaire"
+            type="date"
+            inputName="dateOfBirth"
+            :inputValue="dateOfBirth"
+            @update:value="dateOfBirth = $event"
+          />
+          <span v-if="dateOfBirthError" class="error-message">
+            {{ dateOfBirthError }}
+          </span>
+          <MyInput
+            class="md:col-span-1"
             label="Type de permis"
             type="text"
             inputName="drivingLicence"
             :inputValue="drivingLicence"
             @update:value="drivingLicence = $event"
           />
-          <MyButton @click.prevent="saveInfosPersoData">Enregistrer</MyButton>
+          <MyButton @click.prevent="saveInfosPersoData" class="mx-auto md:col-start-2 py-3">Enregistrer</MyButton>
         </MyForm>
         <div class="displayedFormations">
           <div v-for="(formation, index) in formations" :key="index">
             <p>{{ formation.degree }}</p>
             <span>{{ formation.startDate }} - {{ formation.endDate }}</span>
-            <MyButton @click.prevent="editFormation(index)">Modifier</MyButton>
-            <MyButton @click.prevent="removeFormation(index)">Supprimer</MyButton>
+            <MyButton :without-background="true" @click.prevent="editFormation(index)"
+              ><i class="fa-solid fa-pen text-orange"></i
+            ></MyButton>
+            <MyButton :without-background="true" @click.prevent="removeFormation(index)"
+              ><i class="fa-solid fa-trash text-orange"></i
+            ></MyButton>
           </div>
         </div>
-        <MyForm class="formations">
+        <MyForm class="formations border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3">
           <template v-if="isFormVisible || formations.length === 0">
-            <MyInput
+            <MyInput 
+            class="md:col-span-2"
               label="Diplôme"
               type="text"
               inputName="degree"
@@ -184,6 +209,7 @@
               @update:value="degree = $event"
             />
             <MyInput
+            class="md:col-span-1"
               label="Nom de l'établissement"
               type="text"
               inputName="nameSchool"
@@ -194,6 +220,7 @@
               {{ nameSchoolError }}
             </div>
             <MyInput
+            class="md:col-span-1"
               label="Lieu de l'établissement"
               type="text"
               inputName="locationSchool"
@@ -204,6 +231,7 @@
               {{ locationSchoolError }}
             </div>
             <MyInput
+            class="md:col-span-1"
               label="Date de début"
               type="date"
               inputName="startDateFormation"
@@ -214,6 +242,7 @@
               {{ startDateFormationError }}
             </div>
             <MyInput
+            class="md:col-span-1"
               label="Date de fin"
               type="date"
               inputName="endDateFormation"
@@ -224,6 +253,7 @@
               {{ endDateFormationError }}
             </div>
             <MyInput
+            class="md:col-span-2"
               label="Description"
               type="textarea"
               inputName="descriptionFormation"
@@ -234,12 +264,16 @@
               @click.prevent="
                 isEditingFormation ? updateFormation() : saveFormationsData()
               "
+              class="mx-auto md:col-start-2 py-3"
             >
               Enregistrer
             </MyButton>
           </template>
 
-          <MyButton v-if="isEditingFormation" @click.prevent="clearFormationForm">
+          <MyButton
+            v-if="isEditingFormation"
+            @click.prevent="clearFormationForm"
+          >
             Supprimer
           </MyButton>
         </MyForm>
@@ -251,14 +285,19 @@
           <div v-for="(experience, index) in experiences" :key="index">
             <p>{{ experience.jobTitle }}</p>
             <span>{{ experience.startDate }} - {{ experience.endDate }}</span>
-            <MyButton @click.prevent="editExperience(index)">Modifier</MyButton>
-            <MyButton @click.prevent="removeExperience(index)">Supprimer</MyButton>
+            <MyButton :without-background="true" @click.prevent="editExperience(index)"
+              ><i class="fa-solid fa-pen text-orange"></i
+            ></MyButton>
+            <MyButton :without-background="true" @click.prevent="removeExperience(index)"
+              ><i class="fa-solid fa-trash text-orange"></i
+            ></MyButton>
           </div>
         </div>
 
-        <MyForm class="experiences">
+        <MyForm class="experiences border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3">
           <template v-if="isExperienceFormVisible || experiences.length === 0">
             <MyInput
+              class="md:col-span-1"
               label="Intitulé du poste"
               type="text"
               inputName="jobTitle"
@@ -269,6 +308,15 @@
               {{ jobTitleError }}
             </div>
             <MyInput
+              class="md:col-span-1"
+              label="Employeur"
+              type="text"
+              inputName="employer"
+              :inputValue="employer"
+              @update:value="employer = $event"
+            />
+            <MyInput
+            class="md:col-span-1"
               label="Lieu du poste"
               type="text"
               inputName="cityExperience"
@@ -279,6 +327,15 @@
               {{ cityExperienceError }}
             </div>
             <MyInput
+            class="md:col-span-1"
+              label="Type de contrat"
+              type="text"
+              inputName="contractTypeExperience"
+              :inputValue="contractTypeExperience"
+              @update:value="contractTypeExperience = $event"
+            />
+            <MyInput
+            class="md:col-span-1"
               label="Date de début"
               type="date"
               inputName="startDateExperience"
@@ -290,6 +347,7 @@
             </div>
 
             <MyInput
+            class="md:col-span-1"
               label="Date de fin"
               type="date"
               inputName="endDateExperience"
@@ -301,23 +359,19 @@
             </div>
 
             <MyInput
+            class="md:col-span-2"
               label="Description"
               type="textarea"
               inputName="descriptionExperience"
               :inputValue="descriptionExperience"
               @update:value="descriptionExperience = $event"
             />
-            <MyInput
-              label="Type de contrat"
-              type="text"
-              inputName="contractTypeExperience"
-              :inputValue="contractTypeExperience"
-              @update:value="contractTypeExperience = $event"
-            />
+           
             <MyButton
               @click.prevent="
                 isEditingExperience ? updateExperience() : saveExperiencesData()
               "
+               class="mx-auto md:col-start-2 py-3"
             >
               Enregistrer
             </MyButton>
@@ -336,14 +390,19 @@
         <div class="displayedSkills">
           <div v-for="(skill, index) in skills" :key="index">
             <p>{{ skill.name }}</p>
-            <MyButton @click.prevent="editSkill(index)">Modifier</MyButton>
-            <MyButton @click.prevent="removeSkill(index)">Supprimer</MyButton>
+            <MyButton :without-background="true" @click.prevent="editSkill(index)"
+              ><i class="fa-solid fa-pen text-orange"></i
+            ></MyButton>
+            <MyButton :without-background="true" @click.prevent="removeSkill(index)"
+              ><i class="fa-solid fa-trash text-orange"></i
+            ></MyButton>
           </div>
         </div>
 
-        <MyForm class="skills">
+        <MyForm class="skills  border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3">
           <template v-if="isSkillFormVisible || skills.length === 0">
             <MyInput
+            class="md:col-span-2"
               label="Compétence"
               type="text"
               inputName="nameSkill"
@@ -352,6 +411,7 @@
             />
             <MyButton
               @click.prevent="isEditingSkill ? updateSkill() : saveSkillsData()"
+              class="mx-auto md:col-start-2 py-3"
             >
               Enregistrer
             </MyButton>
@@ -360,18 +420,25 @@
             Supprimer
           </MyButton>
         </MyForm>
-        <MyButton @click.prevent="addSkill">Ajouter une autre compétence</MyButton>
+        <MyButton @click.prevent="addSkill"
+          >Ajouter une autre compétence</MyButton
+        >
         <div class="displayedLanguages">
           <div v-for="(language, index) in languages" :key="index">
             <p>{{ language.name }}</p>
-            <MyButton @click.prevent="editLanguage(index)">Modifier</MyButton>
-            <MyButton @click.prevent="removeLanguage(index)">Supprimer</MyButton>
+            <MyButton :without-background="true" @click.prevent="editLanguage(index)"
+              ><i class="fa-solid fa-pen text-orange"></i
+            ></MyButton>
+            <MyButton :without-background="true" @click.prevent="removeLanguage(index)"
+              ><i class="fa-solid fa-trash text-orange"></i
+            ></MyButton>
           </div>
         </div>
 
-        <MyForm class="languages">
+        <MyForm class="languages border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3">
           <template v-if="isLanguageFormVisible || languages.length === 0">
             <MyInput
+            class="md:col-span-2"
               label="Langue"
               type="text"
               inputName="nameLanguage"
@@ -380,8 +447,8 @@
             />
             <MyButton
               @click.prevent="
-                isEditingLanguage ? updateLanguage() : saveLanguagesData()
-              "
+                isEditingLanguage ? updateLanguage() : saveLanguagesData()"
+                class="mx-auto md:col-start-2 py-3"
             >
               Enregistrer
             </MyButton>
@@ -394,15 +461,20 @@
         <div class="diplayedSocialMedias">
           <div v-for="(socialMedia, index) in socialMedias" :key="index">
             <p>{{ socialMedia.name }}</p>
-            <MyButton @click.prevent="editSocialMedia(index)">Modifier</MyButton>
-            <MyButton @click.prevent="removeSocialMedia(index)">Supprimer</MyButton>
+            <MyButton :without-background="true" @click.prevent="editSocialMedia(index)"
+              ><i class="fa-solid fa-pen text-orange"></i
+            ></MyButton>
+            <MyButton :without-background="true" @click.prevent="removeSocialMedia(index)"
+              ><i class="fa-solid fa-trash text-orange"></i
+            ></MyButton>
           </div>
         </div>
-        <MyForm class="socialMedias">
+        <MyForm class="socialMedias border-2 border-blue p-8 rounded-[16px] grid grid-cols-1 md:grid-cols-2 gap-3">
           <template
             v-if="isSocialMediaFormVisible || socialMedias.length === 0"
           >
             <MyInput
+            class="md:col-span-1"
               label="Réseau social"
               type="text"
               inputName="nameSocialMedia"
@@ -410,6 +482,7 @@
               @update:value="nameSocialMedia = $event"
             />
             <MyInput
+            class="md:col-span-1"
               label="Pseudo"
               type="text"
               inputName="pseudoSocialMedia"
@@ -422,6 +495,7 @@
                   ? updateSocialMedia()
                   : saveSocialMediasData()
               "
+              class="mx-auto md:col-start-2 py-3"
             >
               Enregistrer
             </MyButton>
@@ -429,14 +503,14 @@
           <MyButton
             v-if="isEditingSocialMedia"
             @click.prevent="clearSocialMediaForm"
+            
           >
             Supprimer
           </MyButton>
         </MyForm>
         <MyButton @click.prevent="addSocialMedia">Ajouter une langue</MyButton>
       </div>
-
-      <div class="preview">
+      <div class="preview md:w-1/2">
         <TemplateCV
           :name="selectedCVTemplate.name"
           :formations="formations"
@@ -493,10 +567,14 @@
     </div>
   </div>
   <MyButton v-if="currentStep !== 'choix-template'" @click="previousStep">
-    Précédent
+    Précédent <i class="fa-solid fa-chevron-left"></i>
   </MyButton>
-  <MyButton v-if="currentStep !== 'telecharger'" @click="nextStep">
-    Suivant
+  <MyButton
+    v-if="currentStep !== 'telecharger'"
+    @click="nextStep"
+    class="flex items-center gap-3 text-center"
+  >
+    Suivant <i class="fa-solid fa-chevron-right"></i>
   </MyButton>
 </template>
 
@@ -844,7 +922,15 @@ export default {
         encryptionKey
       ).toString();
 
-      cookies.set("personalData", encryptedProfil, "1d", null, null, true, "Strict");
+      cookies.set(
+        "personalData",
+        encryptedProfil,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("Personal data saved to cookies:", encryptedProfil);
     },
     loadInfosPersoFromCookies() {
@@ -916,8 +1002,15 @@ export default {
         encryptionKey
       ).toString();
 
-
-      cookies.set("formationsData", encryptedFormations, "1d", null, null, true, "Strict");
+      cookies.set(
+        "formationsData",
+        encryptedFormations,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("Formations data loaded from cookies:", encryptedFormations);
     },
     loadFormationsFromCookies() {
@@ -1044,7 +1137,15 @@ export default {
       ).toString();
       // 1 day expiration
 
-      cookies.set("experiencesData", encryptedExperiences, "1d", null, null, true, "Strict");
+      cookies.set(
+        "experiencesData",
+        encryptedExperiences,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("Experiences data saved to cookies:", encryptedExperiences);
     },
     loadExperiencesFromCookies() {
@@ -1152,7 +1253,7 @@ export default {
     },
     saveSkillsData() {
       const newSkill = {
-        name:  this.sanitizeAndEscape(this.nameSkill),
+        name: this.sanitizeAndEscape(this.nameSkill),
       };
 
       if (this.isEditingSkill && this.editingSkillIndex >= 0) {
@@ -1160,7 +1261,7 @@ export default {
       } else {
         this.skills.push(newSkill);
       }
-      
+
       this.clearSkillForm();
       this.isSkillFormVisible = false;
       this.saveSkillsToCookies();
@@ -1173,7 +1274,15 @@ export default {
       ).toString();
       // 1 day expiration
 
-      cookies.set("skillsData", encryptedSkills, "1d", null, null, true, "Strict");
+      cookies.set(
+        "skillsData",
+        encryptedSkills,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("Skills data saved to cookies:", encryptedSkills);
     },
     loadSkillsFromCookies() {
@@ -1186,16 +1295,10 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.skills = JSON.parse(decryptedSkills);
-          console.log(
-            "Skills data loaded from cookies:",
-            decryptedSkills
-          );
+          console.log("Skills data loaded from cookies:", decryptedSkills);
         }
       } catch (error) {
-        console.error(
-          "Error while decrypting/parsing skills data:",
-          error
-        );
+        console.error("Error while decrypting/parsing skills data:", error);
       }
     },
     addSkill() {
@@ -1207,7 +1310,7 @@ export default {
       } else {
         // Add the new Skill
         const newSkill = {
-          name:  this.sanitizeAndEscape(this.nameSkill),
+          name: this.sanitizeAndEscape(this.nameSkill),
         };
 
         this.cvStore.addSkill([newSkill]);
@@ -1249,7 +1352,7 @@ export default {
     },
     saveLanguagesData() {
       const newLanguage = {
-        name:  this.sanitizeAndEscape(this.nameLanguage),
+        name: this.sanitizeAndEscape(this.nameLanguage),
       };
 
       if (this.isEditingLanguage && this.editingLanguageIndex >= 0) {
@@ -1260,7 +1363,7 @@ export default {
 
       this.clearLanguageForm();
       this.isLanguageFormVisible = false;
-      this.saveLanguagesToCookies()// Save data to cookies
+      this.saveLanguagesToCookies(); // Save data to cookies
     },
     saveLanguagesToCookies() {
       // Encrypt and store Languages data in cookies
@@ -1270,7 +1373,15 @@ export default {
       ).toString();
       // 1 day expiration
 
-      cookies.set("languagesData", encryptedLanguages, "1d", null, null, true, "Strict");
+      cookies.set(
+        "languagesData",
+        encryptedLanguages,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("Languages data saved to cookies:", encryptedLanguages);
     },
     loadLanguagesFromCookies() {
@@ -1289,10 +1400,7 @@ export default {
           );
         }
       } catch (error) {
-        console.error(
-          "Error while decrypting/parsing Languages data:",
-          error
-        );
+        console.error("Error while decrypting/parsing Languages data:", error);
       }
     },
     addLanguage() {
@@ -1304,7 +1412,7 @@ export default {
       } else {
         // Add the new Language
         const newLanguage = {
-          name:  this.sanitizeAndEscape(this.nameLanguage),
+          name: this.sanitizeAndEscape(this.nameLanguage),
         };
 
         this.cvStore.addLanguage([newLanguage]);
@@ -1325,7 +1433,7 @@ export default {
     },
     updateLanguage() {
       const updatedLanguage = {
-        name:  this.sanitizeAndEscape(this.nameLanguage),
+        name: this.sanitizeAndEscape(this.nameLanguage),
       };
 
       this.languages.splice(this.editingLanguageIndex, 1, updatedLanguage);
@@ -1342,11 +1450,11 @@ export default {
     removeLanguage(index) {
       this.languages.splice(index, 1);
       this.cvStore.removeLanguage(index); // Suppression dans le store
-      this.saveLanguagesToCookies()// Mettre à jour les cookies si nécessaire
+      this.saveLanguagesToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveSocialMediasData() {
       const newSocialMedia = {
-        name:  this.sanitizeAndEscape(this.nameSocialMedia),
+        name: this.sanitizeAndEscape(this.nameSocialMedia),
       };
 
       if (this.isEditingSocialMedia && this.editingSocialMediaIndex >= 0) {
@@ -1357,7 +1465,7 @@ export default {
 
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
-      this.saveSocialMediasToCookies()
+      this.saveSocialMediasToCookies();
       // Save data to cookies
     },
     saveSocialMediasToCookies() {
@@ -1367,7 +1475,15 @@ export default {
         encryptionKey
       ).toString();
 
-      cookies.set("socialMediasData", encryptedSocialMedias, "1d", null, null, true, "Strict");
+      cookies.set(
+        "socialMediasData",
+        encryptedSocialMedias,
+        "1d",
+        null,
+        null,
+        true,
+        "Strict"
+      );
       console.log("SocialMedias data saved to cookies:", encryptedSocialMedias);
     },
     loadSocialMediasFromCookies() {
@@ -1402,8 +1518,8 @@ export default {
       } else {
         // Add the new SocialMedia
         const newSocialMedia = {
-          name:  this.sanitizeAndEscape(this.nameSocialMedia),
-          pseudo:  this.sanitizeAndEscape(this.pseudoSocialMedia),
+          name: this.sanitizeAndEscape(this.nameSocialMedia),
+          pseudo: this.sanitizeAndEscape(this.pseudoSocialMedia),
         };
 
         this.cvStore.addSocialMedia([newSocialMedia]);
@@ -1438,7 +1554,7 @@ export default {
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
       this.isEditingSocialMedia = false;
-      this.saveSocialMediasToCookies()
+      this.saveSocialMediasToCookies();
     },
     clearSocialMediaForm() {
       this.name = "";
@@ -1448,7 +1564,7 @@ export default {
     removeSocialMedia(index) {
       this.socialMedias.splice(index, 1);
       this.cvStore.removeSocialMedia(index); // Suppression dans le store
-      this.saveSocialMediasToCookies() // Mettre à jour les cookies si nécessaire
+      this.saveSocialMediasToCookies(); // Mettre à jour les cookies si nécessaire
     },
     async downloadPDF() {
       // Récupérer la référence au composant CV

@@ -1,8 +1,8 @@
 <template>
-  <div class="contact container mx-auto px-3 py-4 md:px-8 md:py-8">
+  <div class="contact container mx-auto flex justify-center items-center h-screen flex-col">
     <h1 class="text-3xl text-center gap-5 text-blue pt-3 pb-3">Contactez-nous</h1>
     <p class="text-center py-2">Si vous avez une question, n'hésitez pas à nous écrire.</p>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" class="w-full  md:w-1/2 py-8">
       <MyInput
         label="Nom"
         type="text"
@@ -45,8 +45,8 @@
         @update:value="message = $event"
         :required="required"
       />
-      <div v-if="showNotification" class="message">{{ notification }}</div>
-      <MyButton type="submit">Envoyer</MyButton>
+      <div v-if="showNotification" class="message bg-green text-white px-3">{{ notification }}</div>
+      <MyButton class="block mx-auto my-4" type="submit">Envoyer</MyButton>
     </form>
   </div>
 </template>
