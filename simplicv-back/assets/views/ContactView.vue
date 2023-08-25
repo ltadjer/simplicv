@@ -1,69 +1,69 @@
 <template>
-  <div class="contact">
-    <h1 class="text-orange">Contact Us</h1>
+  <div class="contact container mx-auto px-3 py-4 md:px-8 md:py-8">
+    <h1 class="text-3xl text-center gap-5 text-blue pt-3 pb-3">Contactez-nous</h1>
+    <p class="text-center py-2">Si vous avez une question, n'hésitez pas à nous écrire.</p>
     <form @submit.prevent="submitForm">
-      <div>
-        <label for="lastname">Last Name:</label>
-        <input
-          type="text"
-          id="lastname"
-          v-model="lastname"
-          name="lastname"
-          required
-        />
-      </div>
-      <div>
-        <label for="firstname">First Name:</label>
-        <input
-          type="text"
-          id="firstname"
-          v-model="firstname"
-          name="firstname"
-          required
-        />
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          v-model="email"
-          name="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          required
-        />
-  
-      </div>
-      <div>
-        <label for="subject">Subject:</label>
-        <input
-          type="text"
-          id="subject"
-          v-model="subject"
-          name="subject"
-          required
-        />
-      </div>
-      <div>
-        <label for="message">Message:</label>
-        <textarea
-          id="message"
-          v-model="message"
-          name="message"
-          required
-        ></textarea>
-      </div>
+      <MyInput
+        label="Nom"
+        type="text"
+        inputName="lastname"
+        :inputValue="lastname"
+        @update:value="lastname = $event"
+        :InputPlaceholder="Dupont"
+        :required="required"
+      />
+      <MyInput
+        label="Prénom"
+        type="text"
+        inputName="firstname"
+        :inputValue="firstname"
+        @update:value="firstname = $event"
+        :InputPlaceholder="John"
+        :required="required"
+      />
+      <MyInput
+        label="Adresse email"
+        type="email"
+        inputName="email"
+        :inputValue="email"
+        @update:value="email = $event"
+        :required="required"
+      />
+      <MyInput
+        label="Sujet"
+        type="text"
+        inputName="subject"
+        :inputValue="subject"
+        @update:value="subject = $event"
+        :required="required"
+      />
+      <MyInput
+        label="Message"
+        type="textarea"
+        inputName="message"
+        :inputValue="message"
+        @update:value="message = $event"
+        :required="required"
+      />
       <div v-if="showNotification" class="message">{{ notification }}</div>
-      <button type="submit">Envoyer</button>
+      <MyButton type="submit">Envoyer</MyButton>
     </form>
   </div>
 </template>
   
   <script>
 import axios from "axios";
+import MyForm from "../components/form/MyForm.vue";
+import MyInput from "../components/form/MyInput.vue";
+import MyButton from "../components/MyButton";
 
 export default {
   name: "Contact",
+  components: {
+    MyForm,
+    MyInput,
+    MyButton,
+  },
   data() {
     return {
       lastname: "",
@@ -72,7 +72,6 @@ export default {
       subject: "",
       message: "",
       showMessage: false, // Ajout de la propriété pour afficher ou masquer le message
-    
     };
   },
   methods: {
@@ -103,7 +102,7 @@ export default {
           this.email = "";
           this.subject = "";
           this.message = "";
-          this.notification = "Message envoyé !";
+          this.notification = "Votre message a bien été envoyé";
           this.showNotification = true;
         })
         .catch((error) => {
@@ -113,7 +112,7 @@ export default {
           this.notification = "Une erreur s'est produite. Veuillez réessayer.";
           this.showNotification = true;
         });
-    }
+    },
   },
 };
 </script>

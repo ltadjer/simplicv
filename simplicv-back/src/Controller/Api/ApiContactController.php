@@ -25,8 +25,8 @@ class ApiContactController extends AbstractController
         // Vérifier si l'adresse e-mail est définie
         if ($userEmail) {
             // Build email content
-            $emailSubject = 'Contact request from ' . $userEmail;
-            $emailContent = $lastname . ' ' . $firstname . ' has sent you the following message: ' . $message;
+            $emailSubject = 'Message de la part de ' . $userEmail;
+            $emailContent = $lastname . ' ' . $firstname . ' vous a envoyé le message suivant : ' . $message;
 
             // Create the email
             $email = (new Email())
@@ -40,12 +40,12 @@ class ApiContactController extends AbstractController
             $mailer->send($email);
 
             // Redirect with a success flash message
-            $this->addFlash('success', 'Your message has been sent.');
+            $this->addFlash('success', 'Votre message a bien été envoyé.');
               // Return a success response
-            return new JsonResponse(['message' => 'Your message has been sent.'], Response::HTTP_OK);
+            return new JsonResponse(['message' => 'Votre message a bien été envoyé.'], Response::HTTP_OK);
         } else {
             // L'adresse e-mail n'est pas définie, gérer l'erreur
-            return new Response('Email address is missing.', Response::HTTP_BAD_REQUEST);
+            return new Response('Veuillez renseigner votre adresse email.', Response::HTTP_BAD_REQUEST);
         }
     }
 }

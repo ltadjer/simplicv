@@ -47,7 +47,7 @@
           :zipCode="cv.profil.zipCode"
           :image="cv.profil.image"
         ></TemplateCV>
-        <button @click="selectCV(cv)">Sélectionner le modèle</button>
+        <MyButton @click="selectCV(cv)">Sélectionner le modèle</MyButton>
       </section>
     </div>
     <div v-if="currentStep === 'infos-personnelles'">
@@ -61,7 +61,6 @@
             @update:value="imageFromForm = $event"
             @changeImage="handleImageChange"
           />
-
           <MyInput
             label="Titre"
             type="text"
@@ -165,14 +164,14 @@
             :inputValue="drivingLicence"
             @update:value="drivingLicence = $event"
           />
-          <button @click.prevent="saveInfosPersoData">Enregistrer</button>
+          <MyButton @click.prevent="saveInfosPersoData">Enregistrer</MyButton>
         </MyForm>
         <div class="displayedFormations">
           <div v-for="(formation, index) in formations" :key="index">
             <p>{{ formation.degree }}</p>
             <span>{{ formation.startDate }} - {{ formation.endDate }}</span>
-            <button @click.prevent="editFormation(index)">Modifier</button>
-            <button @click.prevent="removeFormation(index)">Supprimer</button>
+            <MyButton @click.prevent="editFormation(index)">Modifier</MyButton>
+            <MyButton @click.prevent="removeFormation(index)">Supprimer</MyButton>
           </div>
         </div>
         <MyForm class="formations">
@@ -231,29 +230,29 @@
               :inputValue="descriptionFormation"
               @update:value="descriptionFormation = $event"
             />
-            <button
+            <MyButton
               @click.prevent="
                 isEditingFormation ? updateFormation() : saveFormationsData()
               "
             >
               Enregistrer
-            </button>
+            </MyButton>
           </template>
 
-          <button v-if="isEditingFormation" @click.prevent="clearFormationForm">
+          <MyButton v-if="isEditingFormation" @click.prevent="clearFormationForm">
             Supprimer
-          </button>
+          </MyButton>
         </MyForm>
-        <button @click.prevent="addFormation">
+        <MyButton @click.prevent="addFormation">
           Ajouter une autre formation
-        </button>
+        </MyButton>
 
         <div class="displayedExperiences">
           <div v-for="(experience, index) in experiences" :key="index">
             <p>{{ experience.jobTitle }}</p>
             <span>{{ experience.startDate }} - {{ experience.endDate }}</span>
-            <button @click.prevent="editExperience(index)">Modifier</button>
-            <button @click.prevent="removeExperience(index)">Supprimer</button>
+            <MyButton @click.prevent="editExperience(index)">Modifier</MyButton>
+            <MyButton @click.prevent="removeExperience(index)">Supprimer</MyButton>
           </div>
         </div>
 
@@ -315,30 +314,30 @@
               :inputValue="contractTypeExperience"
               @update:value="contractTypeExperience = $event"
             />
-            <button
+            <MyButton
               @click.prevent="
                 isEditingExperience ? updateExperience() : saveExperiencesData()
               "
             >
               Enregistrer
-            </button>
+            </MyButton>
           </template>
 
-          <button
+          <MyButton
             v-if="isEditingExperience"
             @click.prevent="clearExperienceForm"
           >
             Supprimer
-          </button>
+          </MyButton>
         </MyForm>
-        <button @click.prevent="addExperience">
+        <MyButton @click.prevent="addExperience">
           Ajouter une autre expérience
-        </button>
+        </MyButton>
         <div class="displayedSkills">
           <div v-for="(skill, index) in skills" :key="index">
             <p>{{ skill.name }}</p>
-            <button @click.prevent="editSkill(index)">Modifier</button>
-            <button @click.prevent="removeSkill(index)">Supprimer</button>
+            <MyButton @click.prevent="editSkill(index)">Modifier</MyButton>
+            <MyButton @click.prevent="removeSkill(index)">Supprimer</MyButton>
           </div>
         </div>
 
@@ -351,22 +350,22 @@
               :inputValue="nameSkill"
               @update:value="nameSkill = $event"
             />
-            <button
+            <MyButton
               @click.prevent="isEditingSkill ? updateSkill() : saveSkillsData()"
             >
               Enregistrer
-            </button>
+            </MyButton>
           </template>
-          <button v-if="isEditingSkill" @click.prevent="clearSkillForm">
+          <MyButton v-if="isEditingSkill" @click.prevent="clearSkillForm">
             Supprimer
-          </button>
+          </MyButton>
         </MyForm>
-        <button @click.prevent="addSkill">Ajouter une autre compétence</button>
+        <MyButton @click.prevent="addSkill">Ajouter une autre compétence</MyButton>
         <div class="displayedLanguages">
           <div v-for="(language, index) in languages" :key="index">
             <p>{{ language.name }}</p>
-            <button @click.prevent="editLanguage(index)">Modifier</button>
-            <button @click.prevent="removeLanguage(index)">Supprimer</button>
+            <MyButton @click.prevent="editLanguage(index)">Modifier</MyButton>
+            <MyButton @click.prevent="removeLanguage(index)">Supprimer</MyButton>
           </div>
         </div>
 
@@ -379,24 +378,24 @@
               :inputValue="nameLanguage"
               @update:value="nameLanguage = $event"
             />
-            <button
+            <MyButton
               @click.prevent="
                 isEditingLanguage ? updateLanguage() : saveLanguagesData()
               "
             >
               Enregistrer
-            </button>
+            </MyButton>
           </template>
-          <button v-if="isEditingLanguage" @click.prevent="clearLanguageForm">
+          <MyButton v-if="isEditingLanguage" @click.prevent="clearLanguageForm">
             Supprimer
-          </button>
+          </MyButton>
         </MyForm>
-        <button @click.prevent="addLanguage">Ajouter une langue</button>
+        <MyButton @click.prevent="addLanguage">Ajouter une langue</MyButton>
         <div class="diplayedSocialMedias">
           <div v-for="(socialMedia, index) in socialMedias" :key="index">
             <p>{{ socialMedia.name }}</p>
-            <button @click.prevent="editSocialMedia(index)">Modifier</button>
-            <button @click.prevent="removeSocialMedia(index)">Supprimer</button>
+            <MyButton @click.prevent="editSocialMedia(index)">Modifier</MyButton>
+            <MyButton @click.prevent="removeSocialMedia(index)">Supprimer</MyButton>
           </div>
         </div>
         <MyForm class="socialMedias">
@@ -417,7 +416,7 @@
               :inputValue="pseudoSocialMedia"
               @update:value="pseudoSocialMedia = $event"
             />
-            <button
+            <MyButton
               @click.prevent="
                 isEditingSocialMedia
                   ? updateSocialMedia()
@@ -425,16 +424,16 @@
               "
             >
               Enregistrer
-            </button>
+            </MyButton>
           </template>
-          <button
+          <MyButton
             v-if="isEditingSocialMedia"
             @click.prevent="clearSocialMediaForm"
           >
             Supprimer
-          </button>
+          </MyButton>
         </MyForm>
-        <button @click.prevent="addSocialMedia">Ajouter une langue</button>
+        <MyButton @click.prevent="addSocialMedia">Ajouter une langue</MyButton>
       </div>
 
       <div class="preview">
@@ -490,15 +489,15 @@
         :titleColor="selectedCVTemplate.titleColor"
         :textFont="selectedCVTemplate.textFont"
       ></TemplateCV>
-      <button @click.prevent="downloadPDF">Télécharger en PDF</button>
+      <MyButton @click.prevent="downloadPDF">Télécharger en PDF</MyButton>
     </div>
   </div>
-  <button v-if="currentStep !== 'choix-template'" @click="previousStep">
+  <MyButton v-if="currentStep !== 'choix-template'" @click="previousStep">
     Précédent
-  </button>
-  <button v-if="currentStep !== 'telecharger'" @click="nextStep">
+  </MyButton>
+  <MyButton v-if="currentStep !== 'telecharger'" @click="nextStep">
     Suivant
-  </button>
+  </MyButton>
 </template>
 
 <script>
@@ -507,6 +506,7 @@ import { useCVStore } from "../stores/cv";
 import TemplateCV from "../components/TemplateCV";
 import MyForm from "../components/form/MyForm.vue";
 import MyInput from "../components/form/MyInput.vue";
+import MyButton from "../components/MyButton";
 import cookies from "vue-cookies";
 import DOMPurify from "dompurify";
 import jsPDF from "jspdf";
@@ -521,6 +521,7 @@ export default {
     TemplateCV,
     MyForm,
     MyInput,
+    MyButton,
   },
   data() {
     return {
@@ -612,6 +613,9 @@ export default {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
     this.loadFormationsFromCookies();
     this.loadExperiencesFromCookies();
+    this.loadSkillsFromCookies();
+    this.loadLanguagesFromCookies();
+    this.loadSocialMediasFromCookies();
     this.loadInfosPersoFromCookies();
   },
   setup() {
@@ -669,7 +673,6 @@ export default {
       const escapedText = this.escapeHtml(sanitizedText);
       return escapedText;
     },
-
     escapeHtml(text) {
       // Fonction d'échappement des caractères spéciaux HTML
       return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -841,8 +844,7 @@ export default {
         encryptionKey
       ).toString();
 
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict", httpOnly: true }; // 1 day expiration
-      cookies.set("personalData", encryptedProfil, cookieOptions);
+      cookies.set("personalData", encryptedProfil, "1d", null, null, true, "Strict");
       console.log("Personal data saved to cookies:", encryptedProfil);
     },
     loadInfosPersoFromCookies() {
@@ -908,15 +910,14 @@ export default {
       this.saveFormationsToCookies();
     },
     saveFormationsToCookies() {
-      // Encrypt and store formations data in cookies
+      // crypter les stocker les data dans cookies
       const encryptedFormations = cryptoJS.AES.encrypt(
         JSON.stringify(this.formations),
         encryptionKey
       ).toString();
 
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict" }; // 1 day expiration
 
-      cookies.set("formationsData", encryptedFormations, cookieOptions);
+      cookies.set("formationsData", encryptedFormations, "1d", null, null, true, "Strict");
       console.log("Formations data loaded from cookies:", encryptedFormations);
     },
     loadFormationsFromCookies() {
@@ -1032,23 +1033,20 @@ export default {
       }
 
       this.clearExperienceForm();
-      this.isExperienceFormVisible = false; // Set this flag to false to hide the form
+      this.isExperienceFormVisible = false; // cacher le formulaire
       this.saveExperiencesToCookies(); // Appel de la fonction pour sauvegarder les expériences dans les cookies
     },
-
     saveExperiencesToCookies() {
       // Encrypt and store experiences data in cookies
       const encryptedExperiences = cryptoJS.AES.encrypt(
         JSON.stringify(this.experiences),
         encryptionKey
       ).toString();
+      // 1 day expiration
 
-      const cookieOptions = { secure: true, expires: 1, sameSite: "strict", httpOnly: true }; // 1 day expiration
-
-      cookies.set("experiencesData", encryptedExperiences, cookieOptions);
+      cookies.set("experiencesData", encryptedExperiences, "1d", null, null, true, "Strict");
       console.log("Experiences data saved to cookies:", encryptedExperiences);
     },
-
     loadExperiencesFromCookies() {
       try {
         const encryptedExperiences = cookies.get("experiencesData");
@@ -1136,7 +1134,6 @@ export default {
       this.isExperienceFormVisible = false;
       this.isEditingExperience = false;
     },
-
     // Méthode pour réinitialiser le formulaire d'expérience
     clearExperienceForm() {
       this.jobTitle = "";
@@ -1151,11 +1148,11 @@ export default {
     removeExperience(index) {
       this.experiences.splice(index, 1);
       this.cvStore.removeExperience(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveExperiencesToCookies(); // Mettre à jour les cookies si nécessaire
     },
     saveSkillsData() {
       const newSkill = {
-        name: this.nameSkill,
+        name:  this.sanitizeAndEscape(this.nameSkill),
       };
 
       if (this.isEditingSkill && this.editingSkillIndex >= 0) {
@@ -1163,12 +1160,44 @@ export default {
       } else {
         this.skills.push(newSkill);
       }
-
+      
       this.clearSkillForm();
       this.isSkillFormVisible = false;
-      // Save data to cookies
+      this.saveSkillsToCookies();
     },
+    saveSkillsToCookies() {
+      // Encrypt and store Skills data in cookies
+      const encryptedSkills = cryptoJS.AES.encrypt(
+        JSON.stringify(this.skills),
+        encryptionKey
+      ).toString();
+      // 1 day expiration
 
+      cookies.set("skillsData", encryptedSkills, "1d", null, null, true, "Strict");
+      console.log("Skills data saved to cookies:", encryptedSkills);
+    },
+    loadSkillsFromCookies() {
+      try {
+        const encryptedSkills = cookies.get("skillsData");
+        if (encryptedSkills) {
+          const decryptedSkills = cryptoJS.AES.decrypt(
+            encryptedSkills,
+            encryptionKey
+          ).toString(cryptoJS.enc.Utf8);
+
+          this.skills = JSON.parse(decryptedSkills);
+          console.log(
+            "Skills data loaded from cookies:",
+            decryptedSkills
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error while decrypting/parsing skills data:",
+          error
+        );
+      }
+    },
     addSkill() {
       this.isSkillFormVisible = true;
       this.nameSkill = "";
@@ -1178,7 +1207,7 @@ export default {
       } else {
         // Add the new Skill
         const newSkill = {
-          name: this.nameSkill,
+          name:  this.sanitizeAndEscape(this.nameSkill),
         };
 
         this.cvStore.addSkill([newSkill]);
@@ -1207,9 +1236,8 @@ export default {
       this.clearSkillForm();
       this.isSkillFormVisible = false;
       this.isEditingSkill = false;
+      this.saveSkillsToCookies(); // Mettre à jour les cookies
     },
-
-    // Méthode pour réinitialiser le formulaire d'expérience
     clearSkillForm() {
       this.name = "";
       this.editingSkillIndex = -1;
@@ -1217,11 +1245,11 @@ export default {
     removeSkill(index) {
       this.skills.splice(index, 1);
       this.cvStore.removeSkill(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveSkillsToCookies(); // Mettre à jour les cookies
     },
     saveLanguagesData() {
       const newLanguage = {
-        name: this.nameLanguage,
+        name:  this.sanitizeAndEscape(this.nameLanguage),
       };
 
       if (this.isEditingLanguage && this.editingLanguageIndex >= 0) {
@@ -1232,9 +1260,41 @@ export default {
 
       this.clearLanguageForm();
       this.isLanguageFormVisible = false;
-      // Save data to cookies
+      this.saveLanguagesToCookies()// Save data to cookies
     },
+    saveLanguagesToCookies() {
+      // Encrypt and store Languages data in cookies
+      const encryptedLanguages = cryptoJS.AES.encrypt(
+        JSON.stringify(this.languages),
+        encryptionKey
+      ).toString();
+      // 1 day expiration
 
+      cookies.set("languagesData", encryptedLanguages, "1d", null, null, true, "Strict");
+      console.log("Languages data saved to cookies:", encryptedLanguages);
+    },
+    loadLanguagesFromCookies() {
+      try {
+        const encryptedLanguages = cookies.get("languagesData");
+        if (encryptedLanguages) {
+          const decryptedLanguages = cryptoJS.AES.decrypt(
+            encryptedLanguages,
+            encryptionKey
+          ).toString(cryptoJS.enc.Utf8);
+
+          this.languages = JSON.parse(decryptedLanguages);
+          console.log(
+            "Languages data loaded from cookies:",
+            decryptedLanguages
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error while decrypting/parsing Languages data:",
+          error
+        );
+      }
+    },
     addLanguage() {
       this.isLanguageFormVisible = true;
       this.nameLanguage = "";
@@ -1244,7 +1304,7 @@ export default {
       } else {
         // Add the new Language
         const newLanguage = {
-          name: this.nameLanguage,
+          name:  this.sanitizeAndEscape(this.nameLanguage),
         };
 
         this.cvStore.addLanguage([newLanguage]);
@@ -1265,7 +1325,7 @@ export default {
     },
     updateLanguage() {
       const updatedLanguage = {
-        name: this.nameLanguage,
+        name:  this.sanitizeAndEscape(this.nameLanguage),
       };
 
       this.languages.splice(this.editingLanguageIndex, 1, updatedLanguage);
@@ -1273,9 +1333,8 @@ export default {
       this.clearLanguageForm();
       this.isLanguageFormVisible = false;
       this.isEditingLanguage = false;
+      this.saveLanguagesToCookies();
     },
-
-    // Méthode pour réinitialiser le formulaire d'expérience
     clearLanguageForm() {
       this.name = "";
       this.editingLanguageIndex = -1;
@@ -1283,11 +1342,11 @@ export default {
     removeLanguage(index) {
       this.languages.splice(index, 1);
       this.cvStore.removeLanguage(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveLanguagesToCookies()// Mettre à jour les cookies si nécessaire
     },
     saveSocialMediasData() {
       const newSocialMedia = {
-        name: this.nameSocialMedia,
+        name:  this.sanitizeAndEscape(this.nameSocialMedia),
       };
 
       if (this.isEditingSocialMedia && this.editingSocialMediaIndex >= 0) {
@@ -1298,9 +1357,41 @@ export default {
 
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
+      this.saveSocialMediasToCookies()
       // Save data to cookies
     },
+    saveSocialMediasToCookies() {
+      // crypter et stocker dans les cookies
+      const encryptedSocialMedias = cryptoJS.AES.encrypt(
+        JSON.stringify(this.socialMedias),
+        encryptionKey
+      ).toString();
 
+      cookies.set("socialMediasData", encryptedSocialMedias, "1d", null, null, true, "Strict");
+      console.log("SocialMedias data saved to cookies:", encryptedSocialMedias);
+    },
+    loadSocialMediasFromCookies() {
+      try {
+        const encryptedSocialMedias = cookies.get("socialMediasData");
+        if (encryptedSocialMedias) {
+          const decryptedSocialMedias = cryptoJS.AES.decrypt(
+            encryptedSocialMedias,
+            encryptionKey
+          ).toString(cryptoJS.enc.Utf8);
+
+          this.socialMedias = JSON.parse(decryptedSocialMedias);
+          console.log(
+            "SocialMedias data loaded from cookies:",
+            decryptedSocialMedias
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error while decrypting/parsing SocialMedias data:",
+          error
+        );
+      }
+    },
     addSocialMedia() {
       this.isSocialMediaFormVisible = true;
       this.nameSocialMedia = "";
@@ -1311,8 +1402,8 @@ export default {
       } else {
         // Add the new SocialMedia
         const newSocialMedia = {
-          name: this.nameSocialMedia,
-          pseudo: this.pseudoSocialMedia,
+          name:  this.sanitizeAndEscape(this.nameSocialMedia),
+          pseudo:  this.sanitizeAndEscape(this.pseudoSocialMedia),
         };
 
         this.cvStore.addSocialMedia([newSocialMedia]);
@@ -1334,8 +1425,8 @@ export default {
     },
     updateSocialMedia() {
       const updatedSocialMedia = {
-        name: this.nameSocialMedia,
-        pseudo: this.pseudoSocialMedia,
+        name: this.sanitizeAndEscape(this.nameSocialMedia),
+        pseudo: this.sanitizeAndEscape(this.pseudoSocialMedia),
       };
 
       this.socialMedias.splice(
@@ -1347,9 +1438,8 @@ export default {
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
       this.isEditingSocialMedia = false;
+      this.saveSocialMediasToCookies()
     },
-
-    // Méthode pour réinitialiser le formulaire d'expérience
     clearSocialMediaForm() {
       this.name = "";
       this.pseudo = "";
@@ -1358,9 +1448,8 @@ export default {
     removeSocialMedia(index) {
       this.socialMedias.splice(index, 1);
       this.cvStore.removeSocialMedia(index); // Suppression dans le store
-      // Mettre à jour les cookies si nécessaire
+      this.saveSocialMediasToCookies() // Mettre à jour les cookies si nécessaire
     },
-
     async downloadPDF() {
       // Récupérer la référence au composant CV
       const cvComponent = this.$refs.cvComponent;
@@ -1392,7 +1481,6 @@ export default {
       }
     },
   },
-
   computed: {
     selectedCVTemplate() {
       // Calcul de la propriété "selectedCVTemplate"
@@ -1402,16 +1490,3 @@ export default {
 };
 </script>
 
-<style scoped>
-button,
-[role="button"] {
-  background-color: #f55200;
-  padding: 10px;
-}
-
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-}
-</style>

@@ -1,8 +1,56 @@
-:root {
+@tailwind components;
+@tailwind utilities;
+@tailwind base;
+@layer base {
+  @font-face {
+    font-family: 'Merriweather';
+    src: url("../fonts/Merriweather-Regular.ttf") format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Merriweather Bold';
+    src: url("../fonts/Merriweather-Bold.ttf") format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Lexend';
+    src: url('../fonts/Lexend-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Lexend Bold';
+    src: url("../fonts/Lexend-Bold.ttf") format('truetype');
+  }
+
+  :root {
     --bgColor:#EBFCFF;
     --buttonColor: #F55200;
+    --textColor: #212121;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
     background-color: var(--bgColor);
+    font-family: 'Lexend', sans-serif;
+    color: var(--textColor); 
 }
+
+  h1, h2, .text-hero {
+    font-family: 'Merriweather Bold', serif;
+  }
+
+  h3 {
+    font-family: 'Lexend Bold', serif;
+  }
+  p {
+    margin: 0;
+  }
+}
+
+

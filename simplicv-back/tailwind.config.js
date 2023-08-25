@@ -32,8 +32,8 @@ module.exports = {
     },
     colors: {
       orange: "#F55200",
-      fond: "#EBFCFF",
-      bleu: "#00B4D8",
+      background: "#EBFCFF",
+      blue: "#00B4D8",
     },
     extend: {
       backgroundImage: {
@@ -41,10 +41,14 @@ module.exports = {
       minHeight: {
         '80': '80vh',
       },
+      boxShadow: {
+        'top-lg': '0px -5px 10px rgba(0, 0, 0, 0.1)',
+        'bottom-lg': '0px 5px 10px rgba(0, 0, 0, 0.1)',
+      },
     },
     fontFamily: {
-      brunoAce: ['Lora', 'serif'],
-      nunito: ['Lexend', 'sans-serif'],
+      merriweather: ['Merriweather', 'serif'],
+      lexend: ['Lexend', 'sans-serif'],
     },
   },
   plugins: [require('@tailwindcss/typography')],

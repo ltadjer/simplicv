@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useCVStore = defineStore('cv', {
+export const useCVStore = defineStore("cv", {
   state: () => ({
     selectedTemplate: null,
     profil: [],
@@ -9,7 +9,7 @@ export const useCVStore = defineStore('cv', {
     skills: [],
     languages: [],
     socialMedias: [],
-    imageFromForm: '',
+    imageFromForm: "",
   }),
 
   getters: {
@@ -17,7 +17,6 @@ export const useCVStore = defineStore('cv', {
       return this.selectedTemplate;
     },
   },
-
   actions: {
     setSelectedTemplate(template) {
       this.selectedTemplate = template;
@@ -35,7 +34,6 @@ export const useCVStore = defineStore('cv', {
     addFormation(formation) {
       this.formations.push(formation);
     },
-    
     removeFormation(index) {
       this.formations.splice(index, 1); // Suppression dans le store
     },
@@ -56,7 +54,7 @@ export const useCVStore = defineStore('cv', {
     },
     removeSkill(index) {
       this.skills.splice(index, 1); // Suppression dans le store
-  s },
+    },
     setLanguages(languages) {
       this.languages = languages;
     },
@@ -65,7 +63,7 @@ export const useCVStore = defineStore('cv', {
     },
     removeLanguage(index) {
       this.languages.splice(index, 1); // Suppression dans le store
-  s },
+    },
     setSocialMedias(socialMedias) {
       this.socialMedias = socialMedias;
     },
@@ -74,7 +72,7 @@ export const useCVStore = defineStore('cv', {
     },
     removeSocialMedia(index) {
       this.socialMedias.splice(index, 1); // Suppression dans le store
-  s },
+    },
     reset() {
       this.selectedTemplate = null;
       this.profil = [];

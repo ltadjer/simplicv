@@ -6,6 +6,9 @@ import CoverLetterModelView from '../views/CoverLetterModelView.vue';
 import CVModelsView from '../views/CVModelsView.vue';
 import CVModelView from '../views/CVModelView.vue';
 import ContactView from '../views/ContactView.vue';
+import LegalNoticeView from '../views/LegalNoticeView.vue';
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue';
+import TermsAndConditionsView from '../views/TermsAndConditionsView.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -44,6 +47,21 @@ const router = createRouter({
         path: '/contact',
         name: 'Contact',
         component: ContactView,
+      },
+      {
+        path: '/mentions-legales',
+        name: 'Mentions légales',
+        component: LegalNoticeView,
+      },
+      {
+        path: '/politique-de-confidentialite',
+        name: 'Politique de confidentialité',
+        component: PrivacyPolicyView,
+      },
+      {
+        path: '/conditions-generales-d-utilisation',
+        name: 'Conditions générales d\'utilisation',
+        component: TermsAndConditionsView,
       }
       
     ],
