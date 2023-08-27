@@ -62,7 +62,7 @@
     <div class="templates">
       <h2 class="text-4xl text-bold text-blue text-center my-4">Les templates les plus populaires</h2>
     </div>
-    <div class="flex flex-col  items-center justify-center gap-5 text-center bg-blue text-background py-10">
+    <div class="flex flex-col items-center justify-center gap-5 text-center bg-blue text-background py-10">
       <p class="w-3/4">
         SimpliCV, c'est bien plus qu'un outil en ligne pour créer votre CV. Nous
         sommes là pour vous accompagner dans la réalisation d'un CV qui vous

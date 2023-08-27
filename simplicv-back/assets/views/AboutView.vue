@@ -1,6 +1,6 @@
 <template>
   <div class="about container mx-auto px-3 py-4 md:px-8 md:py-8">
-    <h1 class="text-3xl text-center gap-5 text-blue pt-3 pb-20">Qui sommes-nous ?</h1>
+    <h1 class="text-4xl md:text-5xl text-center gap-5 text-blue pt-3 pb-20">Qui sommes-nous ?</h1>
     <div class="flex flex-col gap-12">
       <div class="flex flex-col gap-5 sm:flex-row sm:justify-center sm:items-start sm:gap-10">
       <div class="flex flex-col items-end gap-5 text-right sm:w-1/2">

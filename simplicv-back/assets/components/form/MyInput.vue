@@ -1,6 +1,6 @@
 <template>
   <div class="field m-0">
-    <label v-if="type !== 'file'" class="block text-gray-600 text-sm mb-1" :for="inputId">{{ label }}</label>
+    <label v-if="type !== 'file'" class="block text-gray-600 text-md mb-1" :for="inputId">{{ label }}<span v-if="required" class="text-orange">*</span></label>
     <label v-else>
   <i
     class="fa-solid fa-camera text-orange text-6xl border-2 rounded-full p-12 cursor-pointer"
@@ -25,7 +25,7 @@
         :name="inputName"
         @change="handleFileChange"
         :required="required"
-        class="opacity-0 inset-0"
+        class="hidden"
         ref="fileInput"
 
       />

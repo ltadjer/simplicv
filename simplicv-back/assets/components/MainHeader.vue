@@ -27,7 +27,7 @@
       </ul>
 
       <MyButton class="hidden md:block">
-        <RouterLink to="/creer-un-cv">Créer un CV</RouterLink>
+        <RouterLink to="/etapes-creation-de-cv">Créer un CV</RouterLink>
       </MyButton>
     </nav>
 

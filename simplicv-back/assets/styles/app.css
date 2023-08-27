@@ -28,6 +28,7 @@
     --textColor: #212121;
 }
 
+*,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -51,6 +52,7 @@ body {
   p {
     margin: 0;
   }
+
 }
 
 

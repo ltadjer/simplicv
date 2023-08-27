@@ -10,16 +10,31 @@ export const useCVStore = defineStore("cv", {
     languages: [],
     socialMedias: [],
     imageFromForm: "",
+    capturedImages: {},
+    modelCVVisibility: {},
   }),
 
   getters: {
     getSelectedTemplate() {
       return this.selectedTemplate;
     },
+    getCapturedImage: (state) => (cvId) => {
+      return state.capturedImages[cvId] || ''; // Récupérez l'image capturée par son ID
+    },
   },
   actions: {
     setSelectedTemplate(template) {
       this.selectedTemplate = template;
+    },
+    setCapturedImage(cvId, capturedImage) {
+      this.capturedImages[cvId] = capturedImage; // Stockez l'image capturée dans le store
+    },
+    setTemplateVisibility(cvId, isVisible) {
+      // Mettre à jour la visibilité du modèle de CV dans le store
+      const cv = this.modelsCV.find((cv) => cv.id === cvId);
+      if (cv) {
+        cv.isVisible = isVisible;
+      }
     },
     setImageFromForm(image) {
       this.imageFromForm = image;
