@@ -52,6 +52,22 @@ body {
   p {
     margin: 0;
   }
+  @media all and (max-width: 768px) {
+    .progress-bar li {
+      display: none;
+    }
+  
+    .progress-bar li.active {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+    }
+
+    
+  }
 
 }
 

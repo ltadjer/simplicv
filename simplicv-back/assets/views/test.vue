@@ -2026,3 +2026,70 @@ progress-bar li {
 }
 
 </style>
+
+<div class="preview hidden md:block md:w-1/2">
+  <div class="">
+<div class="preview-button">
+<MyButton @click="openPreviewPopup">Voir la prévisualisation</MyButton>
+</div>
+<div
+v-if="isPreviewPopupOpen"
+class="popup-content"
+>
+<TemplateCV
+    :useTemplateA4="false"
+    :name="selectedCVTemplate.name"
+    :formations="formations"
+    :experiences="experiences"
+    :skills="skills"
+    :languages="languages"
+    :socialMedias="socialMedias"
+    :dateOfBirth="dateOfBirth"
+    :phoneNumber="phoneNumber"
+    :postalAddress="postalAddress"
+    :title="title"
+    :description="descriptionProfil"
+    :firstname="firstname"
+    :lastname="lastname"
+    :mailAddress="mailAddress"
+    :drivingLicence="drivingLicence"
+    :city="city"
+    :zipCode="zipCode"
+    :imageFromForm="imageFromForm"
+    :textColor="selectedCVTemplate.textColor"
+    :bgColor="selectedCVTemplate.bgColor"
+    :titleColor="selectedCVTemplate.titleColor"
+    :textFont="selectedCVTemplate.textFont"
+  ></TemplateCV>
+<div class="popup-overlay" @click="closePreviewPopup">Fermer</div>
+</div>
+</div>
+  <div class="" style="width: 100%; height: 100%; overflow: hidden;">
+    <TemplateCV
+    :useTemplateA4="false"
+    :name="selectedCVTemplate.name"
+    :formations="formations"
+    :experiences="experiences"
+    :skills="skills"
+    :languages="languages"
+    :socialMedias="socialMedias"
+    :dateOfBirth="dateOfBirth"
+    :phoneNumber="phoneNumber"
+    :postalAddress="postalAddress"
+    :title="title"
+    :description="descriptionProfil"
+    :firstname="firstname"
+    :lastname="lastname"
+    :mailAddress="mailAddress"
+    :drivingLicence="drivingLicence"
+    :city="city"
+    :zipCode="zipCode"
+    :imageFromForm="imageFromForm"
+    :textColor="selectedCVTemplate.textColor"
+    :bgColor="selectedCVTemplate.bgColor"
+    :titleColor="selectedCVTemplate.titleColor"
+    :textFont="selectedCVTemplate.textFont"
+  ></TemplateCV>
+  </div>
+ 
+</div>

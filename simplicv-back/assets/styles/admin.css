@@ -7,4 +7,57 @@
     --pagination-active-bg: #F55200;
     --link-color: #00B4D8;
     --sidebar-menu-active-item-color: #00B4D8;
+    --font-family-base: 'Lexend', sans-serif;
+    --font-family-sans-serif: 'Lexend', serif;
+    --sidebar-menu-active-item-bg: #EEEBEA;
+    --sidebar-menu-active-item-color: #00B4D8;
+    --sidebar-menu-color: #212121;
+    --sidebar-border-color: #00B4D830;
+    --content-top-border-color:#00B4D830;
+    --responsive-header-border-color: #00B4D830;
+}
+
+#navigation-toggler {
+    color: #F55200;
+}
+
+.dropdown-settings-button {
+    color: #F55200;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 8px 16px;
+}
+
+.user-details .user-avatar {
+    color: #F55200;
+}
+
+#main-menu .menu .menu-header .menu-icon {
+    color: #F55200;
+}
+
+ .main-header #header-logo img, .main-header #header-logo svg {
+    max-width: 45%;
+}
+
+#responsive-header-logo img {
+    max-width: 50%;
+}
+
+.content-body {
+    background: #fff;
+    border-radius: 1em;
+    padding: 2%;
+    border: #00B4D870 1px solid;
+    width: 100%;
+}
+
+#main-menu .main-header {
+    color: #F55200;
+}
+
+.content-wrapper {
+    padding-bottom: 5%;
 }

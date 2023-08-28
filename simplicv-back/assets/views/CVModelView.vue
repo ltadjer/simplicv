@@ -24,6 +24,7 @@
     :titleColor="cv.titleColor"
     :textFont="cv.textFont"
     :image="cv.profil?.image"
+    :useTemplateA4="false"
   ></TemplateCV>
   </div>
 </template>
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       cv: {}, // Initialise avec un objet vide
+      mobile: true,
     };
   },
   mounted() {

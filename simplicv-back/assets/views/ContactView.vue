@@ -45,7 +45,7 @@
         @update:value="message = $event"
         :required="required"
       />
-      <div v-if="showNotification" class="message bg-green text-white px-3">{{ notification }}</div>
+      <div v-if="showNotification" class="message bg-green text-white px-6 py-3 shadow-lg shadow-green-500 rounded-lg">{{ notification }}</div>
       <MyButton class="block mx-auto my-4" type="submit">Envoyer</MyButton>
     </form>
   </div>

@@ -33,7 +33,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Administrateur');
+            ->setTitle('<img src="https://127.0.0.1:8000/images/logo-simplicv.png">');
     }
 
     public function configureMenuItems(): iterable

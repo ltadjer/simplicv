@@ -12,7 +12,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore.setOutputPath('public/build/')
-  .setPublicPath('https://localhost:8000/build')
+  .setPublicPath('/build')
   .addEntry('app', './assets/app.js')
   .addStyleEntry('admin', './assets/styles/admin.css')
   .enableVueLoader()

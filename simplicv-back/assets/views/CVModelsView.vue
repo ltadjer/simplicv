@@ -29,69 +29,71 @@
         3. Télécharger votre CV
       </li>
     </div>
-    <div v-if="currentStep === 'choix-template'" class="relative">
+    <div v-if="currentStep === 'choix-template'">
       <div class="relative">
-<div class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-6 overflow-hidden mx-[5%]">
-        <section v-for="cv in visibleCvs" :key="cv.id">
-          <TemplateCV
-            v-if="!cv.cvCaptured"
-            :id="'template-' + cv.id"
-            :formations="cv.formations"
-            :experiences="cv.experiences"
-            :languages="cv.languages"
-            :skills="cv.skills"
-            :socialMedias="cv.socialMedias"
-            :name="cv.name"
-            :textColor="cv.textColor"
-            :bgColor="cv.bgColor"
-            :titleColor="cv.titleColor"
-            :textFont="cv.textFont"
-            :dateOfBirth="cv.profil.dateOfBirth"
-            :phoneNumber="cv.profil.phoneNumber"
-            :postalAddress="cv.profil.postalAddress"
-            :title="cv.profil.title"
-            :description="cv.profil.description"
-            :firstname="cv.profil.firstname"
-            :lastname="cv.profil.lastname"
-            :mailAddress="cv.profil.mailAddress"
-            :drivingLicence="cv.profil.drivingLicence"
-            :city="cv.profil.city"
-            :zipCode="cv.profil.zipCode"
-            :image="cv.profil.image"
-          ></TemplateCV>
-          <div
-            class="md:w-[90%] border-contour relative flex justify-center items-center mx-auto shadow-lg hover:border hover:border-orange hover:border-2"
-          >
-            <img
-              :src="cvStore.getCapturedImage(cv.id)"
-              alt="Template CV"
-              style="width: fit-content; height: auto"
-              class="opacity-75"
-            />
-            <MyButton @click="selectCV(cv)" class="absolute top-1/2">
-              Sélectionner le modèle
-            </MyButton>
-          </div>
-        </section>
-      </div>
+        <div
+          class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-6 overflow-hidden mx-[5%]"
+        >
+          <section v-for="cv in visibleCvs" :key="cv.id">
+            <TemplateCV
+              :useTemplateA4="true"
+              v-if="!cv.cvCaptured"
+              :id="'template-' + cv.id"
+              :formations="cv.formations"
+              :experiences="cv.experiences"
+              :languages="cv.languages"
+              :skills="cv.skills"
+              :socialMedias="cv.socialMedias"
+              :name="cv.name"
+              :textColor="cv.textColor"
+              :bgColor="cv.bgColor"
+              :titleColor="cv.titleColor"
+              :textFont="cv.textFont"
+              :dateOfBirth="cv.profil.dateOfBirth"
+              :phoneNumber="cv.profil.phoneNumber"
+              :postalAddress="cv.profil.postalAddress"
+              :title="cv.profil.title"
+              :description="cv.profil.description"
+              :firstname="cv.profil.firstname"
+              :lastname="cv.profil.lastname"
+              :mailAddress="cv.profil.mailAddress"
+              :drivingLicence="cv.profil.drivingLicence"
+              :city="cv.profil.city"
+              :zipCode="cv.profil.zipCode"
+              :image="cv.profil.image"
+            ></TemplateCV>
+            <div
+              class="md:w-[90%] border-contour relative flex justify-center items-center mx-auto shadow-lg hover:border hover:border-orange hover:border-2"
+            >
+              <img
+                :src="cvStore.getCapturedImage(cv.id)"
+                alt="Template CV"
+                style="width: fit-content; height: auto"
+                class="opacity-75"
+              />
+              <MyButton @click="selectCV(cv)" class="absolute top-1/2">
+                Sélectionner le modèle
+              </MyButton>
+            </div>
+          </section>
+        </div>
 
-      <button
-        class="absolute left-0 top-1/2 transform -translate-y-1/2"
-        @click="goToPrevious"
-        v-if="currentPage > 0"
-      >
-      <i class="fa-solid fa-chevron-left text-blue text-5xl"></i>
-      </button>
+        <button
+          class="absolute left-0 top-1/2 transform -translate-y-1/2"
+          @click="goToPrevious"
+          v-if="currentPage > 0"
+        >
+          <i class="fa-solid fa-chevron-left text-blue text-5xl"></i>
+        </button>
 
-      <button
-        class="absolute right-0 top-1/2 transform -translate-y-1/2"
-        @click="goToNext"
-        v-if="currentPage < totalPages - 1"
-      >
-      <i class="fa-solid fa-chevron-right text-blue text-5xl "></i>
-      </button>
+        <button
+          class="absolute right-0 top-1/2 transform -translate-y-1/2"
+          @click="goToNext"
+          v-if="currentPage < totalPages - 1"
+        >
+          <i class="fa-solid fa-chevron-right text-blue text-5xl"></i>
+        </button>
       </div>
-      
     </div>
     <div
       v-if="currentStep === 'infos-personnelles'"
@@ -114,13 +116,14 @@
             />
             <div class="md:col-span-1 self-center">
               <MyInput
-                label="Titre"
+                label="Nom du poste recherché"
                 type="text"
                 inputName="title"
                 :inputValue="title"
                 @update:value="title = $event"
                 :required="true"
                 inputId="title"
+                InputPlaceholder="Plombier Professionnel"
               />
               <span
                 v-if="titleError"
@@ -136,6 +139,7 @@
                 :inputValue="descriptionProfil"
                 @update:value="descriptionProfil = $event"
                 :required="true"
+                InputPlaceholder="Plombier expérimenté avec une solide connaissance des systèmes de plomberie résidentielle et commerciale. Compétent dans l'installation, la réparation et l'entretien, offrant une expertise fiable pour résoudre les problèmes de plomberie avec efficacité."
               />
               <span
                 v-if="descriptionProfilError"
@@ -152,6 +156,7 @@
                 :inputValue="lastname"
                 @update:value="lastname = $event"
                 :required="true"
+                InputPlaceholder="Dupont"
               />
               <span
                 v-if="lastnameError"
@@ -168,6 +173,7 @@
                 :inputValue="firstname"
                 @update:value="firstname = $event"
                 :required="true"
+                InputPlaceholder="John"
               />
               <span
                 v-if="firstnameError"
@@ -184,6 +190,7 @@
                 :inputValue="mailAddress"
                 @update:value="mailAddress = $event"
                 :required="true"
+                InputPlaceholder="johndupont@gmail.com"
               />
               <span
                 v-if="mailAddressError"
@@ -200,6 +207,7 @@
                 :inputValue="phoneNumber"
                 @update:value="phoneNumber = $event"
                 :required="true"
+                InputPlaceholder="06 56 53 20 35"
               />
               <span
                 v-if="phoneNumberError"
@@ -216,6 +224,7 @@
               :inputValue="postalAddress"
               @update:value="postalAddress = $event"
               :required="false"
+              InputPlaceholder="Rue des Terres de Borde"
             />
             <div class="md:col-span-1">
               <MyInput
@@ -225,6 +234,7 @@
                 :inputValue="zipCode"
                 @update:value="zipCode = $event"
                 :required="true"
+                InputPlaceholder="33800"
               />
               <span
                 v-if="zipCodeError"
@@ -242,6 +252,7 @@
               :inputValue="city"
               @update:value="city = $event"
               :required="true"
+              InputPlaceholder="Bordeaux"
             />
             <div class="md:col-span-1">
               <MyInput
@@ -267,6 +278,7 @@
               :inputValue="drivingLicence"
               @update:value="drivingLicence = $event"
               :required="false"
+              InputPlaceholder="Permis B - Véhiculé"
             />
             <MyButton
               @click.prevent="saveInfosPersoData"
@@ -324,6 +336,7 @@
                 :inputValue="degree"
                 @update:value="degree = $event"
                 :required="true"
+                InputPlaceholder="CAP Plomberie"
               />
               <span
                 v-if="degreeError"
@@ -340,6 +353,7 @@
                 :inputValue="nameSchool"
                 @update:value="nameSchool = $event"
                 :required="true"
+                InputPlaceholder="École de Plomberie "
               />
               <span
                 v-if="nameSchoolError"
@@ -356,6 +370,7 @@
                 :inputValue="locationSchool"
                 @update:value="locationSchool = $event"
                 :required="true"
+                InputPlaceholder="Bordeaux"
               />
               <span
                 v-if="locationSchoolError"
@@ -483,6 +498,7 @@
               :inputValue="jobTitle"
               @update:value="jobTitle = $event"
               :required="true"
+              InputPlaceholder="Plombier"
             />
             <div v-if="jobTitleError" class="error-message text-sm text-orange">
               {{ jobTitleError }}
@@ -495,6 +511,7 @@
               :inputValue="employer"
               @update:value="employer = $event"
               :required="true"
+              InputPlaceholder="Entreprise de Plomberie XYZ"
             />
             <MyInput
               class="md:col-span-1"
@@ -504,6 +521,7 @@
               :inputValue="cityExperience"
               @update:value="cityExperience = $event"
               :required="true"
+              InputPlaceholder="Bordeaux"
             />
             <div
               v-if="cityExperienceError"
@@ -519,6 +537,7 @@
               :inputValue="contractTypeExperience"
               @update:value="contractTypeExperience = $event"
               :required="false"
+              InputPlaceholder="CDI"
             />
             <MyInput
               class="md:col-span-1"
@@ -634,6 +653,7 @@
               inputName="nameSkill"
               :inputValue="nameSkill"
               @update:value="nameSkill = $event"
+              InputPlaceholder="Installation de tuyauterie"
             />
             <div class="md:col-span-2 py-3 flex justify-between">
               <MyButton
@@ -708,6 +728,7 @@
               inputName="nameLanguage"
               :inputValue="nameLanguage"
               @update:value="nameLanguage = $event"
+              InputPlaceholder="Espagnol"
             />
             <div class="md:col-span-2 py-3 flex justify-between">
               <MyButton
@@ -781,6 +802,7 @@
               inputName="nameSocialMedia"
               :inputValue="nameSocialMedia"
               @update:value="nameSocialMedia = $event"
+              InputPlaceholder="Linkedin"
             />
             <MyInput
               class="md:col-span-1"
@@ -789,6 +811,7 @@
               inputName="pseudoSocialMedia"
               :inputValue="pseudoSocialMedia"
               @update:value="pseudoSocialMedia = $event"
+              InputPlaceholder="john.dupont"
             />
             <div class="md:col-span-2 py-3 flex justify-between">
               <MyButton
@@ -821,35 +844,49 @@
           >
         </MyForm>
       </div>
-      <div class="preview md:w-1/2">
-        <TemplateCV
-          :name="selectedCVTemplate.name"
-          :formations="formations"
-          :experiences="experiences"
-          :skills="skills"
-          :languages="languages"
-          :socialMedias="socialMedias"
-          :dateOfBirth="dateOfBirth"
-          :phoneNumber="phoneNumber"
-          :postalAddress="postalAddress"
-          :title="title"
-          :description="descriptionProfil"
-          :firstname="firstname"
-          :lastname="lastname"
-          :mailAddress="mailAddress"
-          :drivingLicence="drivingLicence"
-          :city="city"
-          :zipCode="zipCode"
-          :imageFromForm="imageFromForm"
-          :textColor="selectedCVTemplate.textColor"
-          :bgColor="selectedCVTemplate.bgColor"
-          :titleColor="selectedCVTemplate.titleColor"
-          :textFont="selectedCVTemplate.textFont"
-        ></TemplateCV>
+      <div class="preview">
+        <div class="preview-button" v-if="isMobile">
+          <MyButton class="block mx-auto mt-[5%]" @click="openPreviewPopup"
+            >Prévisualiser <i class="fa-solid fa-eye text-white ml-2"></i></MyButton
+          >
+        </div>
+        <div v-if="isPreviewPopupOpen || !isMobile" class="popup-content relative shadow-lg">
+          <TemplateCV
+          :useMobileTemplate="isMobile"
+            :useTemplateA4="false"
+            :name="selectedCVTemplate.name"
+            :formations="formations"
+            :experiences="experiences"
+            :skills="skills"
+            :languages="languages"
+            :socialMedias="socialMedias"
+            :dateOfBirth="dateOfBirth"
+            :phoneNumber="phoneNumber"
+            :postalAddress="postalAddress"
+            :title="title"
+            :description="descriptionProfil"
+            :firstname="firstname"
+            :lastname="lastname"
+            :mailAddress="mailAddress"
+            :drivingLicence="drivingLicence"
+            :city="city"
+            :zipCode="zipCode"
+            :imageFromForm="imageFromForm"
+            :textColor="selectedCVTemplate.textColor"
+            :bgColor="selectedCVTemplate.bgColor"
+            :titleColor="selectedCVTemplate.titleColor"
+            :textFont="selectedCVTemplate.textFont"
+          ></TemplateCV>
+          <MyButton class="absolute top-[-6%] right-0 popup-overlay" :withoutBackground="true" @click="closePreviewPopup" v-if="isMobile">
+            <i class="fa-solid fa-xmark text-orange text-[26px]"></i>
+          </MyButton>
+        </div>
       </div>
     </div>
     <div v-if="currentStep === 'telecharger'">
       <TemplateCV
+      class="shadow-lg"
+        :useTemplateA4="false"
         ref="cvComponent"
         :name="selectedCVTemplate.name"
         :formations="formations"
@@ -874,7 +911,9 @@
         :titleColor="selectedCVTemplate.titleColor"
         :textFont="selectedCVTemplate.textFont"
       ></TemplateCV>
-      <MyButton @click.prevent="downloadPDF">Télécharger en PDF</MyButton>
+      <MyButton @click.prevent="downloadPDF" class="mx-auto block"
+        >Télécharger en PDF</MyButton
+      >
     </div>
     <div
       class="flex flex-col md:flex-row md:justify-center items-center gap-5 mt-8"
@@ -923,6 +962,9 @@ export default {
   },
   data() {
     return {
+      isPreviewPopupOpen: false,
+      isMobile: window.innerWidth <= 768,
+
       modelsCV: [], // Tableau pour stocker les modèles de CV récupérés
       currentPage: 0,
       itemsPerPage: 3,
@@ -938,13 +980,13 @@ export default {
       selectedTemplateName: "",
       capturedImages: {},
       imagesCaptured: false, // Initialize as false
-
       formations: [],
       formationsDataSaved: false,
       editingFormationIndex: -1,
       isEditingFormation: false,
       isFormVisible: false,
       experiences: [],
+      contractTypes: ["CDI", "CDD", "Stage", "Apprentissage", "Freelance"],
       isExperienceFormVisible: false,
       isEditingExperience: false,
       editingExperienceIndex: -1,
@@ -1014,7 +1056,7 @@ export default {
   },
   created() {
     this.adjustItemsPerPage();
-    window.addEventListener('resize', this.adjustItemsPerPage);
+    window.addEventListener("resize", this.adjustItemsPerPage);
     // Récupérez le nom de la template sélectionnée depuis les cookies
     const selectedTemplate = cookies.get("selectedTemplate");
     if (selectedTemplate) {
@@ -1022,7 +1064,8 @@ export default {
     }
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.adjustItemsPerPage);
+    window.removeEventListener("resize", this.adjustItemsPerPage);
+    window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
@@ -1032,6 +1075,7 @@ export default {
     this.loadLanguagesFromCookies();
     this.loadSocialMediasFromCookies();
     this.loadInfosPersoFromCookies();
+    window.addEventListener("resize", this.handleResize);
   },
   setup() {
     const cvStore = useCVStore(); // Utilisation du store CV
@@ -1041,7 +1085,15 @@ export default {
     };
   },
   methods: {
-    
+    handleResize() {
+      this.isMobile = window.innerWidth <= 768; // Ajustez la largeur selon vos besoins
+    },
+    openPreviewPopup() {
+      this.isPreviewPopupOpen = true;
+    },
+    closePreviewPopup() {
+      this.isPreviewPopupOpen = false;
+    },
     async getModelsCV() {
       try {
         const response = await axios.get("/api/modeles-de-cv");
@@ -1086,15 +1138,15 @@ export default {
       return imageData;
     },
     async captureImagesForVisibleCvs() {
-  for (const cv of this.visibleCvs) {
-    if (!this.capturedImages[cv.id]) {
-      await this.$nextTick(); // Wait for DOM update
-      const capturedImage = await this.captureTemplateCV(cv);
-      this.capturedImages[cv.id] = capturedImage;
-      this.cvStore.setCapturedImage(cv.id, capturedImage);
-    }
-  }
-},
+      for (const cv of this.visibleCvs) {
+        if (!this.capturedImages[cv.id]) {
+          await this.$nextTick(); // Wait for DOM update
+          const capturedImage = await this.captureTemplateCV(cv);
+          this.capturedImages[cv.id] = capturedImage;
+          this.cvStore.setCapturedImage(cv.id, capturedImage);
+        }
+      }
+    },
     allTemplatesCaptured() {
       return this.modelsCV.every(
         (template) => this.capturedImages[template.id]
@@ -1106,27 +1158,27 @@ export default {
       this.currentStep = step;
     },
     adjustItemsPerPage() {
-    if (window.innerWidth <= 768) {
-      this.itemsPerPage = 1;
-    } else if (window.innerWidth > 768 && window.innerWidth <= 1024) {
-      this.itemsPerPage = 2;
-    } else {
-      this.itemsPerPage = 3;
-    }
-  },
+      if (window.innerWidth <= 768) {
+        this.itemsPerPage = 1;
+      } else if (window.innerWidth > 768 && window.innerWidth <= 1024) {
+        this.itemsPerPage = 2;
+      } else {
+        this.itemsPerPage = 3;
+      }
+    },
     goToPrevious() {
-    if (this.currentPage > 0) {
-      this.currentPage--;
-      this.captureImagesForVisibleCvs(); // Capture images for visible templates
-    }
-  },
-  goToNext() {
-    if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++;
-      console.log("Going to next page");
-      this.captureImagesForVisibleCvs(); // Capture images for visible templates
-    }
-  },
+      if (this.currentPage > 0) {
+        this.currentPage--;
+        this.captureImagesForVisibleCvs(); // Capture images for visible templates
+      }
+    },
+    goToNext() {
+      if (this.currentPage < this.totalPages - 1) {
+        this.currentPage++;
+        console.log("Going to next page");
+        this.captureImagesForVisibleCvs(); // Capture images for visible templates
+      }
+    },
     selectCV(cv) {
       // Fonction pour sélectionner un modèle de CV
       this.selectedCV.name = cv.name;
@@ -2010,15 +2062,17 @@ export default {
       return Math.ceil(this.modelsCV.length / this.itemsPerPage);
     },
     visibleCvs() {
-    this.adjustItemsPerPage(); // Appeler la méthode pour ajuster itemsPerPage
-    const startIndex = this.currentPage * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    const visibleCvs = this.modelsCV.slice(startIndex, endIndex).map(cv => ({
-      ...cv,
-      cvCaptured: this.capturedImages[cv.id],
-    }));
-    return visibleCvs;
-  },
+      this.adjustItemsPerPage(); // Appeler la méthode pour ajuster itemsPerPage
+      const startIndex = this.currentPage * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      const visibleCvs = this.modelsCV
+        .slice(startIndex, endIndex)
+        .map((cv) => ({
+          ...cv,
+          cvCaptured: this.capturedImages[cv.id],
+        }));
+      return visibleCvs;
+    },
     selectedCVTemplate() {
       // Calcul de la propriété "selectedCVTemplate"
       return this.cvStore.getSelectedTemplate; // Récupération du modèle de CV
@@ -2027,18 +2081,17 @@ export default {
 };
 </script>
 <style>
-@media all and (max-width: 768px) {
-  .progress-bar li {
-    display: none;
-  }
 
-  .progress-bar li.active {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 0 auto;
-  }
+/* .cv-models {  
+  position: relative;
 }
+
+.preview-button {
+
+  position: absolute;
+  top: 5%; 
+  left: 50%;
+  transform: translateX(-50%); 
+
+} */
 </style>
