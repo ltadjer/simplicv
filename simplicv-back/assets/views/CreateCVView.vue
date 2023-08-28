@@ -4,21 +4,21 @@
       <div class="grid sm:grid-cols-3 gap-5 items-center justify-items-center text-center py-8">
           <div class="flex flex-col gap-5 w-3/4">
               <img
-                  src="../images/etape1-choixtemplatecv-simplicv.png"
+              :src="require('@/images/etape1-choixtemplatecv-simplicv.png')"
                   alt="Etape 1 - Choisir une template CV"
               />
               <h3 class="text-xl">1. Choisissez un modèle parmi notre sélection.</h3>
           </div>
           <div class="flex flex-col gap-5 w-3/4">
               <img
-                  src="../images/etape2-remplircv-simplicv.png"
+              :src="require('@/images/etape2-remplircv-simplicv.png')"
                   alt="Etape 2 - Remplir les informations du CV"
               /> 
               <h3 class="text-xl">2. Remplissez votre CV</h3>
           </div>
           <div class="flex flex-col gap-5 w-3/4">
               <img
-                  src="../images/etape3-telechargercv-simplicv.png"
+              :src="require('@/images/etape3-telechargercv-simplicv.png')"
                   alt="Etape 3 - Télécharger le CV"
               />
               <h3 class="text-xl">3. Télécharger votre CV et commencez à postuler</h3>

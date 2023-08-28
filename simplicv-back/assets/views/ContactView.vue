@@ -2,7 +2,7 @@
   <div class="contact container mx-auto flex justify-center items-center h-screen flex-col">
     <h1 class="text-4xl md:text-5xl text-center gap-5 text-blue pt-3 pb-3">Contactez-nous</h1>
     <p class="text-center py-2">Si vous avez une question, n'hésitez pas à nous écrire.</p>
-    <form @submit.prevent="submitForm" class="w-full  md:w-2/5 py-8">
+    <form @submit.prevent="submitForm" class="w-[80%] md:w-2/5 py-8">
       <MyInput
         label="Nom"
         type="text"

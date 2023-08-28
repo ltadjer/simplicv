@@ -51,6 +51,7 @@
         "sortablejs": "^1.15.0",
         "vite-plugin-legacy": "^2.1.0",
         "vite-plugin-vue": "^0.0.0",
+        "vue-agile": "^2.0.0",
         "vue-cookies": "^1.8.3",
         "vue-dompurify-html": "^4.1.4",
         "vue-portals": "^0.1.0",

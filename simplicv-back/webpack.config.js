@@ -12,7 +12,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore.setOutputPath('public/build/')
-  .setPublicPath('/build')
+  .setPublicPath('https://localhost:8000/build')
   .addEntry('app', './assets/app.js')
   .addStyleEntry('admin', './assets/styles/admin.css')
   .enableVueLoader()
@@ -47,6 +47,8 @@ Encore.setOutputPath('public/build/')
   .configureBabel(() => {}, {
     useBuiltIns: 'usage',
     corejs: 3,
+  })
+  .addAliases({ // Add this part to define aliases
+    '@': path.resolve(__dirname, 'assets'),
   });
-
 module.exports = Encore.getWebpackConfig();

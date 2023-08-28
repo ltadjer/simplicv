@@ -4,7 +4,7 @@
             color: textColor,
             fontFamily: textFont, 
           }">
-      <div class="flex">
+      <div class="flex h-full">
         <div
           class="w-1/4 p-4"
           :style="{
@@ -119,7 +119,7 @@
   <script>
   export default {
     props: {
-      id: Number,
+      id: String,
       name: String,
       formations: Array,
       experiences: Array,

@@ -2,7 +2,7 @@
   <header class="main-header shadow-bottom-lg">
     <nav class="md:container md:mx-auto flex justify-between items-center px-8 py-3">
       <div class="w-28">
-        <RouterLink to="/"><img src="../images/logo-simplicv.png" alt="Logo SimpliCV" /></RouterLink>
+        <RouterLink to="/"><img :src="require('@/images/logo-simplicv.png')" alt="Logo SimpliCV" /></RouterLink>
       </div>
 
       <div class="md:hidden">
@@ -36,7 +36,7 @@
       <li><RouterLink to="/a-propos">À propos</RouterLink></li>
       <li><RouterLink to="/creer-une-lettre-de-motivation">Créer une lettre de motivation</RouterLink></li>
       <li><RouterLink to="/contact">Contact</RouterLink></li>
-      <li><MyButton><RouterLink to="/creer-un-cv">Créer un CV</RouterLink></MyButton></li>
+      <li><MyButton><RouterLink to="/etapes-creation-de-cv">Créer un CV</RouterLink></MyButton></li>
     </ul>
   </header>
 </template>
