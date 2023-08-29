@@ -9,8 +9,8 @@
         inputName="lastname"
         :inputValue="lastname"
         @update:value="lastname = $event"
-        :InputPlaceholder="Dupont"
-        :required="required"
+        InputPlaceholder="Dupont"
+        :required="true"
       />
       <MyInput
         label="Prénom"
@@ -18,8 +18,8 @@
         inputName="firstname"
         :inputValue="firstname"
         @update:value="firstname = $event"
-        :InputPlaceholder="John"
-        :required="required"
+        InputPlaceholder="John"
+        :required="true"
       />
       <MyInput
         label="Adresse email"
@@ -27,7 +27,8 @@
         inputName="email"
         :inputValue="email"
         @update:value="email = $event"
-        :required="required"
+        :required="true"
+        InputPlaceholder="johndupont@gmail.com"
       />
       <MyInput
         label="Sujet"
@@ -35,7 +36,8 @@
         inputName="subject"
         :inputValue="subject"
         @update:value="subject = $event"
-        :required="required"
+        :required="true"
+        InputPlaceholder="Problème de ..."
       />
       <MyInput
         label="Message"
@@ -43,7 +45,8 @@
         inputName="message"
         :inputValue="message"
         @update:value="message = $event"
-        :required="required"
+        :required="true"
+        InputPlaceholder="Bonjour, je vous contacte car je rencontre un problème avec ..."
       />
       <div v-if="showNotification" class="message bg-green text-white px-6 py-3 shadow-lg shadow-green-500 rounded-lg">{{ notification }}</div>
       <MyButton class="block mx-auto my-4" type="submit">Envoyer</MyButton>
@@ -71,7 +74,8 @@ export default {
       email: "",
       subject: "",
       message: "",
-      showMessage: false, // Ajout de la propriété pour afficher ou masquer le message
+      showNotification: false,
+      notification: "",
     };
   },
   methods: {
@@ -113,6 +117,9 @@ export default {
           this.showNotification = true;
         });
     },
+  },
+  mounted() {
+    document.title = "Contact - SympliCV"; 
   },
 };
 </script>

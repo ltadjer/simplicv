@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const tailwindcss = require('tailwindcss');
-const { VueLoaderPlugin } = require('vue-loader');
-const tailwindConfig = require('./tailwind.config.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -26,7 +24,6 @@ Encore.setOutputPath('public/build/')
   .enableSourceMaps(!Encore.isProduction())
   .enableVersioning(Encore.isProduction())
   .configureDevServerOptions(options => {
-        // Activer HTTPS en environnement de développement
         options.https(true);
     })
   .addPlugin(new HtmlWebpackPlugin({
@@ -48,7 +45,7 @@ Encore.setOutputPath('public/build/')
     useBuiltIns: 'usage',
     corejs: 3,
   })
-  .addAliases({ // Add this part to define aliases
+  .addAliases({ 
     '@': path.resolve(__dirname, 'assets'),
   });
 module.exports = Encore.getWebpackConfig();

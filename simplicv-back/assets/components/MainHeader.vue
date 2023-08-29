@@ -2,7 +2,7 @@
   <header class="main-header shadow-bottom-lg">
     <nav class="md:container md:mx-auto flex justify-between items-center px-8 py-3">
       <div class="w-28">
-        <RouterLink to="/"><img src="../images/logo-simplicv.png" alt="Logo SimpliCV" /></RouterLink>
+        <RouterLink to="/"><img src="../../public/images/pages/logo-simplicv.png" alt="Logo SimpliCV" /></RouterLink>
       </div>
 
       <div class="md:hidden">
@@ -13,16 +13,16 @@
       
       <ul :class="menuOpen ? 'block' : 'hidden'" class="hidden md:flex space-x-8">
         <li>
-          <RouterLink :class="{'text-orange border-b-2 border-orange': isActiveLink('/')}" to="/">Accueil</RouterLink>
+          <RouterLink :class="{'text-orange border-b-2 border-orange font-bold': isActiveLink('/')}" to="/">Accueil</RouterLink>
         </li>
         <li>
-          <RouterLink :class="{'text-orange border-b-2 border-orange': isActiveLink('/a-propos')}" to="/a-propos">À propos</RouterLink>
+          <RouterLink :class="{'text-orange border-b-2 border-orange font-bold': isActiveLink('/a-propos')}" to="/a-propos">À propos</RouterLink>
         </li>
         <li>
-          <RouterLink :class="{'text-orange border-b-2 border-orange': isActiveLink('/creer-une-lettre-de-motivation')}" to="/creer-une-lettre-de-motivation">Créer une lettre de motivation</RouterLink>
+          <RouterLink :class="{'text-orange border-b-2 border-orange font-bold': isActiveLink('/creer-une-lettre-de-motivation')}" to="/creer-une-lettre-de-motivation">Créer une lettre de motivation</RouterLink>
         </li>
         <li>
-          <RouterLink :class="{'text-orange border-b-2 border-orange': isActiveLink('/contact')}" to="/contact">Contact</RouterLink>
+          <RouterLink :class="{'text-orange border-b-2 border-orange font-bold': isActiveLink('/contact')}" to="/contact">Contact</RouterLink>
         </li>
       </ul>
 
@@ -32,10 +32,10 @@
     </nav>
 
     <ul :class="[menuOpen ? 'block' : 'hidden', 'md:hidden']" class="md:hidden flex flex-col items-center mt-4 space-y-4 px-8 pt-2 pb-3">
-      <li><RouterLink @click="closeMenu" to="/"  :class="{'text-orange': isActiveLink('/')}">Accueil</RouterLink></li>
-      <li><RouterLink @click="closeMenu" to="/a-propos" :class="{'text-orange': isActiveLink('/a-propos')}" >À propos</RouterLink></li>
-      <li><RouterLink @click="closeMenu" to="/creer-une-lettre-de-motivation" :class="{'text-orange': isActiveLink('/creer-une-lettre-de-motivation')}">Créer une lettre de motivation</RouterLink></li>
-      <li><RouterLink @click="closeMenu" to="/contact" :class="{'text-orange': isActiveLink('/contact')}">Contact</RouterLink></li>
+      <li><RouterLink @click="closeMenu" to="/"  :class="{'text-orange font-bold': isActiveLink('/')}">Accueil</RouterLink></li>
+      <li><RouterLink @click="closeMenu" to="/a-propos" :class="{'text-orange font-bold': isActiveLink('/a-propos')}" >À propos</RouterLink></li>
+      <li><RouterLink @click="closeMenu" to="/creer-une-lettre-de-motivation" :class="{'text-orange font-bold': isActiveLink('/creer-une-lettre-de-motivation')}">Créer une lettre de motivation</RouterLink></li>
+      <li><RouterLink @click="closeMenu" to="/contact" :class="{'text-orange font-bold': isActiveLink('/contact')}">Contact</RouterLink></li>
       <li><MyButton><RouterLink @click="closeMenu" to="/etapes-creation-de-cv">Créer un CV</RouterLink></MyButton></li>
     </ul>
   </header>

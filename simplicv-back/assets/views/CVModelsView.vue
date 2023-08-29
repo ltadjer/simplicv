@@ -29,7 +29,7 @@
         3. Télécharger votre CV
       </li>
     </div>
-    <div v-if="currentStep === 'choix-template'">
+    <div v-if="currentStep === 'choix-template'" data-aos="fade-up">
       <div class="relative">
         <div
           class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-6 overflow-hidden mx-[5%]"
@@ -95,10 +95,7 @@
         </button>
       </div>
     </div>
-    <div
-      v-if="currentStep === 'infos-personnelles'"
-      class="md:flex md:justify-between md:gap-5"
-    >
+    <div v-if="currentStep === 'infos-personnelles'" class="md:flex md:justify-between md:gap-5" data-aos="fade-up">
       <div class="forms md:w-1/2 flex flex-col gap-6">
         <MyForm
           class="infos-perso border-2 border-blue px-6 pt-6 pb-8 rounded-[16px]"
@@ -852,7 +849,7 @@
         </div>
         <div v-if="isPreviewPopupOpen || !isMobile" class="popup-content relative shadow-lg">
           <TemplateCV
-          :useMobileTemplate="isMobile"
+            :useMobileTemplate="isMobile"
             :useTemplateA4="false"
             :name="selectedCVTemplate.name"
             :formations="formations"
@@ -883,10 +880,11 @@
         </div>
       </div>
     </div>
-    <div v-if="currentStep === 'telecharger'">
+    <div v-if="currentStep === 'telecharger'" data-aos="fade-up">
       <TemplateCV
-      class="shadow-lg"
+        class="shadow-lg"
         :useTemplateA4="false"
+        :useMobileTemplate="isMobile"
         ref="cvComponent"
         :name="selectedCVTemplate.name"
         :formations="formations"
@@ -1003,7 +1001,7 @@ export default {
       isEditingSocialMedia: false,
       editingSocialMediaIndex: -1,
       currentStep: "choix-template", // Étape actuelle du processus
-      phoneNumber: "",
+      phoneNumber: null,
       postalAddress: "",
       dateOfBirth: "",
       title: "",
@@ -1014,7 +1012,7 @@ export default {
       mailAddress: "",
       drivingLicence: "",
       city: "",
-      zipCode: "",
+      zipCode: null,
       degree: "",
       nameSchool: "",
       locationSchool: "",
@@ -1068,6 +1066,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
+    document.title = "Créer un CV - SympliCV"; 
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
     this.loadFormationsFromCookies();
     this.loadExperiencesFromCookies();
@@ -1101,11 +1100,11 @@ export default {
 
         for (const cv of this.modelsCV) {
           await this.$nextTick(); // Attendre que les éléments soient rendus
-          console.log("Capturing image for CV:", cv);
+          // console.log("Capturing image for CV:", cv);
           const capturedImage = await this.captureTemplateCV(cv);
           this.capturedImages[cv.id] = capturedImage;
           this.cvStore.setCapturedImage(cv.id, capturedImage); // Stockez l'image dans le store Pinia
-          console.log("Image captured for CV:", cv);
+          // console.log("Image captured for CV:", cv);
         }
       } catch (error) {
         console.error("Error fetching models:", error);
@@ -1115,11 +1114,11 @@ export default {
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
 
-      console.log("Starting captureTemplateCV for CV:", cv);
+      // console.log("Starting captureTemplateCV for CV:", cv);
 
       // Dynamically select the template element for each CV
       const templateCvElement = document.querySelector(`#template-${cv.id}`);
-      console.log("Template element:", templateCvElement);
+      // console.log("Template element:", templateCvElement);
 
       if (!templateCvElement) {
         console.error("Template element not found");
@@ -1133,7 +1132,7 @@ export default {
       context.drawImage(canvasImage, 0, 0);
 
       const imageData = canvas.toDataURL("image/png");
-      console.log("Image captured:", imageData);
+      // console.log("Image captured:", imageData);
 
       return imageData;
     },
@@ -1175,7 +1174,7 @@ export default {
     goToNext() {
       if (this.currentPage < this.totalPages - 1) {
         this.currentPage++;
-        console.log("Going to next page");
+        // console.log("Going to next page");
         this.captureImagesForVisibleCvs(); // Capture images for visible templates
       }
     },
@@ -1370,7 +1369,7 @@ export default {
         dateOfBirth: this.sanitizeAndEscape(this.dateOfBirth),
       };
 
-      console.log("profil:", profil);
+      // console.log("profil:", profil);
       if (this.selectedCV && this.selectedCV.name) {
         // Vérification de la sélection d'un modèle de CV
         this.cvStore.setProfil(profil); // Définition des profils dans le store
@@ -1390,7 +1389,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("Personal data saved to cookies:", encryptedProfil);
+      // console.log("Personal data saved to cookies:", encryptedProfil);
     },
     loadInfosPersoFromCookies() {
       try {
@@ -1412,7 +1411,7 @@ export default {
           );
 
           this.imageFromForm = decryptedProfil.imageFromForm;
-          this.phoneNumber = decryptedProfil.phoneNumber;
+          this.phoneNumber = parseInt(decryptedProfil.phoneNumber);
           this.postalAddress = decryptedProfil.postalAddress;
           this.title = decryptedProfil.title;
           this.descriptionProfil = decryptedProfil.descriptionProfil;
@@ -1421,10 +1420,10 @@ export default {
           this.mailAddress = decryptedProfil.mailAddress;
           this.drivingLicence = decryptedProfil.drivingLicence;
           this.city = decryptedProfil.city;
-          this.zipCode = decryptedProfil.zipCode;
+          this.zipCode = parseInt(decryptedProfil.zipCode);
           this.dateOfBirth = decryptedProfil.dateOfBirth;
 
-          console.log("Personal data loaded from cookies:", decryptedProfil);
+          // console.log("Personal data loaded from cookies:", decryptedProfil);
         }
       } catch (error) {
         console.error("Error while decrypting/parsing data:", error);
@@ -1470,7 +1469,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("Formations data loaded from cookies:", encryptedFormations);
+      // console.log("Formations data loaded from cookies:", encryptedFormations);
     },
     loadFormationsFromCookies() {
       try {
@@ -1482,10 +1481,7 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.formations = JSON.parse(decryptedFormations);
-          console.log(
-            "Formations data loaded from cookies:",
-            decryptedFormations
-          );
+          // console.log("Formations data loaded from cookies:",decryptedFormations);
         }
       } catch (error) {
         console.error("Error while decrypting/parsing formations data:", error);
@@ -1605,7 +1601,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("Experiences data saved to cookies:", encryptedExperiences);
+      // console.log("Experiences data saved to cookies:", encryptedExperiences);
     },
     loadExperiencesFromCookies() {
       try {
@@ -1617,10 +1613,7 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.experiences = JSON.parse(decryptedExperiences);
-          console.log(
-            "Experiences data loaded from cookies:",
-            decryptedExperiences
-          );
+          // console.log("Experiences data loaded from cookies:", decryptedExperiences);
         }
       } catch (error) {
         console.error(
@@ -1742,7 +1735,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("Skills data saved to cookies:", encryptedSkills);
+      // console.log("Skills data saved to cookies:", encryptedSkills);
     },
     loadSkillsFromCookies() {
       try {
@@ -1754,7 +1747,7 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.skills = JSON.parse(decryptedSkills);
-          console.log("Skills data loaded from cookies:", decryptedSkills);
+          // console.log("Skills data loaded from cookies:", decryptedSkills);
         }
       } catch (error) {
         console.error("Error while decrypting/parsing skills data:", error);
@@ -1841,7 +1834,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("Languages data saved to cookies:", encryptedLanguages);
+      // console.log("Languages data saved to cookies:", encryptedLanguages);
     },
     loadLanguagesFromCookies() {
       try {
@@ -1853,10 +1846,7 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.languages = JSON.parse(decryptedLanguages);
-          console.log(
-            "Languages data loaded from cookies:",
-            decryptedLanguages
-          );
+          // console.log("Languages data loaded from cookies:", decryptedLanguages);
         }
       } catch (error) {
         console.error("Error while decrypting/parsing Languages data:", error);
@@ -1926,7 +1916,6 @@ export default {
       this.clearSocialMediaForm();
       this.isSocialMediaFormVisible = false;
       this.saveSocialMediasToCookies();
-      // Save data to cookies
     },
     saveSocialMediasToCookies() {
       // crypter et stocker dans les cookies
@@ -1944,7 +1933,7 @@ export default {
         true,
         "Strict"
       );
-      console.log("SocialMedias data saved to cookies:", encryptedSocialMedias);
+      // console.log("SocialMedias data saved to cookies:", encryptedSocialMedias);
     },
     loadSocialMediasFromCookies() {
       try {
@@ -1956,10 +1945,7 @@ export default {
           ).toString(cryptoJS.enc.Utf8);
 
           this.socialMedias = JSON.parse(decryptedSocialMedias);
-          console.log(
-            "SocialMedias data loaded from cookies:",
-            decryptedSocialMedias
-          );
+          // console.log( "SocialMedias data loaded from cookies:",decryptedSocialMedias);
         }
       } catch (error) {
         console.error(
@@ -2080,18 +2066,3 @@ export default {
   },
 };
 </script>
-<style>
-
-/* .cv-models {  
-  position: relative;
-}
-
-.preview-button {
-
-  position: absolute;
-  top: 5%; 
-  left: 50%;
-  transform: translateX(-50%); 
-
-} */
-</style>

@@ -52,6 +52,10 @@ body {
   p {
     margin: 0;
   }
+  
+  footer a:hover {
+    color: #F55200;
+  }
   @media all and (max-width: 768px) {
     .progress-bar li {
       display: none;

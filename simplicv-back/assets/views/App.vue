@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import MainHeader from "../components/MainHeader.vue";
-import MainFooter from "../components/MainFooter.vue";
+import MainHeader from "../components/MainHeader";
+import MainFooter from "../components/MainFooter";
 export default {
   components: {
     MainHeader,
@@ -16,6 +16,3 @@ export default {
   },
 };
 </script>
-<style>
-</style>
-   

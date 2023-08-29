@@ -85,12 +85,11 @@
             <h3
               class="font-bold"
               :class="useMobileTemplate ? ' text-[10px]' : (useTemplateA4 ? 'text-lg' : 'text-base')"            
-              :style="{ color: titleColor }"
             >
               Langues
             </h3>
             <ul :class="useMobileTemplate ? 'mt-1' : (useTemplateA4 ? 'mt-4' : 'mt-4')">
-              <li v-for="language in languages" :key="language.id" :class="useMobileTemplate ? 'text-[8px]' : (useTemplateA4 ? 'text-base' : 'text-base')" >
+              <li v-for="language in languages" :key="language.id" :class="useMobileTemplate ? 'text-[8px]' : (useTemplateA4 ? 'text-sm' : 'text-sm')" >
                 {{ language.name }}
               </li>
             </ul>
@@ -99,7 +98,6 @@
             <h3
               class="font-bold"
               :class="useMobileTemplate ? 'text-[10px]' : (useTemplateA4 ? 'text-lg' : 'text-base')"            
-              :style="{ color: titleColor }"
             >
               Réseaux sociaux
             </h3>
@@ -108,7 +106,7 @@
                 v-for="socialMedia in socialMedias"
                 :key="socialMedia.id"
                 class="flex items-center"
-                :class="useMobileTemplate ? 'text-[8px]' : (useTemplateA4 ? 'text-base' : 'text-base')"            
+                :class="useMobileTemplate ? 'text-[8px]' : (useTemplateA4 ? 'text-sm' : 'text-sm')"            
               >
                 <i
                   :class="[
@@ -239,8 +237,8 @@
           >
             Compétences
           </h3>
-          <ul :class="useMobileTemplate ? 'mt-2' : (useTemplateA4 ? 'mt-4' : 'mt-4')">
-            <li :class="useMobileTemplate ? 'text-[10px]' : (useTemplateA4 ? 'text-sm' : 'text-sm')" v-for="skill in skills" :key="skill.id">{{ skill.name }}</li>
+          <ul class="list-disc" :class="useMobileTemplate ? 'mt-2' : (useTemplateA4 ? 'mt-4' : 'mt-4')">
+            <li class="ml-3" :class="useMobileTemplate ? 'text-[10px]' : (useTemplateA4 ? 'text-sm' : 'text-sm')" v-for="skill in skills" :key="skill.id">{{ skill.name }}</li>
           </ul>
         </section>
       </div>

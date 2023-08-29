@@ -5,7 +5,7 @@
     --button-primary-bg: #F55200;
     --pagination-active-bg: #F55200;
     --pagination-active-bg: #F55200;
-    --link-color: #00B4D8;
+    --link-color: #F55200;
     --sidebar-menu-active-item-color: #00B4D8;
     --font-family-base: 'Lexend', sans-serif;
     --font-family-sans-serif: 'Lexend', serif;
@@ -15,6 +15,11 @@
     --sidebar-border-color: #00B4D830;
     --content-top-border-color:#00B4D830;
     --responsive-header-border-color: #00B4D830;
+    --form-panel-header-color:#00B4D8;
+    --form-panel-header-border-color: #00B4D8;
+    --dropdown-bg:#EBFCFF;
+    --form-type-check-input-checked-bg:#F55200;
+    --sidebar-menu-active-item-bg: #baedf8;
 }
 
 #navigation-toggler {

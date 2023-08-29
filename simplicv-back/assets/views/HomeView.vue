@@ -2,6 +2,7 @@
   <div class="home">
     <div
       class="hero h-screen sm:h-[80vh] relative container mx-auto sm:mt-[2%]"
+      data-aos="fade-up"
     >
       <div
         class="grid gap-12 sm:grid-cols-2 sm:grid-flow-col sm:gap-5 p-8 sm:px-3 sm:py-4 sm:px-8 sm:py-8 sm:items-center sm:justify-center"
@@ -10,8 +11,12 @@
           class="content-hero flex flex-col items-start gap-5 sm:mx-auto sm:w-2/3 sm:w-9/12"
         >
           <h1 class="text-3xl sm:text-5xl text-blue">
-            Créez un <span class="text-orange text-4xl sm:text-6xl">CV</span> professionnel en
-            quelques clics avec Simpli<span class="text-orange text-4xl sm:text-6xl">CV</span>
+            Créez un
+            <span class="text-orange text-4xl sm:text-6xl">CV</span>
+            professionnel en quelques clics avec Simpli<span
+              class="text-orange text-4xl sm:text-6xl"
+              >CV</span
+            >
           </h1>
           <MyButton
             ><a href="/etapes-creation-de-cv"
@@ -23,12 +28,12 @@
           class="img-hero relative justify-self-center align-self-center sm:w-3/5 sm:w-4/5"
         >
           <img
-            :src="require('@/images/blob-hero.png')"
+            src="../../public/images/pages/blob-hero.png"
             alt=""
             class="relative z-10"
           />
           <img
-            :src="require('@/images/illustrationcv.png')"
+            src="../../public/images/pages/illustrationcv.png"
             alt="Créez votre CV en toute simplicité."
             class="absolute top-0 left-0 w-3/4 sm:w-2/3 z-20"
           />
@@ -36,10 +41,13 @@
       </div>
       <span
         class="btn-down text-6xl text-blue flex justify-center absolute sm:bottom-0 left-1/2"
-        ><i class="fa-solid fa-chevron-down"></i
+        ><i @click="scrollToBottom" class="fa-solid fa-chevron-down"></i
       ></span>
     </div>
-    <div class="sm:px-8 sm:py-16 container mx-auto">
+    <div
+      class="values-simplicv sm:px-8 sm:py-16 container mx-auto"
+      data-aos="fade-up"
+    >
       <h2 class="text-2xl sm:text-4xl text-bold text-blue text-center my-4">
         Pourquoi choisir SimpliCV ?
       </h2>
@@ -48,7 +56,7 @@
       >
         <div class="flex flex-col gap-2 w-3/4">
           <img
-            :src="require('@/images/etape1-choixtemplatecv-simplicv.png')"
+            src="../../public/images/pages/etape1-choixtemplatecv-simplicv.png"
             alt="Etape 1 - Choisir une template CV"
           />
           <h3 class="text-orange text-xl sm:text-2xl">Simplicité</h3>
@@ -59,7 +67,7 @@
         </div>
         <div class="flex flex-col gap-2 w-3/4">
           <img
-            :src="require('@/images/etape2-remplircv-simplicv.png')"
+            src="../../public/images/pages/etape2-remplircv-simplicv.png"
             alt="Etape 2 - Remplir les informations du CV"
           />
           <h3 class="text-orange text-xl sm:text-2xl">Personnalisation</h3>
@@ -70,7 +78,7 @@
         </div>
         <div class="flex flex-col gap-2 w-3/4">
           <img
-            :src="require('@/images/etape3-telechargercv-simplicv.png')"
+            src="../../public/images/pages/etape3-telechargercv-simplicv.png"
             alt="Etape 3 - Télécharger le CV"
           />
           <h3 class="text-orange text-xl sm:text-2xl">Accessibilité</h3>
@@ -80,7 +88,10 @@
         </div>
       </div>
     </div>
-    <div class="templates sm:px-8 sm:py-16 container mx-auto">
+    <div
+      class="templates sm:px-8 sm:py-16 container mx-auto"
+      data-aos="fade-up"
+    >
       <h2 class="text-2xl sm:text-4xl text-bold text-blue text-center my-4">
         Les dernières templates
       </h2>
@@ -163,13 +174,17 @@
   </div>
 </template>
   
-  <script>
+<script>
 import MyButton from "../components/MyButton";
 import axios from "axios";
 import { useCVStore } from "../stores/cv";
 import TemplateCV from "../components/TemplateCV";
 import html2canvas from "html2canvas";
 import cookies from "vue-cookies";
+
+import AOS from "aos";
+
+AOS.init();
 
 export default {
   components: {
@@ -199,6 +214,7 @@ export default {
   },
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
+    document.title = "Accueil - SympliCV";
   },
   setup() {
     const cvStore = useCVStore(); // Utilisation du store CV
@@ -208,6 +224,10 @@ export default {
     };
   },
   methods: {
+    scrollToBottom() {
+      const section = document.querySelector(".values-simplicv");
+      section.scrollIntoView({ behavior: "smooth" });
+    },
     async getModelsCV() {
       try {
         const response = await axios.get("/api/modeles-de-cv");
@@ -318,8 +338,15 @@ export default {
   animation: floating 2s infinite ease-out;
 }
 @keyframes floating {
- 0% { transform: translate(0,  0px); }
- 50%  { transform: translate(0, 20px); }
- 100%   { transform: translate(0, -0px); }
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 20px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
 }
+
 </style>

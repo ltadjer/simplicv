@@ -37,6 +37,7 @@ module.exports = {
       contour: "#9ca5ab",
       white: "#FFFFFF",
       green: "#52b788",
+      black: '#212121',
     },
     extend: {
       backgroundImage: {
