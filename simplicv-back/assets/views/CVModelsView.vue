@@ -984,7 +984,6 @@ export default {
       isEditingFormation: false,
       isFormVisible: false,
       experiences: [],
-      contractTypes: ["CDI", "CDD", "Stage", "Apprentissage", "Freelance"],
       isExperienceFormVisible: false,
       isEditingExperience: false,
       editingExperienceIndex: -1,
@@ -1066,7 +1065,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
-    document.title = "Créer un CV - SympliCV"; 
+    document.title = "Créer un CV - SimpliCV"; 
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
     this.loadFormationsFromCookies();
     this.loadExperiencesFromCookies();
@@ -1085,7 +1084,7 @@ export default {
   },
   methods: {
     handleResize() {
-      this.isMobile = window.innerWidth <= 768; // Ajustez la largeur selon vos besoins
+      this.isMobile = window.innerWidth <= 768;
     },
     openPreviewPopup() {
       this.isPreviewPopupOpen = true;
@@ -1251,7 +1250,7 @@ export default {
     validateDateOfBirth(dateOfBirth) {
       // Validez si la personne a plus de 16 ans
       const birthDate = parseISO(dateOfBirth);
-      const minAgeDate = subYears(new Date(), 16); // La date d'il y a 16 ans
+      const minAgeDate = subYears(new Date(), 16); 
       return isBefore(birthDate, minAgeDate); // Si la date d'anniversaire est avant la date d'il y a 16 ans
     },
     // Méthode pour valider l'email
@@ -1260,12 +1259,10 @@ export default {
     },
     // Méthode pour valider le numéro de téléphone
     validatePhoneNumber(phoneNumber) {
-      // Implémentez votre propre logique de validation pour le numéro de téléphone
       return /^[0-9]{10}$/.test(phoneNumber);
     },
     // Méthode pour valider le code postal
     validateZipCode(zipCode) {
-      // Implémentez votre propre logique de validation pour le code postal
       return /^[0-9]{5}$/.test(zipCode);
     },
     formatDate(date) {
@@ -1351,7 +1348,6 @@ export default {
     },
     saveInfosPersoData() {
       if (!this.validateInfosPersoData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
         return;
       }
       const profil = {
@@ -1371,8 +1367,7 @@ export default {
 
       // console.log("profil:", profil);
       if (this.selectedCV && this.selectedCV.name) {
-        // Vérification de la sélection d'un modèle de CV
-        this.cvStore.setProfil(profil); // Définition des profils dans le store
+        this.cvStore.setProfil(profil); //profil dans le store
       }
 
       const encryptedProfil = cryptoJS.AES.encrypt(
@@ -1431,7 +1426,6 @@ export default {
     },
     saveFormationsData() {
       if (!this.validateFormationData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
         return;
       }
 
@@ -1526,7 +1520,6 @@ export default {
     },
     updateFormation() {
       if (!this.validateFormationData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
         return;
       }
       const updatedFormation = {
@@ -1664,7 +1657,6 @@ export default {
     },
     updateExperience() {
       if (!this.validateExperienceData()) {
-        // Afficher un message d'erreur ou effectuer toute autre action en cas de données non valides
         return;
       }
       const updatedExperience = {
@@ -2015,10 +2007,6 @@ export default {
     async downloadPDF() {
       // Récupérer la référence au composant CV
       const cvComponent = this.$refs.cvComponent;
-
-      // Générer le contenu HTML du CV
-      const cvContent = cvComponent.$el.outerHTML;
-
       // Convertir le contenu HTML en PDF
       const pdf = new jsPDF();
       const canvas = await html2canvas(cvComponent.$el);

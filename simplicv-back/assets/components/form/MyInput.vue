@@ -9,6 +9,7 @@
 </label>
     <template v-if="type === 'textarea'">
       <textarea
+        rows="5"
         :id="inputId"
         :name="inputName"
         :value="inputValue"

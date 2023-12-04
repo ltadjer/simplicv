@@ -214,7 +214,7 @@ export default {
   },
   mounted() {
     this.getModelsCV(); // Appel à la fonction pour récupérer les modèles de CV lors du montage du composant
-    document.title = "Accueil - SympliCV";
+    document.title = "Accueil - SimpliCV";
   },
   setup() {
     const cvStore = useCVStore(); // Utilisation du store CV

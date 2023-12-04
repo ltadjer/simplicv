@@ -66,3 +66,11 @@
 .content-wrapper {
     padding-bottom: 5%;
 }
+
+.form-admin {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #00B4D8;
+}

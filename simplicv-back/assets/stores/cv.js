@@ -42,7 +42,6 @@ export const useCVStore = defineStore("cv", {
     setProfil(profil) {
       this.profil = profil;
     },
-
     setFormations(formations) {
       this.formations = formations;
     },

@@ -42,7 +42,7 @@ export default {
     MyButton,
   },
   mounted() {
-    document.title = "Créer un CV - SympliCV"; 
+    document.title = "Créer un CV - SimpliCV"; 
   },
 };
 </script>

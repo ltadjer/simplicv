@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\CVModel;;
+use App\Entity\CVModel;
 
 use App\Entity\Profil;
 use App\Form\ExperienceType;
@@ -20,7 +20,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -39,12 +38,12 @@ class CVModelCrudController extends AbstractCrudController
     {
 
         yield FormField::addTab('Contenu');
-        yield FormField::addPanel('Profil');
+        yield FormField::addPanel('Profil')->hideOnIndex();
         yield ImageField::new('profil.image')
         ->setBasePath('/images/profils')
         ->setLabel('Image du profil')
         ->onlyOnForms()
-        ->setUploadDir('public/images/profils') // Set the upload directory
+        ->setUploadDir('public/images/profils') 
         ->setUploadedFileNamePattern('[name].[extension]'); 
         yield DateTimeField::new('profil.updatedAt')
             ->setLabel('Dernière mise à jour')
@@ -69,7 +68,8 @@ class CVModelCrudController extends AbstractCrudController
                 'entry_type' => FormationType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->hideOnIndex();
         yield FormField::addPanel('Expériences');
         yield CollectionField::new('experiences', 'Expériences')
             ->setEntryType(ExperienceType::class)
@@ -77,7 +77,8 @@ class CVModelCrudController extends AbstractCrudController
                 'entry_type' => ExperienceType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->hideOnIndex();
         yield FormField::addPanel('Compétences');
         yield CollectionField::new('skills', 'Compétences')
             ->setEntryType(SkillType::class)
@@ -85,7 +86,8 @@ class CVModelCrudController extends AbstractCrudController
                 'entry_type' => SkillType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->hideOnIndex();
         yield FormField::addPanel('Langues');
         yield CollectionField::new('languages', 'Langues')
             ->setEntryType(LanguageType::class)
@@ -93,7 +95,8 @@ class CVModelCrudController extends AbstractCrudController
                 'entry_type' => LanguageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->hideOnIndex();
         yield FormField::addPanel('Réseaux sociaux');
         yield CollectionField::new('socialMedias', 'Réseaux sociaux')
             ->setEntryType(SocialMediaType::class)
@@ -101,12 +104,13 @@ class CVModelCrudController extends AbstractCrudController
                 'entry_type' => SocialMediaType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->hideOnIndex();
 
         yield FormField::addTab('Mise en page');
         yield TextField::new('name', 'Nom');
         yield SlugField::new('slug', 'Slug')->setTargetFieldName('name')->hideOnIndex();
-        yield TextField::new('type', 'Type de modèle');
+        yield TextField::new('type', 'Type de modèle')->hideOnIndex();
         yield ChoiceField::new('titleFont')
             ->setLabel('Police des titres')
             ->setChoices([
@@ -148,17 +152,15 @@ class CVModelCrudController extends AbstractCrudController
     {
         $viewAction = Action::new('Visualiser')
             ->linkToUrl(function (CVModel $CVModel) {
-                // Remplacez l'URL par celle de votre front-end
                 return '/modeles-de-cv/' . $CVModel->getSlug();
             })
-            ->setIcon('fa fa-eye') // Remplacez par l'icône souhaitée
-            ->setLabel('Visualiser') // Remplacez par le libellé souhaité
-            ->setCssClass('btn btn-secondary'); // Ajoutez des classes CSS si nécessaire
+            ->setLabel('Visualiser') 
+            ->setCssClass('btn btn-secondary'); 
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_NEW, Action::NEW)
             ->add(Crud::PAGE_DETAIL, $viewAction)
-            ->add(Crud::PAGE_INDEX, $viewAction);
+            ->add(Crud::PAGE_EDIT, $viewAction);
     }
 
     public function configureCrud(Crud $crud): Crud

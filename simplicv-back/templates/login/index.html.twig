@@ -2,20 +2,81 @@
 
 {# ... #}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-admin label,
+        .form-admin input,
+        .form-admin button {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+         .form-admin button {
+            color: #EBFCFF;
+            background-color: #F55200;
+            padding: 12px 24px;
+            border-radius: 24px;
+        }
+
+        .form-admin input {
+            border: 2px solid #00B4D8;
+            padding: 5px;
+            border-radius: 16px;
+            
+            
+        }
+
+        .field {
+            display:flex;
+            flex-direction: column; 
+            width: 35%;
+            
+        }
+        .form-admin {
+            height: 100vh;
+            width: 100%; 
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;   
+            padding: 60px 0;
+            margin: 0 20%;        
+            gap: 1rem;
+            border: 2px solid #00B4D8;
+            border-radius: 16px;
+            
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button type="submit">login</button>
+    <form action="{{ path('app_login') }}" method="post" class="form-admin">
+    <div class="container">
+        <div class="field">
+                <label for="username">Email :</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+            </div>
+        
+            <div class="field">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="_password"/>
+            </div>
+            <div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <div>
+            <button type="submit">Connexion</button>
+    </div>
+       
     </form>
 {% endblock %}

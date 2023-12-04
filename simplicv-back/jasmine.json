@@ -1,0 +1,10 @@
+{
+    "spec_dir": "assets/tests", 
+    "spec_files": [
+        "**/*[sS]pec.js"
+    ],
+    "helpers": ["node_modules/@vue/test-utils/dist/vue-test-utils.js"], 
+    "stopSpecOnExpectationFailure": false, 
+    "random": false 
+  }
+  
