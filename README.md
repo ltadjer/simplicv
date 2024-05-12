@@ -1,4 +1,6 @@
-# simplicv, c'est un projet réalisé en vue Js et Symfony pour la génération de CV en ligne sans stockage des CV en base de données.
+# simplicv
+
+C'est un projet réalisé en vue Js et Symfony pour la génération de CV en ligne sans stockage des CV en base de données.
 
 ```bash
 git clone <url-du-dépôt>
